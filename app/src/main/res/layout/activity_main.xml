@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id ="@+id/main"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
@@ -26,22 +25,30 @@
         android:orientation="vertical">
 
         <Button
+            android:id="@+id/button1"
             android:layout_width="match_parent"
             android:layout_height="@dimen/zero"
             android:layout_marginStart="@dimen/borders"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="80dp"
             android:layout_marginEnd="@dimen/borders"
             android:layout_marginBottom="@dimen/borders"
+            app:icon="@drawable/vector"
+            app:iconTint="@color/black"
+            app:iconGravity="textStart"
             android:layout_weight="1"
             android:backgroundTint="@color/white"
             android:insetTop="@dimen/zero"
             android:insetBottom="@dimen/zero"
             android:text="@string/search"
             android:textColor="@color/black"
-            app:cornerRadius="@dimen/borders" />
+            app:cornerRadius="@dimen/borders"
+            />
 
         <Button
-
+            app:icon="@drawable/light_mode"
+            app:iconTint="@color/black"
+            app:iconGravity="textStart"
+            android:id="@+id/button2"
             android:textColor="@color/black"
             android:backgroundTint="@color/white"
             android:layout_width="match_parent"
@@ -58,6 +65,10 @@
             />
 
         <Button
+            app:icon="@drawable/options"
+            app:iconTint="@color/black"
+            app:iconGravity="textStart"
+            android:id="@+id/button3"
             android:textColor="@color/black"
             android:backgroundTint="@color/white"
             android:layout_width="match_parent"
@@ -74,13 +85,7 @@
             />
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/imageView"
-        app:iconGravity="textStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/vector"
-        android:layout_marginTop="40dp"/>
+
 
 
 
