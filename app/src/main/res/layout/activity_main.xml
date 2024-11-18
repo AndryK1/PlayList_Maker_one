@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id ="@+id/main"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:padding="@dimen/zero"
+    android:background="#3772E7"
+
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_marginStart="@dimen/borders"
+        android:layout_marginTop="14dp"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:lineHeight="22.78sp"
+        android:text="@string/program_name"
+        android:textColor="#ffffff"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/zero"
+            android:layout_marginStart="@dimen/borders"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="@dimen/borders"
+            android:layout_marginBottom="@dimen/borders"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            android:insetTop="@dimen/zero"
+            android:insetBottom="@dimen/zero"
+            android:text="@string/search"
+            android:textColor="@color/black"
+            app:cornerRadius="@dimen/borders" />
+
+        <Button
+
+            android:id="@+id/button2"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/zero"
+            android:layout_marginStart="@dimen/borders"
+            android:layout_marginEnd="@dimen/borders"
+            android:layout_marginBottom="@dimen/borders"
+            android:layout_marginTop="@dimen/zero"
+            android:layout_weight="1"
+            android:insetTop="@dimen/zero"
+            android:insetBottom="@dimen/zero"
+            android:text="@string/mediateka"
+            app:cornerRadius="@dimen/borders"
+            />
+
+        <Button
+            android:id="@+id/button3"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/zero"
+            android:layout_marginTop="@dimen/zero"
+            android:layout_marginStart="@dimen/borders"
+            android:layout_marginEnd="@dimen/borders"
+            android:layout_marginBottom="28dp"
+            android:layout_weight="1"
+            android:insetTop="@dimen/zero"
+            android:insetBottom="@dimen/zero"
+            android:text="@string/options"
+            app:cornerRadius="@dimen/borders"
+            />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        app:iconGravity="textStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/vector"
+        android:layout_marginTop="40dp"/>
+
+
+
+
+</FrameLayout>
