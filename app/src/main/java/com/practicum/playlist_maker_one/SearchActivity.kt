@@ -21,8 +21,7 @@ class SearchActivity : AppCompatActivity() {
         val closeButton = findViewById<Button>(R.id.exitButton2)
 
         closeButton.setOnClickListener{
-            val displayIntent = Intent(this, MainActivity::class.java)
-            startActivity(displayIntent)
+            finish()
         }
     }
 }

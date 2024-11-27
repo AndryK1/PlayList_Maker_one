@@ -21,8 +21,7 @@ class MediaActivity : AppCompatActivity() {
         val closeButton = findViewById<Button>(R.id.exitButton1)
 
         closeButton.setOnClickListener{
-            val displayIntent = Intent(this, MainActivity::class.java)
-            startActivity(displayIntent)
+            finish()
         }
     }
 }

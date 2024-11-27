@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:padding="@dimen/zero"
-    android:background="#3772E7"
+    android:background="@color/blue"
 
     >
 
@@ -17,7 +17,7 @@
         android:textSize="22sp"
         android:lineHeight="22.78sp"
         android:text="@string/program_name"
-        android:textColor="#ffffff"
+        android:textColor="@color/white"
         />
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,10 +29,10 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/zero"
             android:layout_marginStart="@dimen/borders"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="@dimen/marginTopOptions"
             android:layout_marginEnd="@dimen/borders"
             android:layout_marginBottom="@dimen/borders"
-            app:icon="@drawable/vector"
+            app:icon="@drawable/ic_vector_24"
             app:iconTint="@color/black"
             app:iconGravity="textStart"
             android:layout_weight="1"
@@ -40,15 +40,19 @@
             android:insetTop="@dimen/zero"
             android:insetBottom="@dimen/zero"
             android:text="@string/search"
+            android:textAllCaps="false"
+            android:textSize="@dimen/textHeadinglSize"
             android:textColor="@color/black"
             app:cornerRadius="@dimen/borders"
             />
 
         <Button
-            app:icon="@drawable/light_mode"
+            app:icon="@drawable/ic_ight_mode_24"
             app:iconTint="@color/black"
             app:iconGravity="textStart"
             android:id="@+id/button2"
+            android:textAllCaps="false"
+            android:textSize="@dimen/textHeadinglSize"
             android:textColor="@color/black"
             android:backgroundTint="@color/white"
             android:layout_width="match_parent"
@@ -65,13 +69,15 @@
             />
 
         <Button
-            app:icon="@drawable/options"
+            app:icon="@drawable/ic_options_24"
             app:iconTint="@color/black"
             app:iconGravity="textStart"
             android:id="@+id/button3"
             android:textColor="@color/black"
             android:backgroundTint="@color/white"
             android:layout_width="match_parent"
+            android:textAllCaps="false"
+            android:textSize="@dimen/textHeadinglSize"
             android:layout_height="@dimen/zero"
             android:layout_marginTop="@dimen/zero"
             android:layout_marginStart="@dimen/borders"

@@ -23,8 +23,7 @@ class SettingsActivity : AppCompatActivity() {
         val closeButton = findViewById<Button>(R.id.button1)
 
         closeButton.setOnClickListener{
-            val displayIntent = Intent(this, MainActivity::class.java)
-            startActivity(displayIntent)
+            finish()
         }
 
     }

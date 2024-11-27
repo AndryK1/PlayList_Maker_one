@@ -2,5 +2,14 @@
 <resources>
     <dimen name="zero">0dp</dimen>
     <dimen name="borders">16dp</dimen>
+    <dimen name="textHeadinglSize">22sp</dimen>
+    <dimen name="textNormalSize">16sp</dimen>
+    <dimen name="lineHeightOne">18.75sp</dimen>
+    <dimen name="marginOptions">18dp</dimen>
+    <dimen name="paddingOptions">21dp</dimen>
+    <dimen name="marginEndOptions">44dp</dimen>
+    <dimen name="marginEndTwelveOptions">12dp</dimen>
+    <dimen name="heightOptions">61dp</dimen>
+    <dimen name="marginTopOptions">80dp</dimen>
 
 </resources>
