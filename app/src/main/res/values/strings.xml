@@ -1,7 +1,13 @@
 <resources>
     <string name="app_name">PlayList_Maker_one</string>
-    <string name= "mediateka" >Медиатека</string>
+    <string name="mediateka">Медиатека</string>
     <string name="search">Поиск</string>
     <string name="options">Настройки</string>
     <string name="program_name">Play list maker</string>
+    <string name="dark_theme">Тёмная тема</string>
+    <string name="support">Написать в поддержку</string>
+    <string name="share_app">Поделиться приложением</string>
+    <string name="users_pact">Пользовательское соглашение</string>
+    <string name="plugMedia">Экран медиатеки</string>
+    <string name="plugSearch">Экран поиска</string>
 </resources>

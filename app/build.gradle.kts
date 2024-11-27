@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "com.practicum.playlist_maker_one"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.practicum.playlist_maker_one"
         minSdk = 29
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
