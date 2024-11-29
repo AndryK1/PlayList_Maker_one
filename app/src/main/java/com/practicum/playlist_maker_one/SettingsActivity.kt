@@ -1,8 +1,10 @@
 package com.practicum.playlist_maker_one
 
 import android.content.Intent
+import android.media.Image
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
@@ -20,7 +22,7 @@ class SettingsActivity : AppCompatActivity() {
             insets
         }
 
-        val closeButton = findViewById<Button>(R.id.button1)
+        val closeButton = findViewById<ImageButton>(R.id.button1)
 
         closeButton.setOnClickListener{
             finish()

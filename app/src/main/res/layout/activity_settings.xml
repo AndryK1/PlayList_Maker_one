@@ -9,23 +9,32 @@
     android:padding="@dimen/zero"
     android:background="@color/white"
     >
-
-    <Button
-        android:id="@+id/button1"
-        android:textAllCaps="false"
-        android:textAlignment="textStart"
-        android:layout_width="match_parent"
+    <FrameLayout
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/borders"
-        app:icon="@drawable/ic_arrow_24"
-        app:iconTint="@color/black"
-        android:textSize="@dimen/textHeadinglSize"
-        android:backgroundTint="@color/white"
-        android:insetTop="@dimen/zero"
-        android:insetBottom="@dimen/zero"
-        android:text="@string/options"
-        android:textColor="@color/black"
-        />
+        android:layout_width="match_parent">
+
+        <ImageButton
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/button1"
+            android:src="@drawable/ic_arrow_24"
+            android:background="@color/white"
+            android:padding="@dimen/borders"
+            android:contentDescription="@string/options"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_marginStart="@dimen/heightOptions"
+            android:layout_marginTop="14dp"
+            android:textSize="@dimen/textHeadinglSize"
+            android:text="@string/options"
+
+            />
+    </FrameLayout>
+
     <RelativeLayout
         android:id="@+id/list1"
         android:layout_width="match_parent"

@@ -9,7 +9,7 @@
     <dimen name="paddingOptions">21dp</dimen>
     <dimen name="marginEndOptions">44dp</dimen>
     <dimen name="marginEndTwelveOptions">12dp</dimen>
-    <dimen name="heightOptions">61dp</dimen>
+    <dimen name="heightOptions">64dp</dimen>
     <dimen name="marginTopOptions">80dp</dimen>
 
 </resources>
