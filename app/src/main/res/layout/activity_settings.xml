@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="UseSwitchCompatOrMaterialXml"
+    android:id ="@+id/settings"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:padding="@dimen/zero"
+    android:background="@color/adaptiveBackGroundWhite"
+    >
+
+    <FrameLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+
+
+        <ImageButton
+            style="@style/headerImageButton"
+            android:id="@+id/button1"
+            android:contentDescription="@string/options"
+            />
+
+        <TextView
+            style="@style/headerText"
+            android:text="@string/options"
+
+            />
+    </FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/list1"
+        style="@style/settingsRelativeLayout"
+        android:layout_marginTop="@dimen/marginTopOptions"
+        >
+        <TextView
+            android:id="@+id/text1"
+            style="@style/settingsTextView"
+            android:text="@string/dark_theme"
+            />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switcher"
+            style="@style/switchStyle"
+
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/list2"
+        style="@style/settingsRelativeLayout"
+        android:layout_marginTop="141dp"
+
+        >
+        <TextView
+            android:id="@+id/text2"
+            style="@style/settingsTextView"
+            android:text="@string/share_app"
+            />
+
+        <ImageView
+            style="@style/settingsImageView"
+            android:background="@drawable/ic_share_24"
+            >
+
+        </ImageView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/list3"
+        style="@style/settingsRelativeLayout"
+        android:layout_marginTop="202dp"
+        >
+        <TextView
+            android:id="@+id/text3"
+            style="@style/settingsTextView"
+            android:text="@string/support"
+            />
+
+        <ImageView
+            style="@style/settingsImageView"
+            android:background="@drawable/ic_support_24"
+            >
+
+        </ImageView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/list4"
+        style="@style/settingsRelativeLayout"
+        android:layout_marginTop="263dp"
+        >
+        <TextView
+            android:id="@+id/text4"
+            style="@style/settingsTextView"
+            android:text="@string/users_pact"
+            />
+
+        <ImageView
+            style="@style/settingsImageView"
+            android:background="@drawable/ic_arrowright_8"
+            android:padding="@dimen/padding_10"
+            >
+
+        </ImageView>
+    </RelativeLayout>
+
+
+
+
+
+</FrameLayout>

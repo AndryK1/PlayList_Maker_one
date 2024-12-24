@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="UseSwitchCompatOrMaterialXml"
+    android:id ="@+id/search"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:padding="@dimen/zero"
+    android:background="@color/adaptiveBackGroundWhite"
+    >
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageButton
+            style="@style/headerImageButton"
+            android:id="@+id/exitButtonSearch"
+            android:contentDescription="@string/search"/>
+        <TextView
+            style="@style/headerText"
+            android:text="@string/search"/>
+
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/searchTop"
+        android:paddingTop="@dimen/paddingSearch"
+        android:paddingBottom="@dimen/paddingSearch"
+        android:paddingStart="@dimen/marginSearch"
+        android:paddingEnd="@dimen/marginSearch">
+
+        <EditText
+            android:id="@+id/search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_36"
+            android:hint="@string/search"
+            android:textSize="@dimen/textNormalSize"
+            android:drawableStart="@drawable/ic_search_16"
+            android:drawablePadding="@dimen/paddingSearch"
+            android:textColorHint="@color/TextGrey_Black"
+            android:padding="8.5dp"
+            android:layout_marginStart="@dimen/marginSearch"
+            android:layout_marginEnd="@dimen/marginSearch"
+            android:background="@drawable/search_bg"
+        />
+        <ImageView
+            android:id="@+id/clearButton"
+            android:layout_width="@dimen/width_40"
+            android:layout_height="@dimen/height_36"
+            android:src="@drawable/ic_clear_16"
+            android:padding="@dimen/padding_10"
+            android:contentDescription="@string/clearButton"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="@dimen/marginSearch"/>
+    </FrameLayout>
+</FrameLayout>

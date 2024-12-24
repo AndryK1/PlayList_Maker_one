@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="zero">0dp</dimen>
+    <dimen name="paddingSearch">8dp</dimen>
+    <dimen name="height_36">36dp</dimen>
     <dimen name="borders">16dp</dimen>
+    <dimen name="textHeadingSize">22sp</dimen>
+    <dimen name="marginSearch">16dp</dimen>
+    <dimen name="corners">12dp</dimen>
+    <dimen name="textNormalSize">16sp</dimen>
+    <dimen name="lineHeightOne">18.75sp</dimen>
+    <dimen name="marginOptions">18dp</dimen>
+    <dimen name="paddingOptions">21dp</dimen>
+    <dimen name="marginEndOptions">44dp</dimen>
+    <dimen name="marginEndTwelveOptions">12dp</dimen>
+    <dimen name="searchTop">56dp</dimen>
+    <dimen name="heightOptions">64dp</dimen>
+    <dimen name="marginTopOptions">80dp</dimen>
+    <dimen name="switchPaddingVertical">25dp</dimen>
+    <dimen name="padding_10">10dp</dimen>
+    <dimen name="switchPaddingHorizontal">7dp</dimen>
+    <dimen name="width_40">40dp</dimen>
+
 
 </resources>
