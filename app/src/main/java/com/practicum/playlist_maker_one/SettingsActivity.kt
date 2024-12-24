@@ -2,6 +2,7 @@ package com.practicum.playlist_maker_one
 
 import android.content.Intent
 import android.media.Image
+
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
@@ -18,11 +19,14 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_settings)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.settings)) { v, insets ->
+
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
 
         findViewById<RelativeLayout>(R.id.list2).setOnClickListener {
             val intent = Intent(Intent.ACTION_SEND).apply {
@@ -53,6 +57,7 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         val closeButton = findViewById<ImageButton>(R.id.button1)
+
         closeButton.setOnClickListener{
             finish()
         }

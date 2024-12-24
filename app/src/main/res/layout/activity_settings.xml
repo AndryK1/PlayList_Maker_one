@@ -10,18 +10,22 @@
     android:background="@color/adaptiveBackGroundWhite"
     >
 
+
     <FrameLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent">
 
 
+
         <ImageButton
             style="@style/headerImageButton"
             android:id="@+id/button1"
+
             android:contentDescription="@string/options"
             />
 
         <TextView
+
             style="@style/headerText"
             android:text="@string/options"
 
@@ -68,6 +72,7 @@
 
     <RelativeLayout
         android:id="@+id/list3"
+
         style="@style/settingsRelativeLayout"
         android:layout_marginTop="202dp"
         >
@@ -80,6 +85,7 @@
         <ImageView
             style="@style/settingsImageView"
             android:background="@drawable/ic_support_24"
+
             >
 
         </ImageView>
@@ -100,6 +106,7 @@
             style="@style/settingsImageView"
             android:background="@drawable/ic_arrowright_8"
             android:padding="@dimen/padding_10"
+
             >
 
         </ImageView>

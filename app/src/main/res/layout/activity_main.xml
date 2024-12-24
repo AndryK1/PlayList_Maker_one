@@ -7,6 +7,7 @@
     android:padding="@dimen/zero"
     android:background="@color/backGroundScreen"
 
+
     >
 
     <TextView
@@ -27,6 +28,7 @@
 
         <Button
             android:id="@+id/button1"
+
             style="@style/MainButtonsStyle"
             android:layout_marginTop="@dimen/marginTopOptions"
             app:icon="@drawable/ic_vector_24"
