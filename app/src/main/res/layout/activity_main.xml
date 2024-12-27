@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:padding="@dimen/zero"
-    android:background="@color/blue"
+    android:background="@color/backGroundScreen"
+
 
     >
 
@@ -14,7 +15,7 @@
         android:layout_marginStart="@dimen/borders"
         android:layout_marginTop="14dp"
         android:layout_height="wrap_content"
-        android:textSize="22sp"
+        android:textSize="@dimen/textHeadingSize"
         android:lineHeight="22.78sp"
         android:text="@string/program_name"
         android:textColor="@color/white"
@@ -22,72 +23,31 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
         <Button
             android:id="@+id/button1"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/zero"
-            android:layout_marginStart="@dimen/borders"
+
+            style="@style/MainButtonsStyle"
             android:layout_marginTop="@dimen/marginTopOptions"
-            android:layout_marginEnd="@dimen/borders"
-            android:layout_marginBottom="@dimen/borders"
             app:icon="@drawable/ic_vector_24"
-            app:iconTint="@color/black"
-            app:iconGravity="textStart"
-            android:layout_weight="1"
-            android:backgroundTint="@color/white"
-            android:insetTop="@dimen/zero"
-            android:insetBottom="@dimen/zero"
             android:text="@string/search"
-            android:textAllCaps="false"
-            android:textSize="@dimen/textHeadinglSize"
-            android:textColor="@color/black"
-            app:cornerRadius="@dimen/borders"
             />
 
         <Button
-            app:icon="@drawable/ic_ight_mode_24"
-            app:iconTint="@color/black"
-            app:iconGravity="textStart"
+            app:icon="@drawable/ic_light_mode_24"
+            style="@style/MainButtonsStyle"
             android:id="@+id/button2"
-            android:textAllCaps="false"
-            android:textSize="@dimen/textHeadinglSize"
-            android:textColor="@color/black"
-            android:backgroundTint="@color/white"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/zero"
-            android:layout_marginStart="@dimen/borders"
-            android:layout_marginEnd="@dimen/borders"
-            android:layout_marginBottom="@dimen/borders"
-            android:layout_marginTop="@dimen/zero"
-            android:layout_weight="1"
-            android:insetTop="@dimen/zero"
-            android:insetBottom="@dimen/zero"
             android:text="@string/mediateka"
-            app:cornerRadius="@dimen/borders"
             />
 
         <Button
             app:icon="@drawable/ic_options_24"
-            app:iconTint="@color/black"
-            app:iconGravity="textStart"
+            style="@style/MainButtonsStyle"
             android:id="@+id/button3"
-            android:textColor="@color/black"
-            android:backgroundTint="@color/white"
-            android:layout_width="match_parent"
-            android:textAllCaps="false"
-            android:textSize="@dimen/textHeadinglSize"
-            android:layout_height="@dimen/zero"
-            android:layout_marginTop="@dimen/zero"
-            android:layout_marginStart="@dimen/borders"
-            android:layout_marginEnd="@dimen/borders"
             android:layout_marginBottom="28dp"
-            android:layout_weight="1"
-            android:insetTop="@dimen/zero"
-            android:insetBottom="@dimen/zero"
             android:text="@string/options"
-            app:cornerRadius="@dimen/borders"
             />
     </LinearLayout>
 

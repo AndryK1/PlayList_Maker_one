@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <color name="backGroundScreen">@color/black</color>
+    <color name="iconTint">@color/white</color>
+    <color name="adaptiveBackGroundWhite">@color/black</color>
+    <color name="adaptiveCommonText">@color/white</color>
+    <color name="TextGrey_Black">@color/black</color>
+    <color name="TextGrey_White">@color/white</color>
+</resources>

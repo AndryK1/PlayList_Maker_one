@@ -25,14 +25,17 @@
             android:text="@string/mediateka"
             android:textColor="@color/black"
             />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+
+            android:text="@string/plugMedia"
             android:textColor="@color/black"
-            android:textSize="40dp"
-            android:textStyle="italic"
-            android:text="@string/plugMedia"/>
+            android:textSize="40sp"
+            android:textStyle="italic" />
+
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
