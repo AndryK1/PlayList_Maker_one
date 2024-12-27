@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="zero">0dp</dimen>
+    <dimen name="paddingSettingsV">20dp</dimen>
     <dimen name="paddingSearch">8dp</dimen>
+    <dimen name="radius_8">8dp</dimen>
     <dimen name="height_36">36dp</dimen>
     <dimen name="borders">16dp</dimen>
     <dimen name="textHeadingSize">22sp</dimen>

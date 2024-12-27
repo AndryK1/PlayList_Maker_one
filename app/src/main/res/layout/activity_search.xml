@@ -9,18 +9,14 @@
     android:padding="@dimen/zero"
     android:background="@color/adaptiveBackGroundWhite"
     >
-    <FrameLayout
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/searchToolbar"
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageButton
-            style="@style/headerImageButton"
-            android:id="@+id/exitButtonSearch"
-            android:contentDescription="@string/search"/>
-        <TextView
-            style="@style/headerText"
-            android:text="@string/search"/>
-
-    </FrameLayout>
+        app:navigationIcon="@drawable/ic_arrow_24"
+        app:titleTextAppearance="@style/headerText"
+        app:title="@string/search"
+        />
 
 
     <FrameLayout
@@ -42,9 +38,10 @@
             android:drawablePadding="@dimen/paddingSearch"
             android:textColorHint="@color/TextGrey_Black"
             android:padding="8.5dp"
-            android:layout_marginStart="@dimen/marginSearch"
-            android:layout_marginEnd="@dimen/marginSearch"
             android:background="@drawable/search_bg"
+            android:textCursorDrawable="@drawable/cursor_color"
+
+
         />
         <ImageView
             android:id="@+id/clearButton"
@@ -54,7 +51,7 @@
             android:padding="@dimen/padding_10"
             android:contentDescription="@string/clearButton"
             android:layout_gravity="end|center_vertical"
-            android:layout_marginEnd="@dimen/marginSearch"/>
+            />
     </FrameLayout>
 </FrameLayout>
 

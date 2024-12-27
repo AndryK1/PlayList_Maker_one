@@ -10,107 +10,43 @@
     android:background="@color/adaptiveBackGroundWhite"
     >
 
-
-    <FrameLayout
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbarSettings"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        app:navigationIcon="@drawable/ic_arrow_24"
+        app:titleTextAppearance="@style/headerText"
+        app:title="@string/options"
+        />
 
-
-
-        <ImageButton
-            style="@style/headerImageButton"
-            android:id="@+id/button1"
-
-            android:contentDescription="@string/options"
-            />
-
-        <TextView
-
-            style="@style/headerText"
-            android:text="@string/options"
-
-            />
-    </FrameLayout>
-
-    <RelativeLayout
-        android:id="@+id/list1"
-        style="@style/settingsRelativeLayout"
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/darkTheme"
+        style="@style/settingsText"
         android:layout_marginTop="@dimen/marginTopOptions"
-        >
-        <TextView
-            android:id="@+id/text1"
-            style="@style/settingsTextView"
-            android:text="@string/dark_theme"
-            />
+        android:text="@string/dark_theme"
+        />
 
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/switcher"
-            style="@style/switchStyle"
-
-            />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/list2"
-        style="@style/settingsRelativeLayout"
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/share"
+        style="@style/settingsText"
         android:layout_marginTop="141dp"
+        android:text="@string/share_app"
+        android:drawableEnd="@drawable/ic_share_24"
+        />
 
-        >
-        <TextView
-            android:id="@+id/text2"
-            style="@style/settingsTextView"
-            android:text="@string/share_app"
-            />
-
-        <ImageView
-            style="@style/settingsImageView"
-            android:background="@drawable/ic_share_24"
-            >
-
-        </ImageView>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/list3"
-
-        style="@style/settingsRelativeLayout"
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/support"
+        style="@style/settingsText"
         android:layout_marginTop="202dp"
-        >
-        <TextView
-            android:id="@+id/text3"
-            style="@style/settingsTextView"
-            android:text="@string/support"
-            />
+        android:text="@string/support"
+        android:drawableEnd="@drawable/ic_support_24"/>
 
-        <ImageView
-            style="@style/settingsImageView"
-            android:background="@drawable/ic_support_24"
-
-            >
-
-        </ImageView>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/list4"
-        style="@style/settingsRelativeLayout"
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/usersAgree"
+        style="@style/settingsText"
         android:layout_marginTop="263dp"
-        >
-        <TextView
-            android:id="@+id/text4"
-            style="@style/settingsTextView"
-            android:text="@string/users_pact"
-            />
-
-        <ImageView
-            style="@style/settingsImageView"
-            android:background="@drawable/ic_arrowright_8"
-            android:padding="@dimen/padding_10"
-
-            >
-
-        </ImageView>
-    </RelativeLayout>
+        android:text="@string/users_pact"
+        android:drawableEnd="@drawable/ic_arrowright_8"/>
 
 
 
