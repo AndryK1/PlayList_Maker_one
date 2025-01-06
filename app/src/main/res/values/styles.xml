@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="MainButtonsStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/zero</item>
+        <item name="android:textSize">@dimen/textHeadingSize</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="fontFamily">@font/ys_display_medium</item>
+        <item name="fontWeight">500</item>
+        <item name="android:layout_marginBottom">@dimen/borders</item>
+        <item name="android:layout_marginTop">@dimen/zero</item>
+        <item name="android:layout_marginStart">@dimen/borders</item>
+        <item name="android:layout_marginEnd">@dimen/borders</item>
+        <item name="iconTint">@color/black</item>
+        <item name="iconGravity">textStart</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:backgroundTint">@color/white</item>
+        <item name="android:insetTop">@dimen/zero</item>
+        <item name="android:insetBottom">@dimen/zero</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="cornerRadius">@dimen/borders</item>
+    </style>
+
+    <style name="settingsText">
+        <item name="fontFamily">@font/ys_display_regular</item>
+        <item name="fontWeight">400</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingHorizontal">@dimen/borders</item>
+        <item name="android:paddingVertical">@dimen/paddingSettingsV</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textSize">@dimen/textNormalSize</item>
+        <item name="android:textColor">@color/adaptiveCommonText</item>
+        <item name="drawableTint">@color/TextGrey_White</item>
+
+    </style>
+
+    <style name="settingsRelativeLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/heightOptions</item>
+        <item name="backgroundColor">@color/white</item>
+    </style>
+
+    <style name="settingsImageView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="iconGravity">end</item>
+        <item name="android:layout_marginTop">@dimen/marginOptions</item>
+        <item name="android:layout_marginBottom">@dimen/marginOptions</item>
+        <item name="android:layout_marginEnd">@dimen/marginEndTwelveOptions</item>
+    </style>
+
+    <style name="headerText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/adaptiveCommonText</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="fontFamily">@font/ys_display_medium</item>
+        <item name="fontWeight">500</item>
+        <item name="android:textSize">@dimen/textHeadingSize</item>
+    </style>
+
+    <style name="headerImageButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:src">@drawable/ic_arrow_24</item>
+        <item name="android:background">@color/adaptiveBackGroundWhite</item>
+        <item name="android:padding">@dimen/borders</item>
+    </style>
+
+
+</resources>

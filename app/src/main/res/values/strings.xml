@@ -10,4 +10,11 @@
     <string name="users_pact">Пользовательское соглашение</string>
     <string name="plugMedia">Экран медиатеки</string>
     <string name="plugSearch">Экран поиска</string>
+    <string name="linkDevelopment">Ознакомьтесь с этим курсом по андроид разработке : https://practicum.yandex.ru/android-developer/</string>
+    <string name="linkAgreement">https://yandex.ru/legal/practicum_offer/</string>
+    <string name="mail">s.hlopovskih@gmail.com</string>
+    <string name="clearButton">Очистить текст</string>
+    <string name="subjectMessage">Сообщение разработчикам и разработчицам приложения Playlist Maker</string>
+    <string name="gratefulMessage">Спасибо разработчикам и разработчицам за крутое приложение!</string>
+
 </resources>

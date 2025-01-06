@@ -1,9 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.PlayList_Maker_one" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Theme.PlayList_Maker_one" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.PlayList_Maker_one" parent="Base.Theme.PlayList_Maker_one" />
+
 </resources>

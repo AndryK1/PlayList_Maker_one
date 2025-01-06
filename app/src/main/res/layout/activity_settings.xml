@@ -3,171 +3,50 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="UseSwitchCompatOrMaterialXml"
-    android:id ="@+id/main"
+    android:id ="@+id/settings"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:padding="@dimen/zero"
-    android:background="@color/white"
+    android:background="@color/adaptiveBackGroundWhite"
     >
-    <FrameLayout
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbarSettings"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent">
-
-        <ImageButton
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:id="@+id/button1"
-            android:src="@drawable/ic_arrow_24"
-            android:background="@color/white"
-            android:padding="@dimen/borders"
-            android:contentDescription="@string/options"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:layout_marginStart="@dimen/heightOptions"
-            android:layout_marginTop="14dp"
-            android:textSize="@dimen/textHeadinglSize"
-            android:text="@string/options"
-
-            />
-    </FrameLayout>
-
-    <RelativeLayout
-        android:id="@+id/list1"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/heightOptions"
+        app:navigationIcon="@drawable/ic_arrow_24"
+        app:titleTextAppearance="@style/headerText"
+        app:title="@string/options"
+        />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/darkTheme"
+        style="@style/settingsText"
         android:layout_marginTop="@dimen/marginTopOptions"
-        android:background="@color/white">
-        <TextView
-            android:id="@+id/text1"
-            android:textSize="@dimen/textNormalSize"
-            android:lineHeight="@dimen/lineHeightOne"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:text="@string/dark_theme"
-            android:textColor="@color/black"
-            android:paddingTop="@dimen/paddingOptions"
-            android:paddingBottom="@dimen/paddingOptions"
-            android:layout_marginStart="@dimen/textNormalSize"
-            android:layout_marginEnd="@dimen/marginEndOptions"/>
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/switcher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="25dp"
-            android:paddingEnd="7dp"
-            android:paddingStart="7dp"
-            android:paddingBottom="25dp"
-            android:layout_alignParentEnd="true"
+        android:text="@string/dark_theme"
+        />
 
-            />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/list2"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/heightOptions"
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/share"
+        style="@style/settingsText"
         android:layout_marginTop="141dp"
-        android:background="@color/white"
-        >
-        <TextView
-            android:id="@+id/text2"
-            android:textSize="@dimen/textNormalSize"
-            android:lineHeight="@dimen/lineHeightOne"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:text="@string/share_app"
-            android:textColor="@color/black"
-            android:paddingTop="@dimen/paddingOptions"
-            android:paddingBottom="@dimen/paddingOptions"
-            android:layout_marginStart="@dimen/borders"
-            android:layout_marginEnd="@dimen/marginEndOptions"/>
+        android:text="@string/share_app"
+        android:drawableEnd="@drawable/ic_share_24"
+        />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:background="@drawable/ic_share_24"
-            app:iconGravity="end"
-            android:layout_marginTop="@dimen/marginOptions"
-            android:layout_marginBottom="@dimen/marginOptions"
-            android:layout_marginEnd="@dimen/marginEndTwelveOptions"
-            >
-
-        </ImageView>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/list3"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/heightOptions"
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/support"
+        style="@style/settingsText"
         android:layout_marginTop="202dp"
-        android:background="#FFFFFF"
-        >
-        <TextView
-            android:id="@+id/text3"
-            android:textSize="@dimen/textNormalSize"
-            android:lineHeight="@dimen/lineHeightOne"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:text="@string/support"
-            android:textColor="@color/black"
-            android:paddingTop="@dimen/paddingOptions"
-            android:paddingBottom="@dimen/paddingOptions"
-            android:layout_marginStart="@dimen/textNormalSize"
-            android:layout_marginEnd="@dimen/marginEndOptions"/>
+        android:text="@string/support"
+        android:drawableEnd="@drawable/ic_support_24"/>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:background="@drawable/ic_support_24"
-            app:iconGravity="end"
-            android:layout_marginTop="@dimen/marginOptions"
-            android:layout_marginBottom="@dimen/marginOptions"
-            android:layout_marginEnd="@dimen/marginEndTwelveOptions"
-            >
-
-        </ImageView>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/list4"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/heightOptions"
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/usersAgree"
+        style="@style/settingsText"
         android:layout_marginTop="263dp"
-        android:background="#FFFFFF"
-        >
-        <TextView
-            android:id="@+id/text4"
-            android:textSize="@dimen/textNormalSize"
-            android:lineHeight="@dimen/lineHeightOne"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:text="@string/users_pact"
-            android:textColor="@color/black"
-            android:paddingTop="@dimen/paddingOptions"
-            android:paddingBottom="@dimen/paddingOptions"
-            android:layout_marginStart="@dimen/borders"
-            android:layout_marginEnd="@dimen/marginEndOptions"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:background="@drawable/ic_arrowright_8"
-            app:iconGravity="end"
-            android:padding="8dp"
-            android:layout_marginTop="@dimen/marginOptions"
-            android:layout_marginBottom="@dimen/marginOptions"
-            android:layout_marginEnd="12dp"
-            >
-
-        </ImageView>
-    </RelativeLayout>
+        android:text="@string/users_pact"
+        android:drawableEnd="@drawable/ic_arrowright_8"/>
 
 
 
