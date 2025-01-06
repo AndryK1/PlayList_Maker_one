@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/songHeight"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:background="@color/adaptiveBackGroundWhite">
+<ImageView
+    android:id="@+id/songIcon"
+    android:layout_width="@dimen/songPhoto"
+    android:layout_height="@dimen/songPhoto"
+    android:layout_marginTop="@dimen/paddingSearch"
+    android:layout_marginBottom="@dimen/paddingSearch"
+    android:layout_marginStart="@dimen/marginSongStart"
+    android:textAlignment="center"
+    />
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/paddingSearch"
+        android:layout_marginTop="@dimen/marginSongTop">
+
+        <TextView
+            android:id="@+id/songName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ys_display_regular"
+            android:textSize="@dimen/songNormalText"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/plug"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/ArtistName"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ys_display_regular"
+            android:textSize="@dimen/songMediumText"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/plug"
+            android:drawableEnd="@drawable/ic_dot_13"
+            />
+        <TextView
+            android:id="@+id/trackTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/timePlug"
+            android:fontFamily="@font/ys_display_regular"
+            android:textSize="@dimen/songMediumText"
+            />
+
+    </LinearLayout>
+
+    </LinearLayout>
+<ImageView
+    android:id="@+id/songArrow"
+    android:layout_width="@dimen/square"
+    android:layout_height="@dimen/square"
+    android:src="@drawable/ic_arrowright_8"
+    android:layout_marginTop="@dimen/marginSongEnd"/>
+
+
+</LinearLayout>
