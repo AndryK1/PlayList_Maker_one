@@ -32,6 +32,8 @@
             android:id="@+id/search_bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_36"
+            android:textColor="@color/black"
+            android:fontFamily="@font/ys_display_regular"
             android:hint="@string/search"
             android:textSize="@dimen/textNormalSize"
             android:drawableStart="@drawable/ic_search_16"
@@ -53,5 +55,14 @@
             android:layout_gravity="end|center_vertical"
             />
     </FrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="124dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
 </FrameLayout>
 

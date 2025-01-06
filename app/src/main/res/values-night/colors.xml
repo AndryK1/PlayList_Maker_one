@@ -8,4 +8,5 @@
     <color name="adaptiveCommonText">@color/white</color>
     <color name="TextGrey_Black">@color/black</color>
     <color name="TextGrey_White">@color/white</color>
+    <color name="searchBg">@color/white</color>
 </resources>

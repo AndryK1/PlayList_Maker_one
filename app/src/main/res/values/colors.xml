@@ -18,6 +18,7 @@
     <color name="adaptiveCommonText">@color/black</color>
     <color name="TextGrey_Black">@color/GreyDark</color>
     <color name="TextGrey_White">@color/GreyDark</color>
+    <color name="searchBg">@color/LightGrey</color>
 
 
 
