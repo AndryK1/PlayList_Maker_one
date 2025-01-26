@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="zero">0dp</dimen>
+    <dimen name="refreshText">14dp</dimen>
+    <dimen name="errorTextMarginX">24dp</dimen>
+    <dimen name="errorTextMarginY">16dp</dimen>
+    <dimen name="errorTextTranslationY">346dp</dimen>
+    <dimen name="errorTextSize">19sp</dimen>
+    <dimen name="commonLineHeight">22.27sp</dimen>
+    <dimen name="errorImageHeight">120dp</dimen>
+    <dimen name="errorImageTranslationY">210dp</dimen>
+    <dimen name="marginSongTop">6dp</dimen>
+    <dimen name="songNormalText">16sp</dimen>
+    <dimen name="songMediumText">11sp</dimen>
     <dimen name="paddingSettingsV">20dp</dimen>
     <dimen name="paddingSearch">8dp</dimen>
     <dimen name="radius_8">8dp</dimen>
+    <dimen name="songHeight">61dp</dimen>
+    <dimen name="songPhoto">45dp</dimen>
     <dimen name="height_36">36dp</dimen>
     <dimen name="borders">16dp</dimen>
     <dimen name="textHeadingSize">22sp</dimen>
@@ -12,12 +25,15 @@
     <dimen name="textNormalSize">16sp</dimen>
     <dimen name="lineHeightOne">18.75sp</dimen>
     <dimen name="marginOptions">18dp</dimen>
+    <dimen name="marginSongEnd">18dp</dimen>
     <dimen name="paddingOptions">21dp</dimen>
     <dimen name="marginEndOptions">44dp</dimen>
     <dimen name="marginEndTwelveOptions">12dp</dimen>
+    <dimen name="marginSongStart">13dp</dimen>
     <dimen name="searchTop">56dp</dimen>
     <dimen name="heightOptions">64dp</dimen>
     <dimen name="marginTopOptions">80dp</dimen>
+    <dimen name="square">24dp</dimen>
     <dimen name="switchPaddingVertical">25dp</dimen>
     <dimen name="padding_10">10dp</dimen>
     <dimen name="switchPaddingHorizontal">7dp</dimen>
