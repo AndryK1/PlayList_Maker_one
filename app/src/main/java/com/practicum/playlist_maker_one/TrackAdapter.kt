@@ -1,5 +1,6 @@
 package com.practicum.playlist_maker_one
 
+import android.icu.text.SimpleDateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textview.MaterialTextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import java.util.Locale
 
 class TrackAdapter (private val track: List<TrackData>
 ) : RecyclerView.Adapter<TrackViewHolder> () {
@@ -32,7 +34,7 @@ class TrackAdapter (private val track: List<TrackData>
 
 class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
     private val tvTrackName: TextView = itemView.findViewById(R.id.songName)
-    private val tvArtistName: MaterialTextView = itemView.findViewById(R.id.ArtistName)
+    private val tvArtistName: TextView = itemView.findViewById(R.id.ArtistName)
     private val tvTrackTime: TextView = itemView.findViewById(R.id.trackTime)
     private val icSong: ImageView = itemView.findViewById(R.id.songIcon)
 
@@ -47,9 +49,9 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
             .transform(RoundedCorners(2))
             .into(icSong)
 
-        tvTrackTime.text = item.trackTime
-        tvTrackName.text = item.trackName
-        tvArtistName.text = item.artistName
+        tvTrackTime.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(item.trackTimeMillis)
+        tvTrackName.text = item.trackName.trim()
+        tvArtistName.text = item.artistName.trim()
     }
 
 

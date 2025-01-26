@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="zero">0dp</dimen>
+    <dimen name="refreshText">14dp</dimen>
+    <dimen name="errorTextMarginX">24dp</dimen>
+    <dimen name="errorTextMarginY">16dp</dimen>
+    <dimen name="errorTextTranslationY">346dp</dimen>
+    <dimen name="errorTextSize">19sp</dimen>
+    <dimen name="commonLineHeight">22.27sp</dimen>
+    <dimen name="errorImageHeight">120dp</dimen>
+    <dimen name="errorImageTranslationY">210dp</dimen>
     <dimen name="marginSongTop">6dp</dimen>
     <dimen name="songNormalText">16sp</dimen>
     <dimen name="songMediumText">11sp</dimen>

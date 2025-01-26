@@ -35,17 +35,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <com.google.android.material.textview.MaterialTextView
+        <TextView
             android:id="@+id/ArtistName"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/ys_display_regular"
             android:textSize="@dimen/songMediumText"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@string/plug"
-            android:drawableEnd="@drawable/ic_dot_13"
+            />
+        <ImageView
+            android:id="@+id/dot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_dot_13"
+            android:textAlignment="center"
             />
         <TextView
             android:id="@+id/trackTime"
