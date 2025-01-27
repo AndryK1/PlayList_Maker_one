@@ -11,7 +11,7 @@ import com.google.android.material.textview.MaterialTextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import java.util.Locale
-
+//
 class TrackAdapter (private val track: List<TrackData>
 ) : RecyclerView.Adapter<TrackViewHolder> () {
 
