@@ -65,7 +65,6 @@
         android:orientation="vertical"
         android:layout_marginTop="124dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-
     <ImageView
         android:id="@+id/nothingFoundImage"
         style="@style/errorImageStyle"
@@ -88,7 +87,7 @@
         android:id="@+id/internetProblemText"
         style="@style/errorTextStyle"
         />
-    
+
     <Button
         android:id="@+id/refreshButton"
         style="@style/refreshButton"

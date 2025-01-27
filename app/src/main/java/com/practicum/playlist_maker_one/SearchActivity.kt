@@ -6,6 +6,7 @@ import android.text.Editable
 import android.text.SpannableString
 import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
@@ -28,7 +29,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-
+//
 class SearchActivity : AppCompatActivity() {
     private var textInput : String? = null
     private lateinit var editedText: EditText
@@ -82,80 +83,92 @@ class SearchActivity : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 clearInput.isVisible = !s.isNullOrEmpty()
-
-
             }
 
             override fun afterTextChanged(s: Editable?) {
-
                 if (s.isNullOrEmpty()) {
                     listOfSongs.clear()
                     nothing.visibility = View.GONE
                     nothingImage.visibility = View.GONE
                     errorText.visibility = View.GONE
                     internetError.visibility = View.GONE
+                    recyclerView.visibility = View.GONE
+                    refreshButton.visibility = View.GONE
                     adapter.notifyDataSetChanged()
-                    return
                 }
-                else if (editedText.text.isNotEmpty()) {
-                    search()
-                }
-
             }
 
+        })
 
-            fun search() {
-                itunesService.search(editedText.text.toString()).enqueue(object :
-                    Callback<TrackResponse> {
-                    override fun onResponse(
-                        call: Call<TrackResponse>,
-                        response: Response<TrackResponse>
-                    ) {
-                        when (response.code()) {
-                            200 -> {
-                                listOfSongs.clear()
-                                if (response.body()?.results?.isNotEmpty() == true) {
-                                    listOfSongs.addAll(response.body()?.results ?: emptyList())
-                                    recyclerView.visibility = View.VISIBLE
-                                    nothing.visibility = View.GONE
-                                    errorText.visibility = View.GONE
-                                    nothingImage.visibility = View.GONE
-                                    internetError.visibility = View.GONE
-                                    refreshButton.visibility = View.GONE
-                                    adapter.notifyDataSetChanged()
-                                }
-                            }
-
-                            else -> {
-                                recyclerView.visibility = View.GONE
-                                nothing.visibility = View.VISIBLE
-                                nothingImage.visibility = View.VISIBLE
+        fun search() {
+            itunesService.search(editedText.text.toString()).enqueue(object :
+                Callback<TrackResponse> {
+                override fun onResponse(
+                    call: Call<TrackResponse>,
+                    response: Response<TrackResponse>
+                ) {
+                    when (response.code()) {
+                        200 -> {
+                            listOfSongs.clear()
+                            if (response.body()?.results?.isNotEmpty() == true) {
+                                listOfSongs.addAll(response.body()?.results ?: emptyList())
+                                recyclerView.visibility = View.VISIBLE
+                                nothing.visibility = View.GONE
+                                errorText.visibility = View.GONE
+                                nothingImage.visibility = View.GONE
+                                internetError.visibility = View.GONE
+                                refreshButton.visibility = View.GONE
                                 adapter.notifyDataSetChanged()
                             }
                         }
+
+                        else -> {
+                            recyclerView.visibility = View.GONE
+                            nothing.visibility = View.VISIBLE
+                            nothingImage.visibility = View.VISIBLE
+                            adapter.notifyDataSetChanged()
+                        }
                     }
+                }
 
-                    override fun onFailure(call: Call<TrackResponse>, t: Throwable) {
-                        val textView: TextView = findViewById(R.id.internetProblemText)
+                override fun onFailure(call: Call<TrackResponse>, t: Throwable) {
+                    val textView: TextView = findViewById(R.id.internetProblemText)
 
-                        val text1 = getString(R.string.something_went_wrong) + "\n\n"
-                        val text2 = getString(R.string.check_internet)
+                    val text1 = getString(R.string.something_went_wrong) + "\n\n"
+                    val text2 = getString(R.string.check_internet)
 
-                        val spannableString =
-                            SpannableString(text1 + text2).apply {}//форматирование текста внутри textView
-                        refreshButton.setOnClickListener{search()}
-                        textView.text = spannableString
-                        recyclerView.visibility = View.GONE
-                        errorText.visibility = View.VISIBLE
-                        internetError.visibility = View.VISIBLE
-                        refreshButton.visibility = View.VISIBLE
-                    }
+                    val spannableString =
+                        SpannableString(text1 + text2).apply {}//форматирование текста внутри textView
+                    refreshButton.setOnClickListener{search()}
+                    textView.text = spannableString
+                    recyclerView.visibility = View.GONE
+                    errorText.visibility = View.VISIBLE
+                    internetError.visibility = View.VISIBLE
+                    refreshButton.visibility = View.VISIBLE
+                }
 
-                })
+            })
+        }
+
+        editedText.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                if (editedText.toString().isNullOrEmpty()) {
+                    listOfSongs.clear()
+                    nothing.visibility = View.GONE
+                    nothingImage.visibility = View.GONE
+                    errorText.visibility = View.GONE
+                    internetError.visibility = View.GONE
+                    recyclerView.visibility = View.GONE
+                    adapter.notifyDataSetChanged()
+                }
+                else if(editedText.toString().isNotEmpty())
+                {
+                    search()
+                }
+                true
             }
-        })
-
-
+            false
+        }
 
         clearInput.setOnClickListener{
             editedText.setText("")
