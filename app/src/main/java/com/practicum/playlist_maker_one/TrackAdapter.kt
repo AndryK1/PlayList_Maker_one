@@ -11,7 +11,7 @@ import com.google.android.material.textview.MaterialTextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import java.util.Locale
-//
+
 class TrackAdapter (private val track: List<TrackData>
 ) : RecyclerView.Adapter<TrackViewHolder> () {
 
@@ -44,7 +44,7 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
         Glide.with(itemView)
             .load(artworkUrl)
-            .placeholder(R.drawable.ic_support_24)
+            .placeholder(R.drawable.ic_placeholder_45)
             .centerInside()
             .transform(RoundedCorners(2))
             .into(icSong)
