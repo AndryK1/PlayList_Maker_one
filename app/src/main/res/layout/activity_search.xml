@@ -70,8 +70,10 @@
         android:id="@+id/nothingFoundImage"
         style="@style/errorImageStyle"
         android:contentDescription="@string/nothing_found"
+
         android:src="@drawable/ic_nothing_found_120"
         />
+
 
     <ImageView
         android:id="@+id/internetProblemImage"

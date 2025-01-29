@@ -1,5 +1,6 @@
 package com.practicum.playlist_maker_one
 
+import android.icu.text.SimpleDateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import java.text.SimpleDateFormat
 import java.util.Locale
+
 
 class TrackAdapter (private val track: List<TrackData>
 ) : RecyclerView.Adapter<TrackViewHolder> () {
@@ -50,6 +52,7 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
             .into(icSong)
 
         tvTrackTime.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(item.trackTimeMills)
+
         tvTrackName.text = item.trackName.trim()
         tvArtistName.text = item.artistName.trim()
     }

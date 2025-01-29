@@ -1,5 +1,8 @@
 <resources>
     <string name="plug">Заглушка</string>
+    <string name="something_went_wrong">Проблемы со связью</string>
+    <string name="check_internet">Загрузка не удалась. Проверьте подключение к интернету</string>
+    <string name="nothing_found">Ничего не нашлось</string>
     <string name="timePlug">0:00</string>
     <string name="app_name">PlayList_Maker_one</string>
     <string name="mediateka">Медиатека</string>

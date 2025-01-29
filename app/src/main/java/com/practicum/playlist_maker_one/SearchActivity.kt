@@ -18,6 +18,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.switchmaterial.SwitchMaterial
 import retrofit2.Call
@@ -26,6 +28,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+//
 class SearchActivity : AppCompatActivity() {
     private var textInput : String? = null
     private lateinit var editedText: EditText
@@ -64,6 +67,7 @@ class SearchActivity : AppCompatActivity() {
             refreshButton.visibility = View.GONE
         }
         allViewGone()
+
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerViewSearch)
         recyclerView.adapter = adapter
 
@@ -83,6 +87,8 @@ class SearchActivity : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 clearInput.isVisible = !s.isNullOrEmpty()
+
+
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -180,7 +186,6 @@ class SearchActivity : AppCompatActivity() {
         if (savedInstanceState != null){
             editedText.setText(savedInstanceState.getString("searchText"))
         }
-
 
     }
 
