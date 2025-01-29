@@ -4,9 +4,13 @@
     <string name="app_name">PlayList_Maker_one</string>
     <string name="mediateka">Медиатека</string>
     <string name="search">Поиск</string>
+    <string name="something_went_wrong">Проблемы со связью</string>
+    <string name="check_internet">Загрузка не удалась. Проверьте подключение к интернету</string>
+    <string name="nothing_found">Ничего не нашлось</string>
     <string name="options">Настройки</string>
     <string name="program_name">Play list maker</string>
     <string name="dark_theme">Тёмная тема</string>
+    <string name="refresh">Обновить</string>
     <string name="support">Написать в поддержку</string>
     <string name="share_app">Поделиться приложением</string>
     <string name="users_pact">Пользовательское соглашение</string>

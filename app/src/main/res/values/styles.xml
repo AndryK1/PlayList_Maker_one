@@ -21,6 +21,42 @@
         <item name="cornerRadius">@dimen/borders</item>
     </style>
 
+    <style name="refreshButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="cornerRadius">54dp</item>
+        <item name="android:layout_margin">@dimen/zero</item>
+        <item name="android:textSize">@dimen/refreshText</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="fontFamily">@font/ys_display_medium</item>
+        <item name="textAllCaps">false</item>
+        <item name="backgroundTint">@color/adaptiveCommonText</item>
+        <item name="android:translationY">458dp</item>
+        <item name="android:layout_gravity">center_horizontal|top</item>
+    </style>
+
+    <style name = "errorTextStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/errorTextMarginX</item>
+        <item name="android:layout_marginEnd">@dimen/errorTextMarginX</item>
+        <item name="android:layout_marginTop">@dimen/errorTextMarginY</item>
+        <item name="android:translationY">@dimen/errorTextTranslationY</item>
+        <item name="fontFamily">@font/ys_display_medium</item>
+        <item name="android:textSize">@dimen/errorTextSize</item>
+        <item name="lineHeight">@dimen/commonLineHeight</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/adaptiveCommonText</item>
+        <item name="android:layout_gravity">center_horizontal|top</item>
+    </style>
+
+    <style name="errorImageStyle">
+        <item name="android:layout_width">@dimen/errorImageHeight</item>
+        <item name="android:layout_height">@dimen/errorImageHeight</item>
+        <item name="android:translationY">@dimen/errorImageTranslationY</item>
+        <item name="android:layout_gravity">center_horizontal|top</item>
+    </style>
+
     <style name="settingsText">
         <item name="fontFamily">@font/ys_display_regular</item>
         <item name="fontWeight">400</item>

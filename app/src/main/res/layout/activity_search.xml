@@ -30,6 +30,8 @@
 
         <EditText
             android:id="@+id/search_bar"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_36"
             android:textColor="@color/black"
@@ -63,6 +65,36 @@
         android:orientation="vertical"
         android:layout_marginTop="124dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+    <ImageView
+        android:id="@+id/nothingFoundImage"
+        style="@style/errorImageStyle"
+        android:contentDescription="@string/nothing_found"
+        android:src="@drawable/ic_nothing_found_120"
+        />
+
+    <ImageView
+        android:id="@+id/internetProblemImage"
+        style="@style/errorImageStyle"
+        android:contentDescription="@string/check_internet"
+        android:src="@drawable/ic_on_failure_music_120"/>
+
+    <TextView
+        android:id="@+id/nothingFoundText"
+        style="@style/errorTextStyle"
+        android:text="@string/nothing_found"
+        />
+
+    <TextView
+        android:id="@+id/internetProblemText"
+        style="@style/errorTextStyle"
+        />
+
+    <Button
+        android:id="@+id/refreshButton"
+        style="@style/refreshButton"
+        android:text="@string/refresh"
+        />
 
 </FrameLayout>
 
