@@ -30,6 +30,8 @@
 
         <EditText
             android:id="@+id/search_bar"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_36"
             android:textColor="@color/black"
@@ -68,7 +70,10 @@
         android:id="@+id/nothingFoundImage"
         style="@style/errorImageStyle"
         android:contentDescription="@string/nothing_found"
-        android:src="@drawable/ic_nothing_found_120"/>
+
+        android:src="@drawable/ic_nothing_found_120"
+        />
+
 
     <ImageView
         android:id="@+id/internetProblemImage"
@@ -86,7 +91,7 @@
         android:id="@+id/internetProblemText"
         style="@style/errorTextStyle"
         />
-    
+
     <Button
         android:id="@+id/refreshButton"
         style="@style/refreshButton"

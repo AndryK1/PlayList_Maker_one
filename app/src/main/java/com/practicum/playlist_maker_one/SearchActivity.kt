@@ -6,12 +6,12 @@ import android.text.Editable
 import android.text.SpannableString
 import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -57,11 +57,16 @@ class SearchActivity : AppCompatActivity() {
         val nothingImage: ImageView = findViewById(R.id.nothingFoundImage)
         val internetError: ImageView = findViewById(R.id.internetProblemImage)
         val refreshButton: Button = findViewById(R.id.refreshButton)
-        nothing.visibility = View.GONE
-        errorText.visibility = View.GONE
-        nothingImage.visibility = View.GONE
-        internetError.visibility = View.GONE
-        refreshButton.visibility = View.GONE
+
+        fun allViewGone()
+        {
+            nothing.visibility = View.GONE
+            errorText.visibility = View.GONE
+            nothingImage.visibility = View.GONE
+            internetError.visibility = View.GONE
+            refreshButton.visibility = View.GONE
+        }
+        allViewGone()
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerViewSearch)
         recyclerView.adapter = adapter
@@ -87,51 +92,52 @@ class SearchActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-
-                if (s.isNullOrEmpty()) {
-                    listOfSongs.clear()
-                    nothing.visibility = View.GONE
-                    nothingImage.visibility = View.GONE
-                    errorText.visibility = View.GONE
-                    internetError.visibility = View.GONE
-                    adapter.notifyDataSetChanged()
-                    return
-                }
-                else if (editedText.text.isNotEmpty()) {
-                    search()
-                }
-
             }
 
+        })
 
-            fun search() {
+        fun search() {
+            if (editedText.toString().isNullOrEmpty()) {
+                listOfSongs.clear()
+                allViewGone()
+                recyclerView.visibility = View.GONE
+                adapter.notifyDataSetChanged()
+            }
+            else{
                 itunesService.search(editedText.text.toString()).enqueue(object :
                     Callback<TrackResponse> {
                     override fun onResponse(
                         call: Call<TrackResponse>,
                         response: Response<TrackResponse>
                     ) {
-                        when (response.code()) {
-                            200 -> {
+                        if (response.code() == 200) {
                                 listOfSongs.clear()
-                                if (response.body()?.results?.isNotEmpty() == true) {
-                                    listOfSongs.addAll(response.body()?.results ?: emptyList())
+                                val results = response.body()?.results ?: emptyList()
+                                if (results.isNotEmpty() ) {
+                                    listOfSongs.addAll(results)
                                     recyclerView.visibility = View.VISIBLE
-                                    nothing.visibility = View.GONE
+                                    allViewGone()
+                                } else {
+                                    listOfSongs.clear()
+                                    recyclerView.visibility = View.GONE
+                                    nothing.visibility = View.VISIBLE
+                                    nothingImage.visibility = View.VISIBLE
                                     errorText.visibility = View.GONE
-                                    nothingImage.visibility = View.GONE
                                     internetError.visibility = View.GONE
                                     refreshButton.visibility = View.GONE
-                                    adapter.notifyDataSetChanged()
                                 }
-                            }
-
-                            else -> {
-                                recyclerView.visibility = View.GONE
-                                nothing.visibility = View.VISIBLE
-                                nothingImage.visibility = View.VISIBLE
                                 adapter.notifyDataSetChanged()
-                            }
+                        }
+                        else
+                        {
+                            listOfSongs.clear()
+                            recyclerView.visibility = View.GONE
+                            nothing.visibility = View.VISIBLE
+                            nothingImage.visibility = View.VISIBLE
+                            errorText.visibility = View.GONE
+                            internetError.visibility = View.GONE
+                            refreshButton.visibility = View.GONE
+                            adapter.notifyDataSetChanged()
                         }
                     }
 
@@ -153,13 +159,25 @@ class SearchActivity : AppCompatActivity() {
 
                 })
             }
-        })
+        }
 
-
+        editedText.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                if(editedText.toString().isNotEmpty())
+                {
+                    search()
+                }
+                true
+            }
+            false
+        }
 
         clearInput.setOnClickListener{
             editedText.setText("")
             hideKeyboard(it)
+            allViewGone()
+            recyclerView.visibility = View.GONE
+
         }
 
         findViewById<MaterialToolbar>(R.id.searchToolbar).setNavigationOnClickListener {
@@ -170,6 +188,8 @@ class SearchActivity : AppCompatActivity() {
         }
 
     }
+
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString("searchText", textInput)
