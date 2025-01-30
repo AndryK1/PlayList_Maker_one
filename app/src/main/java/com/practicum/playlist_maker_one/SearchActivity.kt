@@ -18,17 +18,15 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.switchmaterial.SwitchMaterial
+import com.practicum.music_maker.TrackAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-//
 class SearchActivity : AppCompatActivity() {
     private var textInput : String? = null
     private lateinit var editedText: EditText
@@ -67,7 +65,6 @@ class SearchActivity : AppCompatActivity() {
             refreshButton.visibility = View.GONE
         }
         allViewGone()
-
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerViewSearch)
         recyclerView.adapter = adapter
 
@@ -87,8 +84,6 @@ class SearchActivity : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 clearInput.isVisible = !s.isNullOrEmpty()
-
-
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -111,22 +106,22 @@ class SearchActivity : AppCompatActivity() {
                         response: Response<TrackResponse>
                     ) {
                         if (response.code() == 200) {
+                            listOfSongs.clear()
+                            val results = response.body()?.results ?: emptyList()
+                            if (results.isNotEmpty() ) {
+                                listOfSongs.addAll(results)
+                                recyclerView.visibility = View.VISIBLE
+                                allViewGone()
+                            } else {
                                 listOfSongs.clear()
-                                val results = response.body()?.results ?: emptyList()
-                                if (results.isNotEmpty() ) {
-                                    listOfSongs.addAll(results)
-                                    recyclerView.visibility = View.VISIBLE
-                                    allViewGone()
-                                } else {
-                                    listOfSongs.clear()
-                                    recyclerView.visibility = View.GONE
-                                    nothing.visibility = View.VISIBLE
-                                    nothingImage.visibility = View.VISIBLE
-                                    errorText.visibility = View.GONE
-                                    internetError.visibility = View.GONE
-                                    refreshButton.visibility = View.GONE
-                                }
-                                adapter.notifyDataSetChanged()
+                                recyclerView.visibility = View.GONE
+                                nothing.visibility = View.VISIBLE
+                                nothingImage.visibility = View.VISIBLE
+                                errorText.visibility = View.GONE
+                                internetError.visibility = View.GONE
+                                refreshButton.visibility = View.GONE
+                            }
+                            adapter.notifyDataSetChanged()
                         }
                         else
                         {
@@ -151,6 +146,8 @@ class SearchActivity : AppCompatActivity() {
                             SpannableString(text1 + text2).apply {}//форматирование текста внутри textView
                         refreshButton.setOnClickListener{search()}
                         textView.text = spannableString
+                        nothing.visibility = View.GONE
+                        nothingImage.visibility = View.GONE
                         recyclerView.visibility = View.GONE
                         errorText.visibility = View.VISIBLE
                         internetError.visibility = View.VISIBLE
@@ -166,6 +163,7 @@ class SearchActivity : AppCompatActivity() {
                 if(editedText.toString().isNotEmpty())
                 {
                     search()
+                    true
                 }
                 true
             }
@@ -186,6 +184,7 @@ class SearchActivity : AppCompatActivity() {
         if (savedInstanceState != null){
             editedText.setText(savedInstanceState.getString("searchText"))
         }
+
 
     }
 

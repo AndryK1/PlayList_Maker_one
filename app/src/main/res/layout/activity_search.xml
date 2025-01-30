@@ -30,11 +30,11 @@
 
         <EditText
             android:id="@+id/search_bar"
-            android:imeOptions="actionDone"
-            android:singleLine="true"
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_36"
             android:textColor="@color/black"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
             android:fontFamily="@font/ys_display_regular"
             android:hint="@string/search"
             android:textSize="@dimen/textNormalSize"
@@ -46,7 +46,7 @@
             android:textCursorDrawable="@drawable/cursor_color"
 
 
-        />
+            />
         <ImageView
             android:id="@+id/clearButton"
             android:layout_width="@dimen/width_40"
@@ -65,15 +65,11 @@
         android:orientation="vertical"
         android:layout_marginTop="124dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-
     <ImageView
         android:id="@+id/nothingFoundImage"
         style="@style/errorImageStyle"
         android:contentDescription="@string/nothing_found"
-
-        android:src="@drawable/ic_nothing_found_120"
-        />
-
+        android:src="@drawable/ic_nothing_found_120"/>
 
     <ImageView
         android:id="@+id/internetProblemImage"
@@ -97,6 +93,5 @@
         style="@style/refreshButton"
         android:text="@string/refresh"
         />
-
 </FrameLayout>
 
