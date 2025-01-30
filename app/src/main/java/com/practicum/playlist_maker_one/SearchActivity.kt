@@ -20,7 +20,6 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.switchmaterial.SwitchMaterial
-import com.practicum.music_maker.TrackAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
