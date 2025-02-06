@@ -1,6 +1,8 @@
 <resources>
     <string name="plug">Заглушка</string>
     <string name="timePlug">0:00</string>
+    <string name="searchHistory">Вы искали</string>
+    <string name="clearHistory">Очистить историю</string>
     <string name="app_name">PlayList_Maker_one</string>
     <string name="mediateka">Медиатека</string>
     <string name="search">Поиск</string>

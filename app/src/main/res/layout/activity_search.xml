@@ -65,6 +65,35 @@
         android:orientation="vertical"
         android:layout_marginTop="124dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+    <TextView
+        android:id="@+id/historySearchText"
+        style="@style/historyText"
+        android:text="@string/searchHistory"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="192dp"
+        android:orientation="vertical"
+
+        >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/historyRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+        
+        <Button
+            android:id="@+id/historyClear"
+            style = "@style/clearHistoryButton"
+            android:text="@string/clearHistory"
+            />
+    
+    </LinearLayout>
+
     <ImageView
         android:id="@+id/nothingFoundImage"
         style="@style/errorImageStyle"
