@@ -1,6 +1,7 @@
 package com.practicum.playlist_maker_one
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.media.Image
 import android.net.Uri
 import android.os.Bundle
@@ -19,11 +20,14 @@ import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.textview.MaterialTextView
 
 class SettingsActivity : AppCompatActivity() {
+    private lateinit var sharedPrefs: SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_settings)
         val themeSwitch = findViewById<SwitchMaterial>(R.id.darkTheme)
+        sharedPrefs = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.settings)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -31,16 +35,21 @@ class SettingsActivity : AppCompatActivity() {
             insets
         }
         //тёмная тема
-        val isNightModeEnabled = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES//начальное состояние
+
+        val isNightModeEnabled = sharedPrefs.getBoolean(DARK_THEME_KEY, false)
         themeSwitch.isChecked = isNightModeEnabled
+
 
         themeSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                saveAppTheme(true)
             } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                saveAppTheme(false)
             }
         }
+
         //
         findViewById<MaterialTextView>(R.id.share).setOnClickListener {
             val intent = Intent(Intent.ACTION_SEND).apply {
@@ -74,6 +83,11 @@ class SettingsActivity : AppCompatActivity() {
             finish()
         }
 
+    }
+    private fun saveAppTheme(darkTheme : Boolean){
+        sharedPrefs.edit()
+            .putBoolean(DARK_THEME_KEY, darkTheme)
+            .apply()
     }
 
 }

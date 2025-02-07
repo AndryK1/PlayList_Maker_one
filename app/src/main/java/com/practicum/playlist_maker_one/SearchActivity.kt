@@ -1,10 +1,12 @@
 package com.practicum.playlist_maker_one
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.SpannableString
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -33,7 +35,6 @@ class SearchActivity : AppCompatActivity() {
     private val itunesBaseUrl = "https://itunes.apple.com"
 
 
-
     private val retrofit = Retrofit.Builder()
         .baseUrl(itunesBaseUrl)
         .addConverterFactory(GsonConverterFactory.create())
@@ -48,13 +49,18 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_search)
+        TrackHistoryManager.initializeHistory(this)
+        val historyAdapter = TrackHistoryAdapter(TrackHistoryManager.getTrackHistory())
 
         val nothing: TextView = findViewById(R.id.nothingFoundText)
         val errorText: TextView = findViewById(R.id.internetProblemText)
         val nothingImage: ImageView = findViewById(R.id.nothingFoundImage)
         val internetError: ImageView = findViewById(R.id.internetProblemImage)
         val refreshButton: Button = findViewById(R.id.refreshButton)
-
+        //
+        val searchHistoryText: TextView = findViewById(R.id.historySearchText)
+        val clearHistory: Button = findViewById(R.id.historyClear)
+        //
         fun allViewGone()
         {
             nothing.visibility = View.GONE
@@ -63,10 +69,30 @@ class SearchActivity : AppCompatActivity() {
             internetError.visibility = View.GONE
             refreshButton.visibility = View.GONE
         }
+
+        fun historyGone()
+        {
+            searchHistoryText.visibility = View.GONE
+            clearHistory.visibility = View.GONE
+        }
+        fun historyVisible()
+        {
+            searchHistoryText.visibility = View.VISIBLE
+            clearHistory.visibility = View.VISIBLE
+        }
         allViewGone()
+
+        if(TrackHistoryManager.getTrackHistory().isEmpty())
+        {
+            historyGone()
+        }
+
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerViewSearch)
         recyclerView.adapter = adapter
-
+        //
+        val historyRecyclerView = findViewById<RecyclerView>(R.id.historyRecyclerView)
+        historyRecyclerView.adapter = historyAdapter
+        //
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.search)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -86,6 +112,23 @@ class SearchActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
+                if(s.isNullOrEmpty()){
+                    if(TrackHistoryManager.getTrackHistory().isNotEmpty())
+                    {
+                        historyVisible()
+                        historyRecyclerView.visibility = View.VISIBLE
+                        historyAdapter.notifyDataSetChanged()
+                    }
+                    else
+                    {
+                        historyGone()
+                        historyRecyclerView.visibility = View.GONE
+                    }
+                }
+                else{
+                    historyGone()
+                    historyRecyclerView.visibility = View.GONE
+                }
             }
 
         })
@@ -175,6 +218,12 @@ class SearchActivity : AppCompatActivity() {
             allViewGone()
             recyclerView.visibility = View.GONE
 
+        }
+
+        clearHistory.setOnClickListener{
+            TrackHistoryManager.deliteHistory(this)
+            historyGone()
+            historyAdapter.notifyDataSetChanged()
         }
 
         findViewById<MaterialToolbar>(R.id.searchToolbar).setNavigationOnClickListener {

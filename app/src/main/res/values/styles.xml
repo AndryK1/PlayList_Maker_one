@@ -34,6 +34,30 @@
         <item name="android:layout_gravity">center_horizontal|top</item>
     </style>
 
+    <style name="clearHistoryButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="cornerRadius">54dp</item>
+        <item name="android:layout_marginTop">@dimen/errorTextMarginX</item>
+        <item name="android:textSize">@dimen/refreshText</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="fontFamily">@font/ys_display_medium</item>
+        <item name="textAllCaps">false</item>
+        <item name="backgroundTint">@color/adaptiveCommonText</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+    
+    <style name="historyText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/borders</item>
+        <item name="android:layout_marginEnd">@dimen/borders</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">@dimen/historyTextSize</item>
+        <item name="fontFamily">@font/ys_display_medium</item>
+        <item name="android:layout_marginTop">@dimen/searchHMarginTop</item>
+        <item name="android:textColor">@color/adaptiveCommonText</item>
+    </style>
+
     <style name = "errorTextStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

@@ -1,10 +1,13 @@
 package com.practicum.playlist_maker_one
 
+import android.content.SharedPreferences
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity.MODE_PRIVATE
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textview.MaterialTextView
 import com.bumptech.glide.Glide
@@ -24,6 +27,10 @@ class TrackAdapter (private val track: List<TrackData>
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
         holder.bind(track[position])
 
+        holder.itemView.setOnClickListener{
+            TrackHistoryManager.addTrackToHistory(track[position])
+            TrackHistoryManager.saveHistory(holder.itemView.context)
+        }
     }
 
 
@@ -31,30 +38,6 @@ class TrackAdapter (private val track: List<TrackData>
         return track.size
     }
 
-}
-
-class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-    private val tvTrackName: TextView = itemView.findViewById(R.id.songName)
-    private val tvArtistName: TextView = itemView.findViewById(R.id.ArtistName)
-    private val tvTrackTime: TextView = itemView.findViewById(R.id.trackTime)
-    private val icSong: ImageView = itemView.findViewById(R.id.songIcon)
-
-    fun bind (item : TrackData)
-    {
-        val artworkUrl : String = item.artworkUrl100
-
-        Glide.with(itemView)
-            .load(artworkUrl)
-            .placeholder(R.drawable.ic_placeholder_45)
-            .centerInside()
-            .transform(RoundedCorners(2))
-            .into(icSong)
-
-        tvTrackTime.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(item.trackTimeMills)
-
-        tvTrackName.text = item.trackName.trim()
-        tvArtistName.text = item.artistName.trim()
-    }
 
 
 }
