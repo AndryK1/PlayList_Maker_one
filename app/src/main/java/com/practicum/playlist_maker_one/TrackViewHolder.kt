@@ -26,7 +26,7 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
             .transform(RoundedCorners(2))
             .into(icSong)
 
-        tvTrackTime.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(item.trackTimeMills)
+        tvTrackTime.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(item.trackTimeMillis)
 
         tvTrackName.text = item.trackName.trim()
         tvArtistName.text = item.artistName.trim()
