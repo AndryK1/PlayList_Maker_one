@@ -41,7 +41,7 @@ class SearchActivity : AppCompatActivity() {
         .build()
 
     private val itunesService = retrofit.create(itunesAPI::class.java)
-    private val adapter = TrackAdapter(listOfSongs)
+    private val adapter = TrackAdapter(this, listOfSongs)
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -50,7 +50,7 @@ class SearchActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_search)
         TrackHistoryManager.initializeHistory(this)
-        val historyAdapter = TrackHistoryAdapter(TrackHistoryManager.getTrackHistory())
+        val historyAdapter = TrackHistoryAdapter(this, TrackHistoryManager.getTrackHistory())
 
         val nothing: TextView = findViewById(R.id.nothingFoundText)
         val errorText: TextView = findViewById(R.id.internetProblemText)

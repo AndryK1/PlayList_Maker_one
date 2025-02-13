@@ -20,6 +20,30 @@
         <item name="android:textColor">@color/black</item>
         <item name="cornerRadius">@dimen/borders</item>
     </style>
+    
+    <style name="description">
+        <item name="android:layout_width">124dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="fontFamily">@font/ys_display_regular</item>
+        <item name="android:textSize">@dimen/audioPlayerTextSize</item>
+        <item name="layout_constraintStart_toStartOf">@id/leftBorderText</item>
+        <item name="android:paddingTop">@dimen/audioPlayerPTopText</item>
+        <item name="android:paddingBottom">@dimen/audioPlayerPBottomText</item>
+    </style>
+    
+    <style name="trackData">
+        <item name="android:layout_width">@dimen/zero</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">@dimen/audioPlayerPTopText</item>
+        <item name="android:paddingBottom">@dimen/audioPlayerPBottomText</item>
+        <item name="fontFamily">@font/ys_display_regular</item>
+        <item name="singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">@dimen/audioPlayerTextSize</item>
+        <item name="layout_constraintEnd_toEndOf">@id/rightBorderText</item>
+    </style>
 
     <style name="refreshButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="cornerRadius">54dp</item>

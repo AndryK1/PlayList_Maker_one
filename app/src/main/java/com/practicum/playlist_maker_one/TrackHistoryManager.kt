@@ -13,6 +13,7 @@ import java.lang.reflect.Type
 object TrackHistoryManager {
 
     private var trackHistory = mutableListOf<TrackData>()
+    private lateinit var lastTrack : TrackData
 
     fun initializeHistory(context: Context) {
         trackHistory = getHistory(context)
@@ -65,4 +66,14 @@ object TrackHistoryManager {
     fun getTrackHistory(): List<TrackData> {
         return trackHistory
     }
+
+    fun putLastTrack(track: TrackData){
+        lastTrack = track
+    }
+
+    fun getLastTrack(): TrackData{
+        return lastTrack
+    }
+
+    fun getCoverArtwork(track: TrackData) = track.artworkUrl100.replaceAfterLast('/',"512x512bb.jpg")
 }

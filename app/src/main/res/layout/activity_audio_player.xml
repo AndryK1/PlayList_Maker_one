@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/adaptiveBackGroundWhite"
+    android:id="@+id/audio"
+    >
+
+    <ImageButton
+        android:id="@+id/closeButton"
+        android:layout_width="@dimen/audioArrowHeight"
+        android:layout_height="@dimen/audioArrowHeight"
+        android:layout_marginStart="@dimen/audioArrowMargin"
+        android:layout_marginTop="@dimen/audioArrowMargin"
+        android:background="@color/adaptiveBackGroundWhite"
+        android:src="@drawable/ic_arrow_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/leftBorderBigText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/audioMargin_24" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/rightBorderBigText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/audioMargin_24" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/leftBorderText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/borders" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/rightBorderText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/borders" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/BottomBorderText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="20dp" />
+
+    <TextView
+        android:id="@+id/descriptionCountry"
+        style="@style/description"
+        android:text="Страна"
+        app:layout_constraintBottom_toBottomOf="@id/BottomBorderText" />
+
+    <TextView
+        android:id="@+id/descriptionStyle"
+        style="@style/description"
+        android:text="Жанр"
+        app:layout_constraintBottom_toTopOf="@id/descriptionCountry" />
+
+    <TextView
+        android:id="@+id/descriptionYear"
+        style="@style/description"
+        android:text="Год"
+        app:layout_constraintBottom_toTopOf="@id/descriptionStyle" />
+
+    <TextView
+        android:id="@+id/descriptionAlbum"
+        style="@style/description"
+        android:text="Альбом"
+        app:layout_constraintBottom_toTopOf="@id/descriptionYear" />
+
+    <TextView
+
+        android:id="@+id/descriptionTime"
+        style="@style/description"
+        android:text="Длительность"
+        app:layout_constraintBottom_toTopOf="@id/descriptionAlbum" />
+
+    <TextView
+        android:id="@+id/countryText"
+        style="@style/trackData"
+        android:text="@string/nothing_found"
+        app:layout_constraintBottom_toBottomOf="@id/BottomBorderText"
+        app:layout_constraintStart_toEndOf="@id/descriptionCountry"
+        />
+
+    <TextView
+        android:id="@+id/StyleText"
+        style="@style/trackData"
+        android:text="@string/nothing_found"
+        app:layout_constraintBottom_toTopOf="@id/countryText"
+        app:layout_constraintStart_toEndOf="@id/descriptionStyle"
+        />
+
+    <TextView
+        android:id="@+id/YearText"
+        style="@style/trackData"
+        android:text="0000"
+        app:layout_constraintBottom_toTopOf="@id/StyleText"
+        app:layout_constraintStart_toEndOf="@id/descriptionYear"
+        />
+
+    <TextView
+        android:id="@+id/AlbumText"
+        style="@style/trackData"
+        android:text="@string/nothing_found"
+        app:layout_constraintBottom_toTopOf="@id/YearText"
+        app:layout_constraintStart_toEndOf="@id/descriptionAlbum"
+        />
+
+    <TextView
+        android:id="@+id/TimeText"
+        style="@style/trackData"
+        android:text="@string/timePlug"
+        app:layout_constraintBottom_toTopOf="@id/AlbumText"
+        app:layout_constraintStart_toEndOf="@id/descriptionTime"
+        />
+
+    <TextView
+        android:id="@+id/timeUnderPause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/audioMargin_30"
+        android:fontFamily="@font/ys_display_medium"
+        android:text="@string/timePlug"
+        android:textSize="@dimen/refreshText"
+        app:layout_constraintBottom_toTopOf="@id/descriptionTime"
+        app:layout_constraintEnd_toEndOf="@id/rightBorderText"
+        app:layout_constraintStart_toStartOf="@id/leftBorderText" />
+
+
+    <ImageButton
+        android:id="@+id/plusButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/audioButtonMargin"
+        android:background="@color/adaptiveBackGroundWhite"
+        android:src="@drawable/button_plus"
+        app:layout_constraintBottom_toTopOf="@id/descriptionTime"
+        app:layout_constraintEnd_toStartOf="@id/pauseButton"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="@id/leftBorderBigText" />
+
+    <ImageButton
+        android:id="@+id/pauseButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/audioPauseMargin"
+        android:background="@color/adaptiveBackGroundWhite"
+        android:src="@drawable/button_pause"
+        app:layout_constraintBottom_toTopOf="@id/descriptionTime"
+        app:layout_constraintEnd_toStartOf="@id/likeButton"
+        app:layout_constraintStart_toEndOf="@id/plusButton" />
+
+    <ImageButton
+        android:id="@+id/likeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/audioButtonMargin"
+        android:background="@color/adaptiveBackGroundWhite"
+        android:src="@drawable/button_like"
+        app:layout_constraintBottom_toTopOf="@id/descriptionTime"
+        app:layout_constraintEnd_toEndOf="@id/rightBorderBigText"
+        app:layout_constraintStart_toEndOf="@id/pauseButton" />
+
+    <TextView
+        android:id="@+id/artistText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/audioMargin_30"
+        android:fontFamily="@font/ys_display_medium"
+        android:text="@string/nothing_found"
+        android:textSize="@dimen/refreshText"
+        android:singleLine="true"
+        android:maxLines="1"
+        app:layout_constraintBottom_toTopOf="@id/pauseButton"
+        app:layout_constraintStart_toStartOf="@id/leftBorderBigText"
+        app:layout_constraintEnd_toEndOf="@id/rightBorderBigText"
+        />
+
+    <TextView
+        android:id="@+id/trackName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:fontFamily="@font/ys_display_medium"
+        android:text="@string/nothing_found"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:textSize="@dimen/audioTrackNameText"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="@id/rightBorderBigText"
+        app:layout_constraintBottom_toTopOf="@id/artistText"
+        app:layout_constraintStart_toStartOf="@id/leftBorderBigText" />
+
+    <ImageView
+        android:id="@+id/poster"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/posterMarginTop"
+        android:src="@drawable/ic_placeholder_45"
+        android:layout_marginBottom="@dimen/audioMargin_24"
+        app:layout_constraintBottom_toTopOf="@id/trackName"
+        app:layout_constraintEnd_toEndOf="@id/rightBorderBigText"
+        app:layout_constraintStart_toStartOf="@id/leftBorderBigText"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
