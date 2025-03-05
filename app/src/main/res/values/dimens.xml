@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="zero">0dp</dimen>
+    <dimen name="audioPlayerTextSize">13sp</dimen>
+    <dimen name="audioMargin_30">30dp</dimen>
+    <dimen name="audioArrowHeight">45dp</dimen>
+    <dimen name="audioArrowMargin">4dp</dimen>
+    <dimen name="audioPlayerPTopText">9dp</dimen>
+    <dimen name="audioButtonMargin">75dp</dimen>
+    <dimen name="audioPauseMargin">50dp</dimen>
+    <dimen name="audioMargin_24">24dp</dimen>
+    <dimen name="audioTrackNameText">22sp</dimen>
+    <dimen name="posterHeight">312dp</dimen>
+    <dimen name="posterMarginTop">84dp</dimen>
+    <dimen name="audioPlayerPBottomText">8dp</dimen>
     <dimen name="refreshText">14sp</dimen>
     <dimen name="errorTextMarginX">24dp</dimen>
     <dimen name="errorTextMarginY">16dp</dimen>

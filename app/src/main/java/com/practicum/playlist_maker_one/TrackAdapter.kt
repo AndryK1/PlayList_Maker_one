@@ -1,5 +1,7 @@
 package com.practicum.playlist_maker_one
 
+import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,7 +18,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 
-class TrackAdapter (private val track: List<TrackData>
+class TrackAdapter (private val context: Context, private val track: List<TrackData>
 ) : RecyclerView.Adapter<TrackViewHolder> () {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
@@ -30,6 +32,9 @@ class TrackAdapter (private val track: List<TrackData>
         holder.itemView.setOnClickListener{
             TrackHistoryManager.addTrackToHistory(track[position])
             TrackHistoryManager.saveHistory(holder.itemView.context)
+            TrackHistoryManager.putLastTrack(track[position])
+            val displayIntent = Intent(context, AudioActivity::class.java)
+            context.startActivity(displayIntent)
         }
     }
 
