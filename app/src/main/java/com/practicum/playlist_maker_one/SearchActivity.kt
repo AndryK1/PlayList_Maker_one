@@ -3,6 +3,8 @@ package com.practicum.playlist_maker_one
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.SpannableString
 import android.text.TextWatcher
@@ -13,6 +15,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -28,12 +31,14 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+const val DELAYED = 1000L
+
 class SearchActivity : AppCompatActivity() {
     private var textInput : String? = null
     private lateinit var editedText: EditText
     private var listOfSongs : ArrayList<TrackData> = ArrayList()
     private val itunesBaseUrl = "https://itunes.apple.com"
-
+    private val handler = Handler(Looper.getMainLooper())
 
     private val retrofit = Retrofit.Builder()
         .baseUrl(itunesBaseUrl)
@@ -60,6 +65,7 @@ class SearchActivity : AppCompatActivity() {
         //
         val searchHistoryText: TextView = findViewById(R.id.historySearchText)
         val clearHistory: Button = findViewById(R.id.historyClear)
+        val progressBar: ProgressBar = findViewById(R.id.progressBar)
         //
         fun allViewGone()
         {
@@ -104,6 +110,86 @@ class SearchActivity : AppCompatActivity() {
         val clearInput = findViewById<ImageView>(R.id.clearButton)
         clearInput.visibility = View.GONE
 
+        
+        fun search() {
+            if (editedText.toString().isNullOrEmpty()) {
+                listOfSongs.clear()
+                allViewGone()
+                recyclerView.visibility = View.GONE
+                adapter.notifyDataSetChanged()
+            }
+            else{
+                allViewGone()
+                progressBar.visibility = View.VISIBLE
+                recyclerView.visibility = View.GONE
+                itunesService.search(editedText.text.toString()).enqueue(object :
+                    Callback<TrackResponse> {
+                    override fun onResponse(
+                        call: Call<TrackResponse>,
+                        response: Response<TrackResponse>
+                    ) {
+                        if (response.code() == 200) {
+                            progressBar.visibility = View.GONE
+                            listOfSongs.clear()
+                            val results = response.body()?.results ?: emptyList()
+                            if (results.isNotEmpty() ) {
+                                listOfSongs.addAll(results)
+                                recyclerView.visibility = View.VISIBLE
+                                allViewGone()
+                            } else {
+                                listOfSongs.clear()
+                                recyclerView.visibility = View.GONE
+                                nothing.visibility = View.VISIBLE
+                                nothingImage.visibility = View.VISIBLE
+                                errorText.visibility = View.GONE
+                                internetError.visibility = View.GONE
+                                refreshButton.visibility = View.GONE
+                            }
+                            adapter.notifyDataSetChanged()
+                        }
+                        else
+                        {
+                            progressBar.visibility = View.GONE
+                            listOfSongs.clear()
+                            recyclerView.visibility = View.GONE
+                            nothing.visibility = View.VISIBLE
+                            nothingImage.visibility = View.VISIBLE
+                            errorText.visibility = View.GONE
+                            internetError.visibility = View.GONE
+                            refreshButton.visibility = View.GONE
+                            adapter.notifyDataSetChanged()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<TrackResponse>, t: Throwable) {
+                        progressBar.visibility = View.GONE
+                        val textView: TextView = findViewById(R.id.internetProblemText)
+
+                        val text1 = getString(R.string.something_went_wrong) + "\n\n"
+                        val text2 = getString(R.string.check_internet)
+
+                        val spannableString =
+                            SpannableString(text1 + text2).apply {}//форматирование текста внутри textView
+                        refreshButton.setOnClickListener{search()}
+                        textView.text = spannableString
+                        nothing.visibility = View.GONE
+                        nothingImage.visibility = View.GONE
+                        recyclerView.visibility = View.GONE
+                        errorText.visibility = View.VISIBLE
+                        internetError.visibility = View.VISIBLE
+                        refreshButton.visibility = View.VISIBLE
+                    }
+
+                })
+            }
+        }
+        val searchRunnable = Runnable { search() }
+
+        fun startSearch(){
+            handler.removeCallbacks(searchRunnable)
+            handler.postDelayed ( searchRunnable, DELAYED )
+        }
+
         editedText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
@@ -126,91 +212,13 @@ class SearchActivity : AppCompatActivity() {
                     }
                 }
                 else{
+                    startSearch()
                     historyGone()
                     historyRecyclerView.visibility = View.GONE
                 }
             }
 
         })
-
-        fun search() {
-            if (editedText.toString().isNullOrEmpty()) {
-                listOfSongs.clear()
-                allViewGone()
-                recyclerView.visibility = View.GONE
-                adapter.notifyDataSetChanged()
-            }
-            else{
-                itunesService.search(editedText.text.toString()).enqueue(object :
-                    Callback<TrackResponse> {
-                    override fun onResponse(
-                        call: Call<TrackResponse>,
-                        response: Response<TrackResponse>
-                    ) {
-                        if (response.code() == 200) {
-                            listOfSongs.clear()
-                            val results = response.body()?.results ?: emptyList()
-                            if (results.isNotEmpty() ) {
-                                listOfSongs.addAll(results)
-                                recyclerView.visibility = View.VISIBLE
-                                allViewGone()
-                            } else {
-                                listOfSongs.clear()
-                                recyclerView.visibility = View.GONE
-                                nothing.visibility = View.VISIBLE
-                                nothingImage.visibility = View.VISIBLE
-                                errorText.visibility = View.GONE
-                                internetError.visibility = View.GONE
-                                refreshButton.visibility = View.GONE
-                            }
-                            adapter.notifyDataSetChanged()
-                        }
-                        else
-                        {
-                            listOfSongs.clear()
-                            recyclerView.visibility = View.GONE
-                            nothing.visibility = View.VISIBLE
-                            nothingImage.visibility = View.VISIBLE
-                            errorText.visibility = View.GONE
-                            internetError.visibility = View.GONE
-                            refreshButton.visibility = View.GONE
-                            adapter.notifyDataSetChanged()
-                        }
-                    }
-
-                    override fun onFailure(call: Call<TrackResponse>, t: Throwable) {
-                        val textView: TextView = findViewById(R.id.internetProblemText)
-
-                        val text1 = getString(R.string.something_went_wrong) + "\n\n"
-                        val text2 = getString(R.string.check_internet)
-
-                        val spannableString =
-                            SpannableString(text1 + text2).apply {}//форматирование текста внутри textView
-                        refreshButton.setOnClickListener{search()}
-                        textView.text = spannableString
-                        nothing.visibility = View.GONE
-                        nothingImage.visibility = View.GONE
-                        recyclerView.visibility = View.GONE
-                        errorText.visibility = View.VISIBLE
-                        internetError.visibility = View.VISIBLE
-                        refreshButton.visibility = View.VISIBLE
-                    }
-
-                })
-            }
-        }
-
-        editedText.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                if(editedText.toString().isNotEmpty())
-                {
-                    search()
-                    true
-                }
-                true
-            }
-            false
-        }
 
         clearInput.setOnClickListener{
             editedText.setText("")

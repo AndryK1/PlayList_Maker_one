@@ -1,7 +1,5 @@
 package com.practicum.playlist_maker_one
 
-
-
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
