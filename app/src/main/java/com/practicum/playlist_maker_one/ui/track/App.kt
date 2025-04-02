@@ -1,4 +1,4 @@
-package com.practicum.playlist_maker_one
+package com.practicum.playlist_maker_one.ui.track
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate

@@ -57,32 +57,31 @@
     <TextView
         android:id="@+id/descriptionCountry"
         style="@style/description"
-        android:text="Страна"
+        android:text="@string/country"
         app:layout_constraintBottom_toBottomOf="@id/BottomBorderText" />
 
     <TextView
         android:id="@+id/descriptionStyle"
         style="@style/description"
-        android:text="Жанр"
+        android:text="@string/genre"
         app:layout_constraintBottom_toTopOf="@id/descriptionCountry" />
 
     <TextView
         android:id="@+id/descriptionYear"
         style="@style/description"
-        android:text="Год"
+        android:text="@string/year"
         app:layout_constraintBottom_toTopOf="@id/descriptionStyle" />
 
     <TextView
         android:id="@+id/descriptionAlbum"
         style="@style/description"
-        android:text="Альбом"
+        android:text="@string/album"
         app:layout_constraintBottom_toTopOf="@id/descriptionYear" />
 
     <TextView
-
         android:id="@+id/descriptionTime"
         style="@style/description"
-        android:text="Длительность"
+        android:text="@string/duration"
         app:layout_constraintBottom_toTopOf="@id/descriptionAlbum" />
 
     <TextView
@@ -104,7 +103,7 @@
     <TextView
         android:id="@+id/YearText"
         style="@style/trackData"
-        android:text="0000"
+        android:text="@string/yearPlug"
         app:layout_constraintBottom_toTopOf="@id/StyleText"
         app:layout_constraintStart_toEndOf="@id/descriptionYear"
         />
@@ -140,6 +139,7 @@
 
     <ImageButton
         android:id="@+id/plusButton"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/audioButtonMargin"
