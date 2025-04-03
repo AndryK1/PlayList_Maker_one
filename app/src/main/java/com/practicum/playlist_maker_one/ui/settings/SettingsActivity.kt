@@ -1,33 +1,28 @@
-package com.practicum.playlist_maker_one
+package com.practicum.playlist_maker_one.ui.settings
 
 import android.content.Intent
-import android.content.SharedPreferences
-import android.media.Image
 import android.net.Uri
 import android.os.Bundle
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.RelativeLayout
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.widget.SwitchCompat
-import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.textview.MaterialTextView
+import com.practicum.playlist_maker_one.Creator
+import com.practicum.playlist_maker_one.R
+import com.practicum.playlist_maker_one.ui.track.APP_PREFERENCES
 
 class SettingsActivity : AppCompatActivity() {
-    private lateinit var sharedPrefs: SharedPreferences
+    private val sharedPrefs = Creator.getThemeManager()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_settings)
         val themeSwitch = findViewById<SwitchMaterial>(R.id.darkTheme)
-        sharedPrefs = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.settings)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -36,17 +31,17 @@ class SettingsActivity : AppCompatActivity() {
         }
         //тёмная тема
 
-        val isNightModeEnabled = sharedPrefs.getBoolean(DARK_THEME_KEY, false)
+        val isNightModeEnabled = sharedPrefs.isDarkThemeEnabled(this)
         themeSwitch.isChecked = isNightModeEnabled
 
 
         themeSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                saveAppTheme(true)
+                sharedPrefs.setDarkTheme(true,this)
             } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                saveAppTheme(false)
+                sharedPrefs.setDarkTheme(false,this)
             }
         }
 
@@ -83,11 +78,6 @@ class SettingsActivity : AppCompatActivity() {
             finish()
         }
 
-    }
-    private fun saveAppTheme(darkTheme : Boolean){
-        sharedPrefs.edit()
-            .putBoolean(DARK_THEME_KEY, darkTheme)
-            .apply()
     }
 
 }

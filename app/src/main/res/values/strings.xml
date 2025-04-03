@@ -5,6 +5,12 @@
     <string name="clearHistory">Очистить историю</string>
     <string name="app_name">PlayList_Maker_one</string>
     <string name="mediateka">Медиатека</string>
+    <string name="duration">Длительность</string>
+    <string name="album">Альбом</string>
+    <string name="year">Год</string>
+    <string name="genre">Жанр</string>
+    <string name="country">Страна</string>
+    <string name="yearPlug">0000</string>
     <string name="search">Поиск</string>
     <string name="something_went_wrong">Проблемы со связью</string>
     <string name="check_internet">Загрузка не удалась. Проверьте подключение к интернету</string>
