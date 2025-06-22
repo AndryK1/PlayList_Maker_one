@@ -1,7 +1,8 @@
-package com.practicum.playlist_maker_one.data.dto
+package com.practicum.playlist_maker_one.data.search.dto
 
 import android.content.Context
-import com.practicum.playlist_maker_one.Creator
+import com.practicum.playlist_maker_one.data.dto.TrackDataDto
+import com.practicum.playlist_maker_one.util.Creator
 
 import com.practicum.playlist_maker_one.domain.api.TrackHistoryManager
 

@@ -3,10 +3,10 @@ package com.practicum.playlist_maker_one.domain.impl
 import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
-import com.practicum.playlist_maker_one.domain.api.trackPlayer
+import com.practicum.playlist_maker_one.domain.api.TrackPlayer
 
 
-class TrackPlayerImpl : trackPlayer{
+class TrackPlayerImpl : TrackPlayer{
     companion object{
         private const val STATE_DEFAULT = 0
         private const val STATE_PREPARED = 1
@@ -19,8 +19,9 @@ class TrackPlayerImpl : trackPlayer{
     private var secondsRemain : Int = 30
     private val handler = Handler(Looper.getMainLooper())
     private var isPlaying : Boolean = false
-    private var remainingTime : Int = 0
+    private var completionListener: (() -> Unit)? = null// () -> Unit аналог void
 
+    private var remainingTime : Int = 0
 
 
      override fun preparePlayer( trackUrl: String, timerRunnable: Runnable){
@@ -38,12 +39,18 @@ class TrackPlayerImpl : trackPlayer{
             isPlaying = false
             handler.removeCallbacks(timerRunnable)
             secondsRemain = (mediaPlayer.duration / 1000).coerceAtMost(30)
+
+            completionListener?.invoke()
         }
     }
     override fun startPlayer() {
         mediaPlayer.start()
         isPlaying = true
         playerState = STATE_PLAYING
+    }
+
+    override fun setOnCompletionListener(listener: () -> Unit) {
+        completionListener = listener
     }
 
     override fun getSecondsRemain() : Int{

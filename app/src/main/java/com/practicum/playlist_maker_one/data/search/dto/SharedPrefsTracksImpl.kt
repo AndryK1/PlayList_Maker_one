@@ -1,17 +1,16 @@
-package com.practicum.playlist_maker_one.data.dto
+package com.practicum.playlist_maker_one.data.search.dto
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.practicum.playlist_maker_one.domain.api.SharedPrefs
-import com.practicum.playlist_maker_one.domain.api.ThemeManager
+import com.practicum.playlist_maker_one.data.dto.TrackDataDto
+import com.practicum.playlist_maker_one.domain.api.SharedPrefsTrack
 
 
-class SharedPrefsImpl : SharedPrefs, ThemeManager{
+class SharedPrefsTracksImpl : SharedPrefsTrack{
     companion object{
         const val APP_PREFERENCES = "AppPreferences"
-        const val DARK_THEME_KEY = "dark_theme"
         const val HISTORY_KEY = "search_history_key"
     }
 
@@ -36,17 +35,5 @@ class SharedPrefsImpl : SharedPrefs, ThemeManager{
         else{
             return list
         }
-    }
-
-    override fun setDarkTheme(enabled: Boolean, context: Context) {
-        val sharedPrefs = context.getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE)
-        sharedPrefs.edit()
-            .putBoolean(DARK_THEME_KEY, enabled)
-            .apply()
-    }
-
-    override fun isDarkThemeEnabled(context: Context): Boolean {
-        val sharedPrefs = context.getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE)
-        return sharedPrefs.getBoolean(DARK_THEME_KEY, false)
     }
 }
