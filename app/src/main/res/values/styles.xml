@@ -37,6 +37,7 @@
         <item name="android:paddingTop">@dimen/audioPlayerPTopText</item>
         <item name="android:paddingBottom">@dimen/audioPlayerPBottomText</item>
         <item name="fontFamily">@font/ys_display_regular</item>
+        <item name="android:textColor">@color/adaptiveCommonText</item>
         <item name="singleLine">true</item>
         <item name="android:ellipsize">end</item>
         <item name="android:gravity">end</item>

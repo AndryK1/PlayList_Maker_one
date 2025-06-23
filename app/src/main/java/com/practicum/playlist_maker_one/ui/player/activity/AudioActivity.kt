@@ -1,8 +1,11 @@
 package com.practicum.playlist_maker_one.ui.player.activity
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.IntentCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
@@ -11,6 +14,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.practicum.playlist_maker_one.util.Creator
 import com.practicum.playlist_maker_one.R
 import com.practicum.playlist_maker_one.databinding.ActivityAudioPlayerBinding
+import com.practicum.playlist_maker_one.domain.entity.TrackData
 import com.practicum.playlist_maker_one.ui.player.PlayerState
 import com.practicum.playlist_maker_one.ui.player.view_model.AudioViewModel
 
@@ -18,7 +22,6 @@ class AudioActivity : AppCompatActivity() {
 
     private var viewModel: AudioViewModel? = null
 
-    private val trackManager = Creator.getTrackManager()
     private lateinit var binding: ActivityAudioPlayerBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +31,13 @@ class AudioActivity : AppCompatActivity() {
         binding = ActivityAudioPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val track = Creator.getMapper().map(trackManager.getLastTrack())
+        val track = IntentCompat.getParcelableExtra(intent, EXTRA_TRACK, TrackData::class.java)
+
+        if (track == null) {
+            finish()
+            return
+        }
+
         viewModel = ViewModelProvider(this, AudioViewModel.getFactory(track.previewUrl)).get(AudioViewModel::class.java)
 
 
@@ -76,7 +85,7 @@ class AudioActivity : AppCompatActivity() {
             .load(artworkUrl)
             .placeholder(R.drawable.ic_placeholder_45)
             .centerInside()
-            .transform(RoundedCorners(8))
+            .transform(RoundedCorners(R.string.posterCornerRadius))
             .into(binding.poster)
 
 
@@ -101,6 +110,14 @@ class AudioActivity : AppCompatActivity() {
         viewModel?.onDestroyPlayer()
     }
 
+    companion object {
+        private const val EXTRA_TRACK = "TRACK_EXTRA"
 
-
+        fun start(context: Context, track: TrackData) {
+            val intent = Intent(context, AudioActivity::class.java).apply {
+                putExtra(EXTRA_TRACK, track)
+            }
+            context.startActivity(intent)
+        }
+    }
 }

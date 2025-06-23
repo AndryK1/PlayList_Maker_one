@@ -8,13 +8,9 @@ import com.practicum.playlist_maker_one.data.dto.TrackDataDto
 import com.practicum.playlist_maker_one.domain.api.SharedPrefsTrack
 
 
-class SharedPrefsTracksImpl : SharedPrefsTrack{
-    companion object{
-        const val APP_PREFERENCES = "AppPreferences"
-        const val HISTORY_KEY = "search_history_key"
-    }
+class SharedPrefsTracksImpl(private val context: Context) : SharedPrefsTrack{
 
-    override fun saveHistory(history: List<TrackDataDto>, context : Context){
+    override fun saveHistory(history: List<TrackDataDto>){
         val sharedPrefs = context.getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE)
         val json = Gson().toJson(history)
         sharedPrefs.edit()
@@ -22,7 +18,7 @@ class SharedPrefsTracksImpl : SharedPrefsTrack{
             .apply()
     }
 
-    override fun getHistory(context : Context) : MutableList<TrackDataDto>{
+    override fun getHistory() : MutableList<TrackDataDto>{
         val sharedPrefs = context.getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE)
         val json = sharedPrefs.getString(HISTORY_KEY, null)
         var list: MutableList<TrackDataDto> = mutableListOf()
@@ -35,5 +31,10 @@ class SharedPrefsTracksImpl : SharedPrefsTrack{
         else{
             return list
         }
+    }
+
+    companion object{
+        const val APP_PREFERENCES = "AppPreferences"
+        const val HISTORY_KEY = "search_history_key"
     }
 }

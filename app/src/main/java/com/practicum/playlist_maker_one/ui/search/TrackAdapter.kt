@@ -26,11 +26,12 @@ class TrackAdapter (private val context: Context, private var track: List<TrackD
         holder.bind(track[position])
 
         holder.itemView.setOnClickListener{
+
+            val currentTrack = track[position]
             history.addTrackToHistory(mapper.reversedMap(track[position]))
-            Creator.getSharedPrefs().saveHistory(history.getTrackHistory() ,holder.itemView.context)
-            history.putLastTrack(mapper.reversedMap(track[position]))
-            val displayIntent = Intent(context, AudioActivity::class.java)
-            context.startActivity(displayIntent)
+            Creator.getSharedPrefs().saveHistory(history.getTrackHistory())
+
+            AudioActivity.start(context, currentTrack)
         }
     }
 

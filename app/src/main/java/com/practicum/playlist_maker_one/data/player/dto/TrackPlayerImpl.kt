@@ -1,4 +1,4 @@
-package com.practicum.playlist_maker_one.domain.impl
+package com.practicum.playlist_maker_one.data.player.dto
 
 import android.media.MediaPlayer
 import android.os.Handler
@@ -7,12 +7,6 @@ import com.practicum.playlist_maker_one.domain.api.TrackPlayer
 
 
 class TrackPlayerImpl : TrackPlayer{
-    companion object{
-        private const val STATE_DEFAULT = 0
-        private const val STATE_PREPARED = 1
-        private const val STATE_PLAYING = 2
-        private const val STATE_PAUSED = 3
-    }
 
     private var playerState = STATE_DEFAULT
     private var mediaPlayer = MediaPlayer()
@@ -89,5 +83,10 @@ class TrackPlayerImpl : TrackPlayer{
         mediaPlayer.release()
     }
 
-
+    companion object{
+        private const val STATE_DEFAULT = 0
+        private const val STATE_PREPARED = 1
+        private const val STATE_PLAYING = 2
+        private const val STATE_PAUSED = 3
+    }
 }

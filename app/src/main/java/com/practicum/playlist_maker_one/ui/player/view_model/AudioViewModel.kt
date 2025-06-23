@@ -6,13 +6,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.practicum.playlist_maker_one.R
 import com.practicum.playlist_maker_one.ui.player.PlayerState
 import com.practicum.playlist_maker_one.ui.search.activity.DELAYED
+import com.practicum.playlist_maker_one.ui.track.App
 import com.practicum.playlist_maker_one.util.Creator
 
-class AudioViewModel(previewUrl: String) : ViewModel(){
+class AudioViewModel(previewUrl: String, startTime: String) : ViewModel(){
 
     private val handler = Handler(Looper.getMainLooper())
     private val player = Creator.getMediaPlayer()
@@ -21,22 +24,15 @@ class AudioViewModel(previewUrl: String) : ViewModel(){
     private var playingLiveData = MutableLiveData<PlayerState>()
     fun observePlayer() : LiveData<PlayerState> = playingLiveData
 
-    private var timerLiveData = MutableLiveData<String>("00:30")
+    private var timerLiveData = MutableLiveData<String>(startTime)
     fun observeTimer() : LiveData<String> = timerLiveData
 
-    companion object {
-        fun getFactory(url: String) : ViewModelProvider.Factory = viewModelFactory{
-            initializer {
-                AudioViewModel(url)
-            }
-        }
-    }
 
     init {
         player.preparePlayer(previewUrl, timerRunnable)
         player.setOnCompletionListener {
             playingLiveData.postValue(PlayerState.Finished)
-            timerLiveData.postValue("00:30")
+            timerLiveData.postValue(startTime)
         }
     }
 
@@ -76,6 +72,15 @@ class AudioViewModel(previewUrl: String) : ViewModel(){
         val minutes = seconds / 60
         val remainingSeconds = seconds % 60
         return String.format("%02d:%02d", minutes, remainingSeconds)
+    }
+
+    companion object {
+        fun getFactory(url: String) : ViewModelProvider.Factory = viewModelFactory{
+            initializer {
+                val app = (this[APPLICATION_KEY] as App)
+                AudioViewModel(url,app.getString(R.string.audioStartTime))
+            }
+        }
     }
 
 }

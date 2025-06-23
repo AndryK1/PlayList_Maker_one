@@ -14,6 +14,7 @@ class TrackHistoryAdapter (private val context: Context, private var trackHistor
 ) : RecyclerView.Adapter<TrackViewHolder> () {
 
     val history = Creator.getTrackManager()
+    private val mapper = Creator.getMapper()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_song, parent, false)
@@ -24,9 +25,11 @@ class TrackHistoryAdapter (private val context: Context, private var trackHistor
         holder.bind(trackHistory[position])
 
         holder.itemView.setOnClickListener{
-            history.putLastTrack(Creator.getMapper().reversedMap(trackHistory[position]))
-            val displayIntent = Intent(context, AudioActivity::class.java)
-            context.startActivity(displayIntent)
+            val currentTrack = trackHistory[position]
+            history.addTrackToHistory(mapper.reversedMap(trackHistory[position]))
+            Creator.getSharedPrefs().saveHistory(history.getTrackHistory())
+
+            AudioActivity.start(context, currentTrack)
         }
 
     }

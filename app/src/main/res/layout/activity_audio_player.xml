@@ -132,6 +132,7 @@
         android:fontFamily="@font/ys_display_medium"
         android:text="@string/timePlug"
         android:textSize="@dimen/refreshText"
+        android:textColor="@color/adaptiveCommonText"
         app:layout_constraintBottom_toTopOf="@id/descriptionTime"
         app:layout_constraintEnd_toEndOf="@id/rightBorderText"
         app:layout_constraintStart_toStartOf="@id/leftBorderText" />
@@ -180,6 +181,7 @@
         android:fontFamily="@font/ys_display_medium"
         android:text="@string/nothing_found"
         android:textSize="@dimen/refreshText"
+        android:textColor="@color/adaptiveCommonText"
         android:singleLine="true"
         android:maxLines="1"
         app:layout_constraintBottom_toTopOf="@id/pauseButton"
@@ -196,6 +198,7 @@
         android:text="@string/nothing_found"
         android:singleLine="true"
         android:maxLines="1"
+        android:textColor="@color/adaptiveCommonText"
         android:textSize="@dimen/audioTrackNameText"
         app:layout_constrainedWidth="true"
         app:layout_constraintEnd_toEndOf="@id/rightBorderBigText"

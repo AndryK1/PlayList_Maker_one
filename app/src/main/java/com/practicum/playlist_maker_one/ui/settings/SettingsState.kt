@@ -1,6 +1,6 @@
 package com.practicum.playlist_maker_one.ui.settings
 
-interface SettingsState {
+sealed interface SettingsState {
 
     data class Share(val text: String) : SettingsState
 

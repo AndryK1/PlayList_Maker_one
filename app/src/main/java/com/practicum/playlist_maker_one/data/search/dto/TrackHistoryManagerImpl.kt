@@ -14,8 +14,8 @@ object TrackHistoryManagerImpl : TrackHistoryManager{
     private lateinit var lastTrack : TrackDataDto
     private var sharedPrefs = Creator.getSharedPrefs()
 
-    override fun initializeHistory(context: Context) {
-        trackHistory = sharedPrefs.getHistory(context)
+    override fun initializeHistory() {
+        trackHistory = sharedPrefs.getHistory()
     }
 
     override fun addTrackToHistory(track: TrackDataDto) {
@@ -33,7 +33,7 @@ object TrackHistoryManagerImpl : TrackHistoryManager{
         }
     }
 
-    override fun deliteHistory(context: Context){
+    override fun deliteHistory(){
         trackHistory.clear()
     }
 
