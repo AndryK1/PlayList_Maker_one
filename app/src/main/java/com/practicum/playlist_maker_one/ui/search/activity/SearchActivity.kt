@@ -183,6 +183,7 @@ class SearchActivity : AppCompatActivity() {
     private fun showHistory(){
         allViewGone()
         binding.apply {
+            historySearchText.visibility = View.VISIBLE
             historyRecyclerView.visibility = View.VISIBLE
             historyClear.visibility = View.VISIBLE
         }

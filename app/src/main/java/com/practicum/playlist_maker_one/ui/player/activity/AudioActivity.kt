@@ -51,7 +51,7 @@ class AudioActivity : AppCompatActivity() {
                 }
                 PlayerState.Finished -> {
                     binding.pauseButton.setImageResource(R.drawable.ic_button_play_100)
-                    binding.timeUnderPause.text = "00:30"
+                    binding.timeUnderPause.text = getString(R.string.audioStartTime)
                 }
             }
         }
@@ -80,12 +80,13 @@ class AudioActivity : AppCompatActivity() {
         binding.pauseButton.isEnabled = true
         binding.pauseButton.setImageResource(R.drawable.ic_button_play_100)
 
+        val radius = getResources().getDimensionPixelSize(R.dimen.posterCornerRadius)
 
         Glide.with(this)
             .load(artworkUrl)
             .placeholder(R.drawable.ic_placeholder_45)
             .centerInside()
-            .transform(RoundedCorners(R.string.posterCornerRadius))
+            .transform(RoundedCorners(radius))
             .into(binding.poster)
 
 

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="zero">0dp</dimen>
-    <string name="posterCornerRadius">8px</string>
+    <dimen name="posterCornerRadius">8dp</dimen>
+    <dimen name="iconCornerRadius">2dp</dimen>
     <dimen name="audioPlayerTextSize">13sp</dimen>
     <dimen name="audioMargin_30">30dp</dimen>
     <dimen name="audioArrowHeight">45dp</dimen>
