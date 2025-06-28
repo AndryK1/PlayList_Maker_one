@@ -1,7 +1,9 @@
 package com.practicum.playlist_maker_one.domain.entity
 
-import java.util.Date
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class TrackData(
     val trackName: String, // Название композиции
     val artistName: String, // Имя исполнителя
@@ -13,4 +15,4 @@ data class TrackData(
     val primaryGenreName: String,//жанр
     val country: String//старана
 
-)
+) : Parcelable

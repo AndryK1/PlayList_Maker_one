@@ -1,6 +1,6 @@
-package com.practicum.playlist_maker_one.data.dto
+package com.practicum.playlist_maker_one.data.search.dto
 
-import com.practicum.playlist_maker_one.Creator
+import com.practicum.playlist_maker_one.util.Creator
 import com.practicum.playlist_maker_one.domain.api.NetworkClient
 import com.practicum.playlist_maker_one.domain.api.TrackRepository
 import com.practicum.playlist_maker_one.domain.entity.TrackData
@@ -43,3 +43,4 @@ class TrackRepositoryImpl(private val networkClient: NetworkClient) : TrackRepos
 
     }
 }
+

@@ -1,4 +1,4 @@
-package com.practicum.playlist_maker_one.ui.main
+package com.practicum.playlist_maker_one.ui.main.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,8 +10,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.practicum.playlist_maker_one.ui.media.MediaActivity
 import com.practicum.playlist_maker_one.R
-import com.practicum.playlist_maker_one.ui.settings.SettingsActivity
-import com.practicum.playlist_maker_one.ui.search.SearchActivity
+import com.practicum.playlist_maker_one.ui.settings.activity.SettingsActivity
+import com.practicum.playlist_maker_one.ui.search.activity.SearchActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
         val searchButton = findViewById<Button>(R.id.button1)
 
         val imageClickListener: View.OnClickListener = object : View.OnClickListener {

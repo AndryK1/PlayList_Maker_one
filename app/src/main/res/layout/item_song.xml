@@ -30,6 +30,7 @@
             android:textSize="@dimen/songNormalText"
             android:ellipsize="end"
             android:maxLines="1"
+            android:textColor="@color/adaptiveCommonText"
             android:text="@string/plug"/>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -66,12 +67,23 @@
     </LinearLayout>
 
     </LinearLayout>
-<ImageView
-    android:id="@+id/songArrow"
-    android:layout_width="@dimen/square"
-    android:layout_height="@dimen/square"
-    android:src="@drawable/ic_arrowright_8"
-    android:layout_marginTop="@dimen/marginSongEnd"/>
+
+    <FrameLayout
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="@dimen/marginSongEnd"
+        android:layout_marginBottom="19dp"
+        android:layout_marginEnd="12dp"
+        >
+        <ImageView
+            android:id="@+id/songArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_arrowright_8"
+            android:scaleType="fitCenter"
+            />
+    </FrameLayout>
 
 
 </LinearLayout>

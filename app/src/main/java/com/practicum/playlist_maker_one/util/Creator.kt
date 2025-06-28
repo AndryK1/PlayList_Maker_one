@@ -1,23 +1,32 @@
-package com.practicum.playlist_maker_one
+package com.practicum.playlist_maker_one.util
 
-import com.practicum.playlist_maker_one.data.dto.SharedPrefsImpl
-import com.practicum.playlist_maker_one.data.dto.TrackHistoryManagerImpl
-import com.practicum.playlist_maker_one.data.dto.TrackRepositoryImpl
-import com.practicum.playlist_maker_one.data.network.RetrofitNetworkClient
+import android.content.Context
+import com.practicum.playlist_maker_one.data.settings.SharedPrefsThemeImpl
+import com.practicum.playlist_maker_one.data.search.dto.SharedPrefsTracksImpl
+import com.practicum.playlist_maker_one.data.search.dto.TrackHistoryManagerImpl
+import com.practicum.playlist_maker_one.data.search.dto.TrackRepositoryImpl
+import com.practicum.playlist_maker_one.data.search.network.RetrofitNetworkClient
 import com.practicum.playlist_maker_one.domain.api.NetworkClient
-import com.practicum.playlist_maker_one.domain.api.SharedPrefs
+import com.practicum.playlist_maker_one.domain.api.SharedPrefsTrack
 import com.practicum.playlist_maker_one.domain.api.ThemeManager
 import com.practicum.playlist_maker_one.domain.api.TrackHistoryManager
 import com.practicum.playlist_maker_one.domain.api.TrackMapper
 import com.practicum.playlist_maker_one.domain.api.TrackRepository
-import com.practicum.playlist_maker_one.domain.api.trackPlayer
+import com.practicum.playlist_maker_one.domain.api.TrackPlayer
 import com.practicum.playlist_maker_one.domain.impl.TrackMapperImpl
-import com.practicum.playlist_maker_one.domain.impl.TrackPlayerImpl
+import com.practicum.playlist_maker_one.data.player.dto.TrackPlayerImpl
 import com.practicum.playlist_maker_one.domain.useCase.TrackRepositoryInteractor
 
 object Creator {
-    fun getSharedPrefs() : SharedPrefs{
-        return SharedPrefsImpl()
+
+    private lateinit var appContext : Context
+
+    fun init(context: Context){
+        appContext = context.applicationContext
+    }
+
+    fun getSharedPrefs() : SharedPrefsTrack{
+        return SharedPrefsTracksImpl(appContext)
     }
 
     fun getTrackManager() : TrackHistoryManager{
@@ -40,11 +49,11 @@ object Creator {
         return TrackRepositoryInteractor(repository)
     }
 
-    fun getMediaPlayer() : trackPlayer{
+    fun getMediaPlayer() : TrackPlayer{
         return TrackPlayerImpl()
     }
 
     fun getThemeManager() : ThemeManager{
-        return SharedPrefsImpl()
+        return SharedPrefsThemeImpl(appContext)
     }
 }

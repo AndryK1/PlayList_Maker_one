@@ -1,10 +1,9 @@
-package com.practicum.playlist_maker_one.data.network
+package com.practicum.playlist_maker_one.data.search.network
 
 import com.practicum.playlist_maker_one.domain.api.NetworkClient
-import com.practicum.playlist_maker_one.data.dto.Response
-import com.practicum.playlist_maker_one.data.dto.TrackSearchRequest
-import com.practicum.playlist_maker_one.data.dto.TrackSearchResponse
-import com.practicum.playlist_maker_one.domain.api.TrackMapper
+import com.practicum.playlist_maker_one.data.search.dto.Response
+import com.practicum.playlist_maker_one.data.search.dto.TrackSearchRequest
+import com.practicum.playlist_maker_one.data.search.dto.TrackSearchResponse
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

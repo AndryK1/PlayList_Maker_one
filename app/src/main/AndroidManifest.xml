@@ -17,20 +17,20 @@
         tools:targetApi="31">
         <activity
 
-            android:name=".ui.settings.SettingsActivity"
+            android:name=".ui.settings.activity.SettingsActivity"
             android:exported="false" />
         <activity
 
-            android:name=".ui.search.SearchActivity"
+            android:name=".ui.search.activity.SearchActivity"
             android:exported="false" />
         <activity
             android:name=".ui.media.MediaActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.search.AudioActivity"
+            android:name=".ui.player.activity.AudioActivity"
             android:exported="false"/>
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name=".ui.main.activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

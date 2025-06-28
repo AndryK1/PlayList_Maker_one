@@ -6,9 +6,9 @@ import com.practicum.playlist_maker_one.domain.entity.TrackData
 
 interface TrackHistoryManager {
 
-    fun initializeHistory(context: Context)
+    fun initializeHistory()
     fun addTrackToHistory(track: TrackDataDto)
-    fun deliteHistory(context: Context)
+    fun deliteHistory()
     fun getTrackHistory(): List<TrackDataDto>
     fun putLastTrack(track: TrackDataDto)
     fun getLastTrack(): TrackDataDto
