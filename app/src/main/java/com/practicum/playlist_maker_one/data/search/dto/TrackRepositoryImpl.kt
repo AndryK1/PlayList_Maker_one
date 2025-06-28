@@ -1,11 +1,14 @@
 package com.practicum.playlist_maker_one.data.search.dto
 
-import com.practicum.playlist_maker_one.util.Creator
 import com.practicum.playlist_maker_one.domain.api.NetworkClient
+import com.practicum.playlist_maker_one.domain.api.TrackMapper
 import com.practicum.playlist_maker_one.domain.api.TrackRepository
 import com.practicum.playlist_maker_one.domain.entity.TrackData
 
-class TrackRepositoryImpl(private val networkClient: NetworkClient) : TrackRepository {
+class TrackRepositoryImpl(
+    private val networkClient: NetworkClient,
+    private val mapper : TrackMapper
+) : TrackRepository {
     private var searchThread: Thread? = null
 
     //флаг volatile - отвечает за видимость изменений переменной между потоками
@@ -16,7 +19,6 @@ class TrackRepositoryImpl(private val networkClient: NetworkClient) : TrackRepos
         searchThread?.interrupt()//прерываем предыдущие потоки
 
         searchThread = Thread {
-            val mapper = Creator.getMapper()
             val request = TrackSearchRequest(query)
 
             val response = networkClient.doRequest(request)

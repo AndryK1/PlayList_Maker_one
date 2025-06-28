@@ -6,12 +6,13 @@ import android.os.Looper
 import com.practicum.playlist_maker_one.domain.api.TrackPlayer
 
 
-class TrackPlayerImpl : TrackPlayer{
+class TrackPlayerImpl(
+    private var mediaPlayer : MediaPlayer,
+    private val handler : Handler
+) : TrackPlayer{
 
     private var playerState = STATE_DEFAULT
-    private var mediaPlayer = MediaPlayer()
     private var secondsRemain : Int = 30
-    private val handler = Handler(Looper.getMainLooper())
     private var isPlaying : Boolean = false
     private var completionListener: (() -> Unit)? = null// () -> Unit аналог void
 

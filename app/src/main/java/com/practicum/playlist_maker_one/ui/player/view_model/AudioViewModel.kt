@@ -10,25 +10,30 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.AP
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.practicum.playlist_maker_one.R
+import com.practicum.playlist_maker_one.domain.api.TrackPlayer
 import com.practicum.playlist_maker_one.ui.player.PlayerState
 import com.practicum.playlist_maker_one.ui.search.activity.DELAYED
 import com.practicum.playlist_maker_one.ui.track.App
-import com.practicum.playlist_maker_one.util.Creator
 
-class AudioViewModel(previewUrl: String, startTime: String) : ViewModel(){
+class AudioViewModel(
+                     private val handler: Handler,
+                     private val player : TrackPlayer
+    ) : ViewModel(){
 
-    private val handler = Handler(Looper.getMainLooper())
-    private val player = Creator.getMediaPlayer()
     private var timerRunnable: Runnable = timerManager()
+    private lateinit var previewUrl: String
+    private lateinit var startTime: String
 
     private var playingLiveData = MutableLiveData<PlayerState>()
     fun observePlayer() : LiveData<PlayerState> = playingLiveData
 
-    private var timerLiveData = MutableLiveData<String>(startTime)
+    private var timerLiveData = MutableLiveData<String>()
     fun observeTimer() : LiveData<String> = timerLiveData
 
+    fun prepare(previewUrl : String, time: String) {
 
-    init {
+        this.previewUrl = previewUrl
+        this.startTime = time
         player.preparePlayer(previewUrl, timerRunnable)
         player.setOnCompletionListener {
             playingLiveData.postValue(PlayerState.Finished)
@@ -45,6 +50,7 @@ class AudioViewModel(previewUrl: String, startTime: String) : ViewModel(){
             playingLiveData.postValue(PlayerState.Paused)
         }
     }
+
 
     fun onPausePlayer(){
         player.pausePlayer()
@@ -74,13 +80,5 @@ class AudioViewModel(previewUrl: String, startTime: String) : ViewModel(){
         return String.format("%02d:%02d", minutes, remainingSeconds)
     }
 
-    companion object {
-        fun getFactory(url: String) : ViewModelProvider.Factory = viewModelFactory{
-            initializer {
-                val app = (this[APPLICATION_KEY] as App)
-                AudioViewModel(url,app.getString(R.string.audioStartTime))
-            }
-        }
-    }
 
 }

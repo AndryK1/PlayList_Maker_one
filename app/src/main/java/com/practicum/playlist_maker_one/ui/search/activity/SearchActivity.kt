@@ -12,16 +12,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
 import com.practicum.playlist_maker_one.R
 import com.practicum.playlist_maker_one.databinding.ActivitySearchBinding
-import com.practicum.playlist_maker_one.domain.entity.TrackData
+import com.practicum.playlist_maker_one.domain.api.SharedPrefsTrack
+import com.practicum.playlist_maker_one.domain.api.TrackHistoryManager
+import com.practicum.playlist_maker_one.domain.api.TrackMapper
 import com.practicum.playlist_maker_one.ui.search.SearchState
 import com.practicum.playlist_maker_one.ui.search.TrackAdapter
 import com.practicum.playlist_maker_one.ui.search.TrackHistoryAdapter
 import com.practicum.playlist_maker_one.ui.search.view_model.SearchViewModel
+import org.koin.android.ext.android.inject
 
 
 const val DELAYED = 1000L
@@ -29,11 +32,14 @@ const val DELAYED = 1000L
 class SearchActivity : AppCompatActivity() {
     private lateinit var context: Context
     private lateinit var binding: ActivitySearchBinding
-    private var viewModel : SearchViewModel? = null
+    private val viewModel : SearchViewModel by viewModel()
     private var lastSearchQuery: String = ""
+    private val history : TrackHistoryManager by inject()
+    private val mapper : TrackMapper by inject()
+    private val sharedPrefs: SharedPrefsTrack by inject()
 
-    private val adapter = TrackAdapter(this, emptyList())
-    private val historyAdapter = TrackHistoryAdapter(this, emptyList())
+    private val adapter = TrackAdapter(this, emptyList(), history, mapper, sharedPrefs)
+    private val historyAdapter = TrackHistoryAdapter(this, emptyList(), history, mapper, sharedPrefs)
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -41,9 +47,6 @@ class SearchActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        viewModel = ViewModelProvider(this, SearchViewModel.getFactory()).get(
-            SearchViewModel::class.java)
 
         viewModel?.observeState()?.observe(this){
             renderState(it)

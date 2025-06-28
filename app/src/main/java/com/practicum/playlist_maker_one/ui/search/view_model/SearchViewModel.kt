@@ -9,31 +9,30 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.practicum.playlist_maker_one.domain.api.SharedPrefsTrack
+import com.practicum.playlist_maker_one.domain.api.TrackHistoryManager
+import com.practicum.playlist_maker_one.domain.api.TrackMapper
 import com.practicum.playlist_maker_one.domain.entity.TrackData
 import com.practicum.playlist_maker_one.domain.useCase.TrackRepositoryInteractor
 import com.practicum.playlist_maker_one.ui.search.SearchState
-import com.practicum.playlist_maker_one.util.Creator
 
-class SearchViewModel() : ViewModel() {
+class SearchViewModel(
+    private val trackManager : TrackHistoryManager,
+    private var trackInteractor: TrackRepositoryInteractor,
+    private val mapper : TrackMapper,
+    private val handler: Handler,
+    private val sharedPrefs: SharedPrefsTrack
+) : ViewModel() {
 
     private var lastSearchText: String? = null
-    private val trackManager = Creator.getTrackManager()
-    private var trackInteractor: TrackRepositoryInteractor
-    private val mapper = Creator.getMapper()
 
     private var stateLiveData = MutableLiveData<SearchState>(SearchState.History(trackManager.getTrackHistory().map { mapper.map(it) }))
     fun observeState() : LiveData<SearchState> = stateLiveData
 
     private var listOfSongs: ArrayList<TrackData> = ArrayList()
-    private val handler = Handler(Looper.getMainLooper())
 
     init{
         trackManager.initializeHistory()
-        trackInteractor = Creator.provideTrackUseCase(
-            Creator.provideTrackRepository(
-                Creator.provideNetworkClient()
-            )
-        )
     }
 
     fun searchDebounce(changedText: String) {
@@ -86,7 +85,7 @@ class SearchViewModel() : ViewModel() {
 
     fun historyClear(){
         trackManager.deliteHistory()
-        Creator.getSharedPrefs().saveHistory(trackManager.getTrackHistory())
+        sharedPrefs.saveHistory(trackManager.getTrackHistory())
         renderState(SearchState.History(trackManager.getTrackHistory().map { mapper.map(it) }))
     }
 
@@ -108,11 +107,6 @@ class SearchViewModel() : ViewModel() {
         private val SEARCH_REQUEST_TOKEN = Any()
         private const val SEARCH_DEBOUNCE_DELAY = 1000L
 
-        fun getFactory(): ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                SearchViewModel()
-            }
-        }
     }
 
 }
