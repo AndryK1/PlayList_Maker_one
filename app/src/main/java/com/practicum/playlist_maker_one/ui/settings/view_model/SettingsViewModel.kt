@@ -8,18 +8,19 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.AP
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.practicum.playlist_maker_one.R
+import com.practicum.playlist_maker_one.domain.api.SharedPrefsTrack
+import com.practicum.playlist_maker_one.domain.api.ThemeManager
 import com.practicum.playlist_maker_one.ui.settings.SettingsState
 import com.practicum.playlist_maker_one.ui.track.App
-import com.practicum.playlist_maker_one.util.Creator
 
 class SettingsViewModel(
     private val prefixShare: String,
     private val prefixEmail: String,
     private val prefixSubjectMessage: String,
     private val prefixGratefulMessage: String,
-    private val prefixUrl: String
+    private val prefixUrl: String,
+    private val sharedPrefs : ThemeManager
 ) : ViewModel() {
-    private val sharedPrefs = Creator.getThemeManager()
 
     private val nightStateLiveData = MutableLiveData<Boolean>(sharedPrefs.isDarkThemeEnabled())
     fun observeState() : LiveData<Boolean> = nightStateLiveData
@@ -51,21 +52,6 @@ class SettingsViewModel(
 
     private fun renderState(state: SettingsState) {
         sharingStateLiveData.postValue(state)
-    }
-
-    companion object{
-        fun getFactory() : ViewModelProvider.Factory = viewModelFactory {
-            initializer{
-                val app = (this[APPLICATION_KEY] as App)
-                SettingsViewModel(
-                    app.getString(R.string.linkDevelopment),
-                    app.getString(R.string.mail),
-                    app.getString(R.string.subjectMessage),
-                    app.getString(R.string.gratefulMessage),
-                    app.getString(R.string.linkAgreement)
-                )
-            }
-        }
     }
 
 }

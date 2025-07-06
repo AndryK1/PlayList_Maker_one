@@ -8,11 +8,14 @@ import com.practicum.playlist_maker_one.data.dto.TrackDataDto
 import com.practicum.playlist_maker_one.domain.api.SharedPrefsTrack
 
 
-class SharedPrefsTracksImpl(private val context: Context) : SharedPrefsTrack{
+class SharedPrefsTracksImpl(
+    private val context: Context,
+    private val gson: Gson
+    ) : SharedPrefsTrack{
 
     override fun saveHistory(history: List<TrackDataDto>){
         val sharedPrefs = context.getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE)
-        val json = Gson().toJson(history)
+        val json = gson.toJson(history)
         sharedPrefs.edit()
             .putString(HISTORY_KEY, json)
             .apply()
@@ -25,7 +28,7 @@ class SharedPrefsTracksImpl(private val context: Context) : SharedPrefsTrack{
         if(json != null)
         {
             val type = object : TypeToken<MutableList<TrackDataDto>>() {}.type
-            list = Gson().fromJson(json, type)
+            list = gson.fromJson(json, type)
             return list
         }
         else{

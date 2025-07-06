@@ -8,24 +8,23 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.ViewModelProvider
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.textview.MaterialTextView
-import com.practicum.playlist_maker_one.util.Creator
 import com.practicum.playlist_maker_one.R
 import com.practicum.playlist_maker_one.ui.settings.SettingsState
 import com.practicum.playlist_maker_one.ui.settings.view_model.SettingsViewModel
 
+
 class SettingsActivity : AppCompatActivity() {
-    private var viewModel : SettingsViewModel? = null
+    private val viewModel : SettingsViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_settings)
 
-        viewModel = ViewModelProvider(this,SettingsViewModel.getFactory()).get(SettingsViewModel::class.java)
 
         val themeSwitch = findViewById<SwitchMaterial>(R.id.darkTheme)
 

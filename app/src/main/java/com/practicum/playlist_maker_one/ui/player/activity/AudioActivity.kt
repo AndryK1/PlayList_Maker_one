@@ -8,19 +8,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.IntentCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.practicum.playlist_maker_one.util.Creator
 import com.practicum.playlist_maker_one.R
 import com.practicum.playlist_maker_one.databinding.ActivityAudioPlayerBinding
 import com.practicum.playlist_maker_one.domain.entity.TrackData
 import com.practicum.playlist_maker_one.ui.player.PlayerState
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.practicum.playlist_maker_one.ui.player.view_model.AudioViewModel
+
 
 class AudioActivity : AppCompatActivity() {
 
-    private var viewModel: AudioViewModel? = null
+    private val viewModel: AudioViewModel by viewModel()
 
     private lateinit var binding: ActivityAudioPlayerBinding
 
@@ -37,9 +37,9 @@ class AudioActivity : AppCompatActivity() {
             finish()
             return
         }
+        binding.timeUnderPause.text = getString(R.string.audioStartTime)
 
-        viewModel = ViewModelProvider(this, AudioViewModel.getFactory(track.previewUrl)).get(AudioViewModel::class.java)
-
+        viewModel.prepare(track.previewUrl, getString(R.string.audioStartTime))
 
         viewModel?.observePlayer()?.observe(this){
             when(it){

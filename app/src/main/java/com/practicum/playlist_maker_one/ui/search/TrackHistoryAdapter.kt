@@ -5,16 +5,20 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.practicum.playlist_maker_one.util.Creator
 import com.practicum.playlist_maker_one.R
+import com.practicum.playlist_maker_one.domain.api.SharedPrefsTrack
+import com.practicum.playlist_maker_one.domain.api.TrackHistoryManager
+import com.practicum.playlist_maker_one.domain.api.TrackMapper
 import com.practicum.playlist_maker_one.domain.entity.TrackData
 import com.practicum.playlist_maker_one.ui.player.activity.AudioActivity
+import org.koin.java.KoinJavaComponent.inject
 
-class TrackHistoryAdapter (private val context: Context, private var trackHistory: List<TrackData>
+class TrackHistoryAdapter (private val context: Context,
+                           private var trackHistory: List<TrackData>,
+                           private val history : TrackHistoryManager,
+                           private val mapper : TrackMapper,
+                           private val sharedPrefs: SharedPrefsTrack
 ) : RecyclerView.Adapter<TrackViewHolder> () {
-
-    val history = Creator.getTrackManager()
-    private val mapper = Creator.getMapper()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_song, parent, false)
@@ -27,7 +31,7 @@ class TrackHistoryAdapter (private val context: Context, private var trackHistor
         holder.itemView.setOnClickListener{
             val currentTrack = trackHistory[position]
             history.addTrackToHistory(mapper.reversedMap(trackHistory[position]))
-            Creator.getSharedPrefs().saveHistory(history.getTrackHistory())
+            sharedPrefs.saveHistory(history.getTrackHistory())
 
             AudioActivity.start(context, currentTrack)
         }
