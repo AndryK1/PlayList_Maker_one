@@ -13,6 +13,12 @@ import com.practicum.playlist_maker_one.ui.media.viewModel.PlayListViewModel
 
 class FragmentPlayList : Fragment() {
 
+    companion object
+    {
+        fun newInstance() = FragmentFavorites().apply {}
+    }
+
+
     private var _binding : FragmentPlayListBinding? = null
     private val binding get() = _binding!!
     private val viewModel: PlayListViewModel by viewModels()

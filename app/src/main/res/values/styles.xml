@@ -85,6 +85,12 @@
         <item name="backgroundTint">@color/adaptiveCommonText</item>
         <item name="android:layout_gravity">center_horizontal</item>
     </style>
+
+    <style name="mediaTabStyle">
+        <item name="fontFamily">@font/ys_display_medium</item>
+        <item name="textAllCaps">false</item>
+        <item name="android:textSize">14sp</item>
+    </style>
     
     <style name="mediaButton" parent ="Widget.MaterialComponents.Button.UnelevatedButton" >
         <item name="android:layout_width">wrap_content</item>

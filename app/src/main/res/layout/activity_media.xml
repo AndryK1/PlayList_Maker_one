@@ -26,6 +26,7 @@
         android:orientation="horizontal"
         android:background="@color/adaptiveBackGroundWhite"
         app:tabTextColor="@color/adaptiveCommonText"
+        app:tabTextAppearance="@style/mediaTabStyle"
         />
 
     <androidx.viewpager2.widget.ViewPager2
