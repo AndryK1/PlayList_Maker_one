@@ -8,7 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.practicum.playlist_maker_one.ui.media.MediaActivity
+import com.practicum.playlist_maker_one.ui.media.activity.MediaActivity
 import com.practicum.playlist_maker_one.R
 import com.practicum.playlist_maker_one.ui.settings.activity.SettingsActivity
 import com.practicum.playlist_maker_one.ui.search.activity.SearchActivity

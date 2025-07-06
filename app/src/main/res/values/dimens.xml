@@ -31,6 +31,7 @@
     <dimen name="paddingSettingsV">20dp</dimen>
     <dimen name="paddingSearch">8dp</dimen>
     <dimen name="radius_8">8dp</dimen>
+    <dimen name="media_medium_margin">16dp</dimen>
     <dimen name="songHeight">61dp</dimen>
     <dimen name="songPhoto">45dp</dimen>
     <dimen name="height_36">36dp</dimen>

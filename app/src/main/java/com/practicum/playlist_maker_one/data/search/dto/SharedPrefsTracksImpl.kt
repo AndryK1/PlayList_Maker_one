@@ -14,7 +14,7 @@ class SharedPrefsTracksImpl(
     ) : SharedPrefsTrack{
 
     override fun saveHistory(history: List<TrackDataDto>){
-        val sharedPrefs = context.getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE)
+        val sharedPrefs = context.getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE)//сделать позже -  SharedPreferences можно сразу создавать с помощью DI и передаывать сюда вместо Context
         val json = gson.toJson(history)
         sharedPrefs.edit()
             .putString(HISTORY_KEY, json)
