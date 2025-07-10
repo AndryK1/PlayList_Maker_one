@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Button
+        android:id="@+id/newPlayListButton"
+        style = "@style/mediaButton"
+        android:text="@string/newPlayListText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/audioMargin_24"
+        />
+
+    <ImageView
+        android:id="@+id/nothingFoundImage"
+        style="@style/mediaNothingFoundImage"
+        app:layout_constraintTop_toBottomOf="@id/newPlayListButton"
+        android:layout_marginTop="46dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/ic_nothing_found_120"
+        />
+
+    <TextView
+        android:id="@+id/nothingFoundText"
+        style="@style/mediaNothingFoundText"
+        android:text="@string/noPlayListsText"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@id/nothingFoundImage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

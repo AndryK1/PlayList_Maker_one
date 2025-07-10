@@ -12,14 +12,15 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.practicum.playlist_maker_one.R
 import com.practicum.playlist_maker_one.domain.api.TrackPlayer
 import com.practicum.playlist_maker_one.ui.player.PlayerState
-import com.practicum.playlist_maker_one.ui.search.activity.DELAYED
 import com.practicum.playlist_maker_one.ui.track.App
 
 class AudioViewModel(
                      private val handler: Handler,
                      private val player : TrackPlayer
     ) : ViewModel(){
-
+        companion object{
+            const val DELAYED = 1000L
+        }
     private var timerRunnable: Runnable = timerManager()
     private lateinit var previewUrl: String
     private lateinit var startTime: String

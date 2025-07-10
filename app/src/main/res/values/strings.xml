@@ -2,6 +2,11 @@
     <string name="plug">Заглушка</string>
     <string name="timePlug">0:00</string>
     <string name="audioStartTime">00:30</string>
+    <string name="favorites">Избранные треки</string>
+    <string name="playList">Плейлисты</string>
+    <string name="emptyMedia">Ваша медиатека пуста</string>
+    <string name="newPlayListText">Новый плейлист</string>
+    <string name="noPlayListsText">Вы не создали \nни одного плейлиста</string>
     <string name="searchHistory">Вы искали</string>
     <string name="clearHistory">Очистить историю</string>
     <string name="app_name">PlayList_Maker_one</string>
