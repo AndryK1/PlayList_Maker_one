@@ -15,7 +15,7 @@ class FragmentPlayList : Fragment() {
 
     companion object
     {
-        fun newInstance() = FragmentFavorites().apply {}
+        fun newInstance() = FragmentPlayList().apply {}
     }
 
 

@@ -25,6 +25,13 @@ class SearchViewModel(
 ) : ViewModel() {
 
     private var lastSearchText: String? = null
+    //последний state
+    private var lastState: SearchState = SearchState.History(emptyList())
+
+    // текст запроса
+    private var savedQuery: String = ""
+
+    private var flagHistory : Boolean = true
 
     private var stateLiveData = MutableLiveData<SearchState>(SearchState.History(trackManager.getTrackHistory().map { mapper.map(it) }))
     fun observeState() : LiveData<SearchState> = stateLiveData
@@ -33,7 +40,10 @@ class SearchViewModel(
 
     init{
         trackManager.initializeHistory()
+        loadHistory()
     }
+
+    fun getLastQuery(): String = savedQuery
 
     fun searchDebounce(changedText: String) {
         if (lastSearchText == changedText && stateLiveData.value != SearchState.InternetError) {
@@ -54,12 +64,15 @@ class SearchViewModel(
     }
 
     private fun search(changedText: String) {
+        savedQuery = changedText
         if (changedText.isEmpty()) {
             listOfSongs.clear()
             renderState(SearchState.History(trackManager.getTrackHistory().map { mapper.map(it) }))
+            flagHistory = true
 
         } else {
             renderState(SearchState.Loading)
+            flagHistory = false
             trackInteractor.execute(changedText) { result ->
                 result.onSuccess { trackList ->
                     listOfSongs.clear()
@@ -86,6 +99,7 @@ class SearchViewModel(
     fun historyClear(){
         trackManager.deliteHistory()
         sharedPrefs.saveHistory(trackManager.getTrackHistory())
+        flagHistory = false
         renderState(SearchState.History(trackManager.getTrackHistory().map { mapper.map(it) }))
     }
 
@@ -99,7 +113,10 @@ class SearchViewModel(
         trackInteractor.destroy()
     }
 
+    fun getLastState(): SearchState = lastState
+
     private fun renderState(state: SearchState) {
+        lastState = state
         stateLiveData.postValue(state)
     }
 
