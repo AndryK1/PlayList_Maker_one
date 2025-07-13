@@ -29,8 +29,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:itemTextColor="@color/adaptiveCommonText"
-        app:itemIconTint="@color/adaptiveCommonText"
+        app:itemIconTint="@color/nav_bottom_color"
+        app:itemTextColor="@color/nav_bottom_color"
         android:background="@color/adaptiveBackGroundWhite"
 
         app:menu="@menu/bottom_navigation_menu"

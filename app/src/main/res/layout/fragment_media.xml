@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
+    android:background="@color/adaptiveBackGroundWhite"
     tools:context=".ui.media.activity.FragmentMedia">
 
     <TextView
@@ -30,6 +31,7 @@
         android:orientation="horizontal"
         android:background="@color/adaptiveBackGroundWhite"
         app:tabTextColor="@color/adaptiveCommonText"
+        app:tabIndicatorColor="@color/adaptiveCommonText"
         app:tabTextAppearance="@style/mediaTabStyle"
         />
 
