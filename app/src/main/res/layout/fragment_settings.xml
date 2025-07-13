@@ -8,15 +8,20 @@
     android:layout_width="match_parent"
     android:padding="@dimen/zero"
     android:background="@color/adaptiveBackGroundWhite"
+    tools:context=".ui.settings.activity.FragmentSettings"
     >
 
-    <com.google.android.material.appbar.MaterialToolbar
+    <TextView
         android:id="@+id/toolbarSettings"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        app:navigationIcon="@drawable/ic_arrow_24"
-        app:titleTextAppearance="@style/headerText"
-        app:title="@string/options"
+        android:layout_width="wrap_content"
+        android:background="@color/adaptiveBackGroundWhite"
+        android:textColor="@color/adaptiveCommonText"
+        android:text="@string/options"
+        android:fontFamily="@font/ys_text_medium"
+        android:textSize="22sp"
+        android:layout_marginTop="14dp"
+        android:layout_marginStart="16dp"
         />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
@@ -24,6 +29,8 @@
         style="@style/settingsText"
         android:layout_marginTop="@dimen/marginTopOptions"
         android:text="@string/dark_theme"
+        app:thumbTint="@color/switcher_thumb_color"
+        app:trackTint="@color/switcher_track_color"
         />
 
     <com.google.android.material.textview.MaterialTextView

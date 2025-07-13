@@ -8,14 +8,19 @@
     android:layout_width="match_parent"
     android:padding="@dimen/zero"
     android:background="@color/adaptiveBackGroundWhite"
+    tools:context=".ui.search.activity.FragmentSearch"
     >
-    <com.google.android.material.appbar.MaterialToolbar
+    <TextView
         android:id="@+id/searchToolbar"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        app:navigationIcon="@drawable/ic_arrow_24"
-        app:titleTextAppearance="@style/headerText"
-        app:title="@string/search"
+        android:layout_width="wrap_content"
+        android:background="@color/adaptiveBackGroundWhite"
+        android:textColor="@color/adaptiveCommonText"
+        android:text="@string/search"
+        android:fontFamily="@font/ys_text_medium"
+        android:textSize="22sp"
+        android:layout_marginTop="14dp"
+        android:layout_marginStart="16dp"
         />
 
 
@@ -74,6 +79,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
         android:layout_marginTop="192dp"
         android:orientation="vertical"
 
@@ -85,13 +91,13 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-        
+
         <Button
             android:id="@+id/historyClear"
             style = "@style/clearHistoryButton"
             android:text="@string/clearHistory"
             />
-    
+
     </LinearLayout>
 
     <ProgressBar android:id="@+id/progressBar"

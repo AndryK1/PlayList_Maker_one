@@ -10,11 +10,11 @@ import com.practicum.playlist_maker_one.domain.api.SharedPrefsTrack
 import com.practicum.playlist_maker_one.domain.api.TrackHistoryManager
 import com.practicum.playlist_maker_one.domain.api.TrackMapper
 import com.practicum.playlist_maker_one.domain.entity.TrackData
-import com.practicum.playlist_maker_one.ui.player.activity.AudioActivity
+import com.practicum.playlist_maker_one.ui.player.activity.AudioFragment
 
 
 class TrackAdapter (
-    private val context: Context,
+    private val onItemClick: (TrackData) -> Unit,
     private var track: List<TrackData>,
     private val history: TrackHistoryManager,
     private val mapper: TrackMapper,
@@ -32,11 +32,10 @@ class TrackAdapter (
 
         holder.itemView.setOnClickListener{
 
-            val currentTrack = track[position]
             history.addTrackToHistory(mapper.reversedMap(track[position]))
             sharedPrefs.saveHistory(history.getTrackHistory())
 
-            AudioActivity.start(context, currentTrack)
+            onItemClick(track[position])
         }
     }
 

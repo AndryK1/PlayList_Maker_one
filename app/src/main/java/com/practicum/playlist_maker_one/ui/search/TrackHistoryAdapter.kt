@@ -10,10 +10,10 @@ import com.practicum.playlist_maker_one.domain.api.SharedPrefsTrack
 import com.practicum.playlist_maker_one.domain.api.TrackHistoryManager
 import com.practicum.playlist_maker_one.domain.api.TrackMapper
 import com.practicum.playlist_maker_one.domain.entity.TrackData
-import com.practicum.playlist_maker_one.ui.player.activity.AudioActivity
+import com.practicum.playlist_maker_one.ui.player.activity.AudioFragment
 import org.koin.java.KoinJavaComponent.inject
 
-class TrackHistoryAdapter (private val context: Context,
+class TrackHistoryAdapter (private val onItemClick: (TrackData) -> Unit,
                            private var trackHistory: List<TrackData>,
                            private val history : TrackHistoryManager,
                            private val mapper : TrackMapper,
@@ -29,11 +29,11 @@ class TrackHistoryAdapter (private val context: Context,
         holder.bind(trackHistory[position])
 
         holder.itemView.setOnClickListener{
-            val currentTrack = trackHistory[position]
+
             history.addTrackToHistory(mapper.reversedMap(trackHistory[position]))
             sharedPrefs.saveHistory(history.getTrackHistory())
 
-            AudioActivity.start(context, currentTrack)
+            onItemClick(trackHistory[position])
         }
 
     }
