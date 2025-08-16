@@ -1,7 +1,7 @@
 package com.practicum.playlist_maker_one.domain.api
 
 interface TrackPlayer {
-    fun playbackControl(timerRunnable: Runnable)
+    fun playbackControl(onTimerStart: () -> Unit)
     fun getCurrentState(): Boolean
     fun getSecondsRemain(): Int
     fun setOnCompletionListener(listener: () -> Unit)

@@ -101,7 +101,6 @@ class FragmentSearch : Fragment() {
         })
 
         binding.clearButton.setOnClickListener{
-            viewModel.searchClear()
             binding.searchBar.setText("")
             hideKeyboard(it)
             allViewGone()
