@@ -4,45 +4,45 @@ import com.practicum.playlist_maker_one.domain.api.NetworkClient
 import com.practicum.playlist_maker_one.domain.api.TrackMapper
 import com.practicum.playlist_maker_one.domain.api.TrackRepository
 import com.practicum.playlist_maker_one.domain.entity.TrackData
+import com.practicum.playlist_maker_one.utils.Resource
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 class TrackRepositoryImpl(
     private val networkClient: NetworkClient,
     private val mapper : TrackMapper
 ) : TrackRepository {
-    private var searchThread: Thread? = null
 
     //флаг volatile - отвечает за видимость изменений переменной между потоками
-    @Volatile private var isSearchCancelled = false
+//    @Volatile private var isSearchCancelled = false
 
-    override fun searchTracks(query: String, callback: (Result<List<TrackData>>) -> Unit) {
-        isSearchCancelled = false
-        searchThread?.interrupt()//прерываем предыдущие потоки
+    override fun searchTracks(query: String) : Flow<Resource<List<TrackData>>> = flow {
+//        isSearchCancelled = false
 
-        searchThread = Thread {
-            val request = TrackSearchRequest(query)
+            val response = networkClient.doRequest(TrackSearchRequest(query))
 
-            val response = networkClient.doRequest(request)
-
-            if (response.resultCode == 200) {
-                if (response is TrackSearchResponse) {
-                    val result = response.results.map { mapper.map(it) }
-                    callback(Result.success(result))
+            when(response.resultCode) {
+                200 -> {
+                    if (response is TrackSearchResponse) {
+                        emit(Resource.Success(
+                            response.results.map { mapper.map(it) }
+                        ))
+                    }
+                }
+                100 -> {
+                    emit(Resource.Error("No tracks error", emptyList()))
+                }
+                400 -> {
+                    emit(Resource.Error("Ошибка при загрузке данных", emptyList()))
                 }
             }
-            else if(response.resultCode == 100){
-                callback(Result.success(emptyList()))
-            }
-            else {
-                callback(Result.failure(Exception("Ошибка при загрузке данных")))
-            }
-        }.apply(){start()}
-    }
-
-    override fun canselThread(){
-        isSearchCancelled = true
-        searchThread?.interrupt()
-        searchThread = null
-
-    }
+        }
 }
+
+//    override fun canselThread(){
+//        isSearchCancelled = true
+//        searchThread?.interrupt()
+//        searchThread = null
+//
+//    }
 

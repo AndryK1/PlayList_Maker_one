@@ -12,11 +12,11 @@ import org.koin.dsl.module
 val viewModelsModule = module {
 
     viewModel {
-        AudioViewModel(get(), get())
+        AudioViewModel(get())
     }
 
     viewModel{
-        SearchViewModel(get(), get(), get(), get(), get())
+        SearchViewModel(get(), get(), get(), get())
     }
 
     viewModel{

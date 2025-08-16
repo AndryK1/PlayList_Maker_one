@@ -7,16 +7,21 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    tools:context=".ui.media.activity.MediaActivity">
+    android:background="@color/adaptiveBackGroundWhite"
+    tools:context=".ui.media.activity.FragmentMedia">
 
-    <com.google.android.material.appbar.MaterialToolbar
+    <TextView
         android:id="@+id/toolbarMedia"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        app:navigationIcon="@drawable/ic_arrow_24"
+        android:layout_width="wrap_content"
         android:background="@color/adaptiveBackGroundWhite"
-        app:titleTextAppearance="@style/headerText"
-        app:title="@string/mediateka"
+        android:textColor="@color/adaptiveCommonText"
+        android:text="@string/mediateka"
+        android:fontFamily="@font/ys_text_medium"
+        android:textSize="22sp"
+        android:layout_marginTop="14dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
         />
 
     <com.google.android.material.tabs.TabLayout
@@ -26,6 +31,7 @@
         android:orientation="horizontal"
         android:background="@color/adaptiveBackGroundWhite"
         app:tabTextColor="@color/adaptiveCommonText"
+        app:tabIndicatorColor="@color/adaptiveCommonText"
         app:tabTextAppearance="@style/mediaTabStyle"
         />
 

@@ -1,14 +1,27 @@
 package com.practicum.playlist_maker_one.domain.useCase
 
 import com.practicum.playlist_maker_one.domain.api.TrackRepository
+import com.practicum.playlist_maker_one.domain.api.TrackRepositoryInteractor
 import com.practicum.playlist_maker_one.domain.entity.TrackData
+import com.practicum.playlist_maker_one.utils.Resource
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 
-class TrackRepositoryInteractor(private val repository: TrackRepository) {
-    fun execute(query: String, callback: (Result<List<TrackData>>) -> Unit) {
-        repository.searchTracks(query, callback)
-    }
+class TrackRepositoryInteractor(private val repository: TrackRepository) : TrackRepositoryInteractor {
+    override fun searchTracks(query: String): Flow<Pair<List<TrackData>?, String?>> {
 
-    fun destroy(){
-        repository.canselThread()
+        return repository.searchTracks(query).map { result ->
+
+            when(result){
+                is Resource.Error ->{
+                    Pair(null, result.message)
+                }
+                is Resource.Success ->{
+                    Pair(result.data, null)
+                }
+            }
+        }
     }
 }
+
