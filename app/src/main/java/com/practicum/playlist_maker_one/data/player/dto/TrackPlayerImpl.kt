@@ -8,7 +8,6 @@ import com.practicum.playlist_maker_one.domain.api.TrackPlayer
 
 class TrackPlayerImpl(
     private var mediaPlayer : MediaPlayer,
-    private val handler : Handler
 ) : TrackPlayer{
 
     private var playerState = STATE_DEFAULT
@@ -32,7 +31,6 @@ class TrackPlayerImpl(
         mediaPlayer.setOnCompletionListener {
             playerState = STATE_PREPARED
             isPlaying = false
-            handler.removeCallbacks(timerRunnable)
             secondsRemain = (mediaPlayer.duration / 1000).coerceAtMost(30)
 
             completionListener?.invoke()
@@ -67,15 +65,14 @@ class TrackPlayerImpl(
         playerState = STATE_PAUSED
     }
 
-    override fun playbackControl(timerRunnable: Runnable) {
+    override fun playbackControl(onTimerStart: () -> Unit) {
         when(playerState){
             STATE_PLAYING ->{
                 pausePlayer()
-                handler.removeCallbacks(timerRunnable)
             }
             STATE_PAUSED, STATE_PREPARED ->{
                 startPlayer()
-                handler.post(timerRunnable)
+                onTimerStart()
             }
         }
     }

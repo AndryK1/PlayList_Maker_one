@@ -4,7 +4,6 @@ import com.practicum.playlist_maker_one.domain.entity.TrackData
 import com.practicum.playlist_maker_one.utils.Resource
 import kotlinx.coroutines.flow.Flow
 
-interface TrackRepository {
-    fun searchTracks(query: String) : Flow<Resource<List<TrackData>>>
-//    fun canselThread()
+interface TrackRepositoryInteractor {
+    fun searchTracks(query: String) : Flow<Pair<List<TrackData>?, String?>>
 }
