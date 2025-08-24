@@ -1,33 +1,31 @@
 package com.practicum.playlist_maker_one.ui.player.view_model
 
-import android.os.Handler
-import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
-import com.practicum.playlist_maker_one.R
 import com.practicum.playlist_maker_one.domain.api.TrackPlayer
+import com.practicum.playlist_maker_one.domain.db.LikedHistoryInteractor
+import com.practicum.playlist_maker_one.domain.entity.TrackData
 import com.practicum.playlist_maker_one.ui.player.PlayerState
-import com.practicum.playlist_maker_one.ui.track.App
-import debounce
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlin.properties.Delegates
 
 class AudioViewModel(
-                     private val player : TrackPlayer
+    private val player : TrackPlayer,
+    private val likedHistoryInteractor: LikedHistoryInteractor
     ) : ViewModel(){
 
     var timerJob: Job?= null
 
     private lateinit var previewUrl: String
     private lateinit var startTime: String
+
+    private var isFavoriteLiveData = MutableLiveData<Boolean>()
+    fun observeFavorite() : LiveData<Boolean> = isFavoriteLiveData
 
     private var playingLiveData = MutableLiveData<PlayerState>()
     fun observePlayer() : LiveData<PlayerState> = playingLiveData
@@ -42,6 +40,19 @@ class AudioViewModel(
         player.preparePlayer(previewUrl) {
             playingLiveData.postValue(PlayerState.Finished)
             timerLiveData.postValue(startTime)
+        }
+    }
+
+    suspend fun onLikeClicked(track : TrackData){
+        val currentState = isFavoriteLiveData.value ?: false
+
+        isFavoriteLiveData.postValue(likedHistoryInteractor.invoke(track, currentState))
+    }
+
+    fun loadLikeState(trackData: TrackData){
+        viewModelScope.launch {
+            val isFavorite = likedHistoryInteractor.isTrackFavorite(trackData)
+            isFavoriteLiveData.postValue(isFavorite)
         }
     }
 

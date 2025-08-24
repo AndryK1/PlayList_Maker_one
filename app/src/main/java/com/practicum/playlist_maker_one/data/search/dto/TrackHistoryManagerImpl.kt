@@ -1,15 +1,19 @@
 package com.practicum.playlist_maker_one.data.search.dto
 
 import android.content.Context
+import com.practicum.playlist_maker_one.data.db.AppDatabase
 import com.practicum.playlist_maker_one.data.dto.TrackDataDto
 import com.practicum.playlist_maker_one.domain.api.SharedPrefsTrack
 
 import com.practicum.playlist_maker_one.domain.api.TrackHistoryManager
+import com.practicum.playlist_maker_one.domain.entity.TrackData
 import org.koin.java.KoinJavaComponent.getKoin
 import org.koin.java.KoinJavaComponent.inject
 
 
-object TrackHistoryManagerImpl : TrackHistoryManager{
+class TrackHistoryManagerImpl(
+    private val appDatabase: AppDatabase
+) : TrackHistoryManager{
 
     private var trackHistory = mutableListOf<TrackDataDto>()
     private lateinit var lastTrack : TrackDataDto
@@ -37,7 +41,16 @@ object TrackHistoryManagerImpl : TrackHistoryManager{
         }
     }
 
-    override fun deliteHistory(){
+    override suspend fun getFavorites(track : TrackDataDto) : Boolean{
+        val trackIds = trackHistory.map { it.trackId }
+
+        val favoriteIds = appDatabase.trackDao().getFavoriteTrackIds(trackIds)
+
+        return favoriteIds.contains(track.trackId)
+
+    }
+
+    override fun deleteHistory(){
         trackHistory.clear()
     }
 

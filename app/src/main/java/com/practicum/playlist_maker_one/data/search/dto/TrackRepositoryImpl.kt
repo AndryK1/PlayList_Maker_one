@@ -1,5 +1,7 @@
 package com.practicum.playlist_maker_one.data.search.dto
 
+import com.practicum.playlist_maker_one.data.db.AppDatabase
+import com.practicum.playlist_maker_one.data.dto.TrackDataDto
 import com.practicum.playlist_maker_one.domain.api.NetworkClient
 import com.practicum.playlist_maker_one.domain.api.TrackMapper
 import com.practicum.playlist_maker_one.domain.api.TrackRepository
@@ -10,7 +12,8 @@ import kotlinx.coroutines.flow.flow
 
 class TrackRepositoryImpl(
     private val networkClient: NetworkClient,
-    private val mapper : TrackMapper
+    private val mapper : TrackMapper,
+    private val appDatabase: AppDatabase
 ) : TrackRepository {
 
     //флаг volatile - отвечает за видимость изменений переменной между потоками
@@ -24,8 +27,16 @@ class TrackRepositoryImpl(
             when(response.resultCode) {
                 200 -> {
                     if (response is TrackSearchResponse) {
+
+                        val trackIds = response.results.map { it.trackId }
+
+                        val favorites = appDatabase.trackDao().getFavoriteTrackIds(trackIds)
+
+                        val data = response.results.map {
+                            mapper.map(it, favorites.contains(it.trackId))
+                        }
                         emit(Resource.Success(
-                            response.results.map { mapper.map(it) }
+                            data
                         ))
                     }
                 }
@@ -37,6 +48,8 @@ class TrackRepositoryImpl(
                 }
             }
         }
+
+
 }
 
 //    override fun canselThread(){
