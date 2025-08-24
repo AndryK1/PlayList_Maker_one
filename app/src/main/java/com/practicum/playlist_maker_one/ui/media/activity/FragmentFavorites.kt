@@ -70,8 +70,6 @@ class FragmentFavorites : Fragment() {
                 binding.nothingFoundText.visibility = View.GONE
                 adapter.updateData(state.tracks)
 
-                println("DEBUG: Received ${state.tracks.size} tracks")
-                state.tracks.forEach { println("DEBUG: Track - ${it.trackName}") }
             }
             else -> {
                 binding.recyclerViewFavorites.visibility = View.GONE
