@@ -17,8 +17,9 @@ class TrackMapperImpl : TrackMapper{
     }
 
 
-    override fun map(trackDataDto: TrackDataDto): TrackData {
+    override fun map(trackDataDto: TrackDataDto, isFavorite : Boolean): TrackData {
         return TrackData(
+            trackId = trackDataDto.trackId,
             trackName = trackDataDto.trackName,
             artistName = trackDataDto.artistName,
             trackFormatedTime = SimpleDateFormat("mm:ss", Locale.getDefault()).format(trackDataDto.trackTimeMillis),
@@ -27,13 +28,15 @@ class TrackMapperImpl : TrackMapper{
             collectionName = trackDataDto.collectionName,
             releaseDateFormated = SimpleDateFormat("yyyy", Locale.getDefault()).format(trackDataDto.releaseDate),
             primaryGenreName = trackDataDto.primaryGenreName,
-            country = trackDataDto.country
+            country = trackDataDto.country,
+            isFavorite = isFavorite
         )
     }
 
     override fun reversedMap(trackData: TrackData) : TrackDataDto{
         val yearFormatter = SimpleDateFormat("yyyy", Locale.getDefault())
         return TrackDataDto(
+            trackId = trackData.trackId,
             trackName = trackData.trackName,
             artistName = trackData.artistName,
             trackTimeMillis = parseMinutesAndSecondsToMillis(trackData.trackFormatedTime),

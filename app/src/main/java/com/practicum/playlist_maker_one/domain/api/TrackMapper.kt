@@ -4,6 +4,6 @@ import com.practicum.playlist_maker_one.data.dto.TrackDataDto
 import com.practicum.playlist_maker_one.domain.entity.TrackData
 
 interface TrackMapper{
-    fun map(trackDataDto: TrackDataDto) : TrackData
+    fun map(trackDataDto: TrackDataDto, isFavorite: Boolean) : TrackData
     fun reversedMap(trackData: TrackData) : TrackDataDto
 }

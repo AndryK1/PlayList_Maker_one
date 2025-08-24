@@ -1,15 +1,10 @@
 package com.practicum.playlist_maker_one.ui.search.view_model
 
-import android.os.Handler
-import android.os.Looper
-import android.os.SystemClock
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
+import com.practicum.playlist_maker_one.data.dto.TrackDataDto
 import com.practicum.playlist_maker_one.domain.api.SharedPrefsTrack
 import com.practicum.playlist_maker_one.domain.api.TrackHistoryManager
 import com.practicum.playlist_maker_one.domain.api.TrackMapper
@@ -38,7 +33,7 @@ class SearchViewModel(
 
     private var flagHistory : Boolean = true
 
-    private var stateLiveData = MutableLiveData<SearchState>(SearchState.History(trackManager.getTrackHistory().map { mapper.map(it) }))
+    private var stateLiveData = MutableLiveData<SearchState>()
     fun observeState() : LiveData<SearchState> = stateLiveData
 
     private var listOfSongs: ArrayList<TrackData> = ArrayList()
@@ -69,7 +64,7 @@ class SearchViewModel(
         savedQuery = changedText
         if (changedText.isEmpty()) {
             listOfSongs.clear()
-            renderState(SearchState.History(trackManager.getTrackHistory().map { mapper.map(it) }))
+            loadHistory()
             flagHistory = true
 
         } else {
@@ -104,15 +99,25 @@ class SearchViewModel(
 
     }
 
-    fun loadHistory(){
-        renderState(SearchState.History(trackManager.getTrackHistory().map { mapper.map(it) }))
+    fun loadHistory() {
+        viewModelScope.launch {
+            val history = trackManager.getTrackHistory().map { track ->
+                val isFavorite = checkFavorite(track)
+                mapper.map(track, isFavorite)
+            }
+            renderState(SearchState.History(history))
+        }
     }
 
     fun historyClear(){
-        trackManager.deliteHistory()
+        trackManager.deleteHistory()
         sharedPrefs.saveHistory(trackManager.getTrackHistory())
         flagHistory = false
-        renderState(SearchState.History(trackManager.getTrackHistory().map { mapper.map(it) }))
+        loadHistory()
+    }
+
+    private suspend fun checkFavorite(trackData: TrackDataDto): Boolean {
+        return trackManager.getFavorites(trackData)
     }
 
     override fun onCleared() {
@@ -125,6 +130,7 @@ class SearchViewModel(
         lastState = state
         stateLiveData.postValue(state)
     }
+
 
     companion object{
         private const val SEARCH_DEBOUNCE_DELAY = 1000L

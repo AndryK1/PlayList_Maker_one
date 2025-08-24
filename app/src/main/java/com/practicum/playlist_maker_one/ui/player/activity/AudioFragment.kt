@@ -12,6 +12,7 @@ import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -20,7 +21,9 @@ import com.practicum.playlist_maker_one.databinding.FragmentAudioPlayerBinding
 import com.practicum.playlist_maker_one.domain.entity.TrackData
 import com.practicum.playlist_maker_one.ui.player.PlayerState
 import com.practicum.playlist_maker_one.ui.player.view_model.AudioViewModel
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlin.properties.Delegates
 
 class AudioFragment : Fragment() {
 
@@ -52,13 +55,18 @@ class AudioFragment : Fragment() {
             arguments?.getParcelable(EXTRA_TRACK, TrackData::class.java)
         } else {
             @Suppress("DEPRECATION")
-            arguments?.getParcelable(EXTRA_TRACK) as? TrackData
+            (arguments?.getParcelable(EXTRA_TRACK))
         }
 
         binding.timeUnderPause.text = getString(R.string.audioStartTime)
 
+
         if (track != null) {
             viewModel.prepare(track.previewUrl, getString(R.string.audioStartTime))
+        }
+
+        viewModel.observeFavorite().observe(viewLifecycleOwner){
+            changeLikeState(it)
         }
 
         viewModel?.observePlayer()?.observe(viewLifecycleOwner ){
@@ -82,6 +90,9 @@ class AudioFragment : Fragment() {
 
         val artworkUrl : String = track?.formatedArtworkUrl100 ?: ""
 
+        viewModel.loadLikeState(track!!)
+
+        track?.let{ safeTrack -> changeLikeState(safeTrack.isFavorite) }
         binding.trackName.text = track?.trackName
         binding.artistText.text = track?.artistName
         binding.TimeText.text = track?.trackFormatedTime
@@ -95,6 +106,14 @@ class AudioFragment : Fragment() {
 
         binding.closeButton.setOnClickListener{
             findNavController().navigateUp()
+        }
+
+        binding.likeButton.setOnClickListener {
+            track?.let { safeTrack ->
+                viewLifecycleOwner.lifecycleScope.launch {
+                    viewModel.onLikeClicked(safeTrack)
+                }
+            }
         }
 
         val radius = getResources().getDimensionPixelSize(R.dimen.posterCornerRadius)
@@ -111,6 +130,15 @@ class AudioFragment : Fragment() {
             viewModel?.play()
         }
 
+    }
+
+    private fun changeLikeState(state: Boolean){
+        if(state){
+            binding.likeButton.setImageResource(R.drawable.ic_liked_like_button_51)
+        }
+        else{
+            binding.likeButton.setImageResource(R.drawable.button_like)
+        }
     }
 
     override fun onPause() {
