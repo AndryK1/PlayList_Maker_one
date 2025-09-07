@@ -4,9 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.IntentCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
@@ -16,16 +18,20 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.practicum.playlist_maker_one.R
 import com.practicum.playlist_maker_one.databinding.FragmentAudioPlayerBinding
+import com.practicum.playlist_maker_one.domain.db.PlayListInteractor
 import com.practicum.playlist_maker_one.domain.entity.TrackData
+import com.practicum.playlist_maker_one.ui.player.PlayerAdapter
 import com.practicum.playlist_maker_one.ui.player.PlayerState
 import com.practicum.playlist_maker_one.ui.player.view_model.AudioViewModel
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.properties.Delegates
 
-class AudioFragment : Fragment() {
+class AudioFragment() : Fragment() {
 
     companion object {
         private const val EXTRA_TRACK = "TRACK_EXTRA"
@@ -35,6 +41,9 @@ class AudioFragment : Fragment() {
     }
 
     private val viewModel: AudioViewModel by viewModel()
+    private val playListInteractor: PlayListInteractor by inject()
+    private lateinit var adapter: PlayerAdapter
+    private var track: TrackData? = null
 
     private lateinit var binding: FragmentAudioPlayerBinding
 
@@ -51,18 +60,60 @@ class AudioFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val track = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+
+        track = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             arguments?.getParcelable(EXTRA_TRACK, TrackData::class.java)
         } else {
             @Suppress("DEPRECATION")
             (arguments?.getParcelable(EXTRA_TRACK))
         }
+        viewModel.getLastTrack(track)
 
         binding.timeUnderPause.text = getString(R.string.audioStartTime)
+        val bottomSheetBehavior = BottomSheetBehavior.from(binding.playListBottomSheet)
 
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+        track?.let { viewModel.prepare(it.previewUrl, getString(R.string.audioStartTime)) }
 
-        if (track != null) {
-            viewModel.prepare(track.previewUrl, getString(R.string.audioStartTime))
+        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+
+                when (newState) {
+                    BottomSheetBehavior.STATE_HIDDEN -> {
+                        binding.overlay.visibility = View.GONE
+                    }
+                    else -> {
+                        binding.overlay.visibility = View.VISIBLE
+                    }
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {}
+        })
+
+        viewModel.observeLastTrack().observe(viewLifecycleOwner){
+            track = it
+        }
+
+        viewModel.observeList().observe(viewLifecycleOwner){
+            adapter = PlayerAdapter(it,
+                playListInteractor,
+                track!!.trackId,
+                viewLifecycleOwner.lifecycleScope,
+                onItemClick = { playlistName, result ->
+                    if(result){
+                        viewModel.loadPlayLists()
+                        Toast.makeText(requireContext(), getString(R.string.addedToPlaylist) + playlistName,
+                            Toast.LENGTH_LONG).show()
+                    }
+                    else{
+                        Toast.makeText(requireContext(), getString(R.string.alreadyHaveTrack) + playlistName,
+                            Toast.LENGTH_LONG).show()
+                    }
+                })
+
+            binding.recyclerView.adapter = adapter
         }
 
         viewModel.observeFavorite().observe(viewLifecycleOwner){
@@ -86,6 +137,15 @@ class AudioFragment : Fragment() {
 
         viewModel?.observeTimer()?.observe(viewLifecycleOwner){
             binding.timeUnderPause.text = it
+        }
+
+        binding.plusButton.setOnClickListener {
+            viewModel.loadPlayLists()
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+        }
+
+        binding.addNewPlayListButton.setOnClickListener {
+            findNavController().navigate(R.id.action_audioFragment_to_fragmentCreateList)
         }
 
         val artworkUrl : String = track?.formatedArtworkUrl100 ?: ""

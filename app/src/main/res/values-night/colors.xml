@@ -10,4 +10,7 @@
     <color name="TextGrey_White">@color/white</color>
     <color name="searchBg">@color/white</color>
     <color name="likeBg">#FFFFFF</color>
+    <color name="LightGray_White">@color/white</color>
+    <color name="adaptiveGrayDark">@color/white</color>
+    <color name="ypGray_white">@color/white</color>
 </resources>

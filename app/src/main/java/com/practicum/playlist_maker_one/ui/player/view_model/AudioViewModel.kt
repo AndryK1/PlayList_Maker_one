@@ -6,17 +6,20 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.practicum.playlist_maker_one.domain.api.TrackPlayer
 import com.practicum.playlist_maker_one.domain.db.LikedHistoryInteractor
+import com.practicum.playlist_maker_one.domain.db.PlayListInteractor
+import com.practicum.playlist_maker_one.domain.entity.PlayListData
 import com.practicum.playlist_maker_one.domain.entity.TrackData
 import com.practicum.playlist_maker_one.ui.player.PlayerState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import kotlin.properties.Delegates
+
 
 class AudioViewModel(
     private val player : TrackPlayer,
-    private val likedHistoryInteractor: LikedHistoryInteractor
+    private val likedHistoryInteractor: LikedHistoryInteractor,
+    private val playlistInteractor : PlayListInteractor
     ) : ViewModel(){
 
     var timerJob: Job?= null
@@ -33,6 +36,11 @@ class AudioViewModel(
     private var timerLiveData = MutableLiveData<String>()
     fun observeTimer() : LiveData<String> = timerLiveData
 
+    private var playlistsLiveData = MutableLiveData<List<PlayListData>>()
+    fun observeList() : LiveData<List<PlayListData>> = playlistsLiveData
+
+    private var lastTrackLiveData = MutableLiveData<TrackData>()
+    fun observeLastTrack() : LiveData<TrackData> = lastTrackLiveData
 
     fun prepare(previewUrl: String, time: String) {
         this.previewUrl = previewUrl
@@ -53,6 +61,12 @@ class AudioViewModel(
         viewModelScope.launch {
             val isFavorite = likedHistoryInteractor.isTrackFavorite(trackData)
             isFavoriteLiveData.postValue(isFavorite)
+        }
+    }
+
+    fun getLastTrack(lastTrack: TrackData?){
+        if(lastTrack != null){
+            lastTrackLiveData.postValue(lastTrack)
         }
     }
 
@@ -85,6 +99,8 @@ class AudioViewModel(
     }
 
     fun onDestroyPlayer(){
+        timerJob?.cancel()
+        timerJob = null
         player.destroy()
     }
 
@@ -92,6 +108,14 @@ class AudioViewModel(
         val minutes = seconds / 60
         val remainingSeconds = seconds % 60
         return String.format("%02d:%02d", minutes, remainingSeconds)
+    }
+
+    fun loadPlayLists(){
+        viewModelScope.launch {
+            playlistInteractor.getPlayLists().collect { listData ->
+                playlistsLiveData.postValue(listData)
+            }
+        }
     }
 
     companion object{

@@ -6,22 +6,26 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.practicum.playlist_maker_one.R
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 import com.practicum.playlist_maker_one.databinding.FragmentPlayListBinding
+import com.practicum.playlist_maker_one.domain.db.PlayListInteractor
+import com.practicum.playlist_maker_one.ui.media.PlayListAdapter
+import com.practicum.playlist_maker_one.ui.media.PlayListState
 import com.practicum.playlist_maker_one.ui.media.viewModel.PlayListViewModel
+import com.practicum.playlist_maker_one.ui.player.PlayerState
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class FragmentPlayList : Fragment() {
-
-    companion object
-    {
-        fun newInstance() = FragmentPlayList().apply {}
-    }
-
+class FragmentPlayList(
+) : Fragment() {
 
     private var _binding : FragmentPlayListBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: PlayListViewModel by viewModels()
+    private val viewModel: PlayListViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,7 +37,51 @@ class FragmentPlayList : Fragment() {
         return binding.root
     }
 
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.recyclerViewPlaylist.layoutManager = GridLayoutManager(
+            requireContext(),
+            2
+        )
+        viewModel.loadPlaylists()
+
+        setupObservers()
+
+        binding.newPlayListButton.setOnClickListener {
+            navigate()
+        }
+    }
     private fun setupObservers() {
-        //тут будет подписка на данные
+        viewModel.observeState().observe(viewLifecycleOwner){
+            renderState(it)
+        }
+    }
+
+    private fun renderState(state: PlayListState){
+        when(state){
+            is PlayListState.NothingFound -> {
+                binding.recyclerViewPlaylist.visibility = View.GONE
+                binding.nothingFoundText.visibility = View.VISIBLE
+                binding.nothingFoundImage.visibility = View.VISIBLE
+            }
+            is PlayListState.Content -> {
+                binding.recyclerViewPlaylist.visibility = View.VISIBLE
+                binding.nothingFoundText.visibility = View.GONE
+                binding.nothingFoundImage.visibility = View.GONE
+                binding.recyclerViewPlaylist.adapter = PlayListAdapter(state.playLists)
+            }
+        }
+    }
+
+    private fun navigate(){
+        findNavController().navigate(R.id.action_fragmentMedia_to_fragmentCreateList)
+    }
+
+    companion object {
+
+        fun newInstance() = FragmentPlayList().apply{}
+
     }
 }

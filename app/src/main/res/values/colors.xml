@@ -18,7 +18,10 @@
 
     <color name="backGroundScreen">@color/blue</color>
     <color name="iconTint">@color/black</color>
+    <color name="ypGray_white">@color/YP_Text_Gray</color>
+    <color name="LightGray_White">@color/LightGrey</color>
     <color name="adaptiveBackGroundWhite">@color/white</color>
+    <color name="adaptiveGrayDark">@color/GreyDark</color>
     <color name="adaptiveCommonText">@color/black</color>
     <color name="TextGrey_Black">@color/GreyDark</color>
     <color name="TextGrey_White">@color/GreyDark</color>

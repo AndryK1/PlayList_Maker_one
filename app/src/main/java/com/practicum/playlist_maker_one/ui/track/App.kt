@@ -2,6 +2,7 @@ package com.practicum.playlist_maker_one.ui.track
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
+import com.practicum.playlist_maker_one.di.converters
 
 import com.practicum.playlist_maker_one.di.networkModule
 import com.practicum.playlist_maker_one.di.playerModule
@@ -25,7 +26,8 @@ class App : Application(){
             androidContext(this@App)
 
             modules( playerModule, networkModule, storageModule, trackModule,
-                viewModelsModule)
+                viewModelsModule, converters
+            )
         }
 
         AppCompatDelegate.setDefaultNightMode(
