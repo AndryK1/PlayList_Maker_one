@@ -27,7 +27,7 @@ class PlayerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
 
         name.text = playList.name
-        trackCount.text = "${playList.tracksCount} треков"
+        trackCount.text = "${playList.tracksCount} ${itemView.context.getString(R.string.tracks)}"
     }
 
     private fun setImageVisible(state: Boolean, imagePath: String){

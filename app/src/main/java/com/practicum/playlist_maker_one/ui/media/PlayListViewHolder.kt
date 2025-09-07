@@ -20,7 +20,7 @@ class PlayListViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun bind(playList : PlayListData){
 
-        if(playList.imageUrl == ""){
+        if(playList.imageUrl.isEmpty()){
             setImageVisible(false, playList.imageUrl)
         }
         else{
@@ -28,7 +28,7 @@ class PlayListViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
 
         name.text = playList.name
-        trackCount.text = "${playList.tracksCount} треков"
+        trackCount.text = "${playList.tracksCount} ${itemView.context.getString(R.string.tracks)}"
     }
 
     private fun setImageVisible(state: Boolean, imagePath: String){

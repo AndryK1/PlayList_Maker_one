@@ -49,7 +49,7 @@ class FragmentCreateList : Fragment() {
         binding.photo.visibility = View.GONE
         binding.photoPlaceholder.visibility = View.VISIBLE
 
-        val alert = MaterialAlertDialogBuilder(requireActivity())
+        val alert = MaterialAlertDialogBuilder(requireContext())
             .setTitle(getString(R.string.are_you_sure_pay_list))
             .setMessage(getString(R.string.exit_warning_play_list))
             .setNeutralButton(getString(R.string.cansel)){ dialog, which ->
@@ -64,7 +64,7 @@ class FragmentCreateList : Fragment() {
                 binding.photo.visibility = View.VISIBLE
                 binding.photoPlaceholder.visibility = View.GONE
                 imageUri = uri
-                Glide.with(this)
+                Glide.with(view)
                     .load(uri)
                     .transform(
                         MultiTransformation(
