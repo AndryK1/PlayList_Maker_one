@@ -7,37 +7,45 @@ import com.practicum.playlist_maker_one.domain.api.TrackPlayer
 
 
 class TrackPlayerImpl(
-    private var mediaPlayer : MediaPlayer,
 ) : TrackPlayer{
 
     private var playerState = STATE_DEFAULT
     private var secondsRemain : Int = 30
+    private var mediaPlayer: MediaPlayer? = null
     private var isPlaying : Boolean = false
+    private var isReleased : Boolean = false // чтобы в купе с bottomSheet не создавался бесконечный цикл ошибок
     private var completionListener: (() -> Unit)? = null// () -> Unit аналог void
 
     private var remainingTime : Int = 0
 
 
      override fun preparePlayer( trackUrl: String, timerRunnable: Runnable){
-        mediaPlayer.setDataSource(trackUrl)
-        mediaPlayer.prepareAsync()
+        mediaPlayer?.release()
+        mediaPlayer = MediaPlayer()
 
-        mediaPlayer.setOnPreparedListener {
+        isReleased = false
+        mediaPlayer?.setDataSource(trackUrl)
+        mediaPlayer?.prepareAsync()
+
+        mediaPlayer?.setOnPreparedListener {
+            if(isReleased)return@setOnPreparedListener
             isPlaying = false
             playerState = STATE_PREPARED
-            secondsRemain = (mediaPlayer.duration / 1000).coerceAtMost(30)//возвращает само число в диапазоне, либо максимум
+            secondsRemain =
+                (mediaPlayer?.duration?.div(1000))?.coerceAtMost(30) ?: 30//возвращает само число в диапазоне, либо максимум
         }
 
-        mediaPlayer.setOnCompletionListener {
+        mediaPlayer?.setOnCompletionListener {
+            if(isReleased)return@setOnCompletionListener
             playerState = STATE_PREPARED
             isPlaying = false
-            secondsRemain = (mediaPlayer.duration / 1000).coerceAtMost(30)
+            secondsRemain = (mediaPlayer?.duration?.div(1000))?.coerceAtMost(30) ?: 30
 
             completionListener?.invoke()
         }
     }
     override fun startPlayer() {
-        mediaPlayer.start()
+        mediaPlayer?.start()
         isPlaying = true
         playerState = STATE_PLAYING
     }
@@ -47,9 +55,16 @@ class TrackPlayerImpl(
     }
 
     override fun getSecondsRemain() : Int{
+        if (isReleased) return remainingTime
         return if (isPlaying) {
-            remainingTime = (mediaPlayer.duration - mediaPlayer.currentPosition) / 1000
-            remainingTime.coerceIn(0, 30)//в диапазоне от и до
+            try {
+                val duration = mediaPlayer?.duration ?: 0
+                val currentPosition = mediaPlayer?.currentPosition ?: 0
+                remainingTime = (duration - currentPosition) / 1000
+                remainingTime.coerceIn(0, 30)
+            } catch (e: IllegalStateException) {
+                remainingTime
+            }
         } else {
             remainingTime
         }
@@ -60,7 +75,7 @@ class TrackPlayerImpl(
     }
 
     override fun pausePlayer() {
-        mediaPlayer.pause()
+        mediaPlayer?.pause()
         isPlaying = false
         playerState = STATE_PAUSED
     }
@@ -78,7 +93,9 @@ class TrackPlayerImpl(
     }
 
     override fun destroy(){
-        mediaPlayer.release()
+        isReleased = true
+        mediaPlayer?.release()
+        mediaPlayer = null
     }
 
     companion object{

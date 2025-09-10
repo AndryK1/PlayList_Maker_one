@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayoutMediator
@@ -34,7 +33,7 @@ class FragmentMedia : Fragment() {
         tabMediator = TabLayoutMediator(binding.mediaTab, binding.pagerContainer) { tab, position ->
             tab.text = when (position) {
                 0 -> getString(R.string.favorites)
-                1 -> getString(R.string.playList)
+                1 -> getString(R.string.playLists)
                 else -> ""
             }
         }

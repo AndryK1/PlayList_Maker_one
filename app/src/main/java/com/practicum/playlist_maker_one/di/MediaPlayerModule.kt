@@ -19,7 +19,6 @@ val playerModule = module {
 
     factory<TrackPlayer> {
         TrackPlayerImpl(
-            get()
         )
     }
 }

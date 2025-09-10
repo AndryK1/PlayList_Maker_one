@@ -3,7 +3,9 @@ package com.practicum.playlist_maker_one.di
 import android.app.Application
 import androidx.core.content.ContextCompat.getString
 import com.practicum.playlist_maker_one.R
+import com.practicum.playlist_maker_one.ui.media.viewModel.CreateListViewModel
 import com.practicum.playlist_maker_one.ui.media.viewModel.FavoritesViewModel
+import com.practicum.playlist_maker_one.ui.media.viewModel.PlayListViewModel
 import com.practicum.playlist_maker_one.ui.player.view_model.AudioViewModel
 import com.practicum.playlist_maker_one.ui.search.view_model.SearchViewModel
 import com.practicum.playlist_maker_one.ui.settings.view_model.SettingsViewModel
@@ -13,7 +15,7 @@ import org.koin.dsl.module
 val viewModelsModule = module {
 
     viewModel {
-        AudioViewModel(get(), get())
+        AudioViewModel(get(), get(), get())
     }
 
     viewModel{
@@ -35,5 +37,13 @@ val viewModelsModule = module {
 
     viewModel{
         FavoritesViewModel(get())
+    }
+
+    viewModel{
+        CreateListViewModel(get())
+    }
+
+    viewModel{
+        PlayListViewModel(get())
     }
 }

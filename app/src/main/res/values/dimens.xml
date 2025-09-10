@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="zero">0dp</dimen>
+    <dimen name="ordinaryMargin">16dp</dimen>
+    <dimen name="minMargin">8dp</dimen>
+    <dimen name="editTextMediumPadding">15dp</dimen>
     <dimen name="posterCornerRadius">8dp</dimen>
     <dimen name="iconCornerRadius">2dp</dimen>
     <dimen name="audioPlayerTextSize">13sp</dimen>

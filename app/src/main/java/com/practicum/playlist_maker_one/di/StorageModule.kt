@@ -2,8 +2,10 @@ package com.practicum.playlist_maker_one.di
 
 import android.content.Context
 import androidx.room.Room
+import androidx.room.migration.Migration
 import com.google.gson.Gson
 import com.practicum.playlist_maker_one.data.db.AppDatabase
+import com.practicum.playlist_maker_one.data.db.Migrations
 import com.practicum.playlist_maker_one.data.search.dto.SharedPrefsTracksImpl
 import com.practicum.playlist_maker_one.data.search.dto.TrackHistoryManagerImpl
 import com.practicum.playlist_maker_one.data.settings.SharedPrefsThemeImpl
@@ -32,6 +34,7 @@ val storageModule = module {
 
     single {
         Room.databaseBuilder(androidContext(), AppDatabase::class.java, "database_db")
+            .addMigrations(Migrations.MIGRATION_1_2)
             .build()
     }
 }
