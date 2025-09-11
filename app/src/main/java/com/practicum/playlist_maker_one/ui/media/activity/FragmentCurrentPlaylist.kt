@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -211,6 +212,15 @@ class FragmentCurrentPlaylist : Fragment() {
         val generalTime = playList!!.tracks.map { it.trackFormatedTime }
         val formatedTime = viewModel.getGeneralTime(generalTime)
         binding.name.text = playList?.name
+        if(playList?.tracks?.isEmpty() == true){
+            binding.emptyTracksImage.isVisible = true
+            binding.noTracksText.isVisible = true
+            binding.recyclerView.isVisible = false
+        }else{
+            binding.emptyTracksImage.isVisible = false
+            binding.noTracksText.isVisible = false
+            binding.recyclerView.isVisible = true
+        }
         binding.description.text = playList?.description
         binding.duration.text = resources.getQuantityString(R.plurals.general_minutes, formatedTime, formatedTime)
         binding.tracksCount.text = resources.getQuantityString(R.plurals.tracks_count, tracksCount, tracksCount)

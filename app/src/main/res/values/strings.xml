@@ -22,6 +22,7 @@
 
     <string name="share">Поделиться</string>
     <string name="thereIsNoTracks">В этом плейлисте нет списка треков, которым можно поделиться</string>
+    <string name="noTracks">Пока не добавлено ни одного трека</string>
     <string name="ok">ОК</string>
     <string name="edit">Редактировать</string>
     <string name="save">Сохранить</string>
