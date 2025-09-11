@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -178,7 +179,15 @@ class FragmentCurrentPlaylist : Fragment() {
             }else{
                 val message = MaterialAlertDialogBuilder(requireContext())
                     .setTitle(R.string.thereIsNoTracks)
-                    .setPositiveButton(R.string.ok){dialog, witch ->}.show()
+                    .setPositiveButton(R.string.ok){dialog, witch ->}
+                    .create()
+
+                message.show()
+
+                message.window?.setLayout(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
             }
         }
     }

@@ -30,7 +30,7 @@ class PlayListRepositoryImpl(
 
         if (!currentTrackIds.contains(track.trackId)) {
             val updatedTracks = playList.tracks.toMutableList().apply {
-                add(track)
+                add(0, track)
             }
             val updatedEntity = playList.copy(
                 tracks = updatedTracks,

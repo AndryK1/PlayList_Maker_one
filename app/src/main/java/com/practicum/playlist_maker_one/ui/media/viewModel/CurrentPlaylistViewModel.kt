@@ -15,18 +15,16 @@ class CurrentPlaylistViewModel(
 ) : ViewModel() {
 
     private var playlistLiveData = MutableLiveData<PlayListData>()
-    private lateinit var lastPlaylist: PlayListData
     fun observeTracks() : LiveData<PlayListData> = playlistLiveData
 
 
     fun putPlaylist(playList: PlayListData){
         playlistLiveData.postValue(playList)
-        lastPlaylist = playList
     }
 
     fun deleteTrack(trackData: TrackData){
         viewModelScope.launch{
-            val newPlaylist = interactor.deleteTrackFromPlayList(trackData, lastPlaylist)
+            val newPlaylist = interactor.deleteTrackFromPlayList(trackData, playlistLiveData.value ?: return@launch)
             playlistLiveData.postValue(newPlaylist)
         }
     }
