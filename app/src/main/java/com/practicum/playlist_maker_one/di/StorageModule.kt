@@ -34,7 +34,7 @@ val storageModule = module {
 
     single {
         Room.databaseBuilder(androidContext(), AppDatabase::class.java, "database_db")
-            .addMigrations(Migrations.MIGRATION_1_2)
+            .fallbackToDestructiveMigration(true)
             .build()
     }
 }

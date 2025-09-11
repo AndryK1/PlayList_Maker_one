@@ -6,7 +6,7 @@ import com.practicum.playlist_maker_one.data.db.dao.PlayListDao
 import com.practicum.playlist_maker_one.data.db.dao.TrackDao
 
 @Database(
-    version = 2,
+    version = 3,
     entities = [
         TrackEntity::class,
         PlayListEntity::class

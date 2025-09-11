@@ -4,6 +4,8 @@ import android.app.Application
 import androidx.core.content.ContextCompat.getString
 import com.practicum.playlist_maker_one.R
 import com.practicum.playlist_maker_one.ui.media.viewModel.CreateListViewModel
+import com.practicum.playlist_maker_one.ui.media.viewModel.CurrentPlaylistViewModel
+import com.practicum.playlist_maker_one.ui.media.viewModel.EditPlaylistViewModel
 import com.practicum.playlist_maker_one.ui.media.viewModel.FavoritesViewModel
 import com.practicum.playlist_maker_one.ui.media.viewModel.PlayListViewModel
 import com.practicum.playlist_maker_one.ui.player.view_model.AudioViewModel
@@ -45,5 +47,13 @@ val viewModelsModule = module {
 
     viewModel{
         PlayListViewModel(get())
+    }
+
+    viewModel{
+        CurrentPlaylistViewModel(get())
+    }
+
+    viewModel{
+        EditPlaylistViewModel(get())
     }
 }

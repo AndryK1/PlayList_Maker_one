@@ -99,7 +99,7 @@ class AudioFragment() : Fragment() {
         viewModel.observeList().observe(viewLifecycleOwner){
             adapter = PlayerAdapter(it,
                 playListInteractor,
-                track!!.trackId,
+                track!!,
                 viewLifecycleOwner.lifecycleScope,
                 onItemClick = { playlistName, result ->
                     if(result){

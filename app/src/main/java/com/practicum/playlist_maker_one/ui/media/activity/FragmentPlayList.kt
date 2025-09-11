@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 import com.practicum.playlist_maker_one.databinding.FragmentPlayListBinding
 import com.practicum.playlist_maker_one.domain.db.PlayListInteractor
+import com.practicum.playlist_maker_one.domain.entity.PlayListData
 import com.practicum.playlist_maker_one.ui.media.PlayListAdapter
 import com.practicum.playlist_maker_one.ui.media.PlayListState
 import com.practicum.playlist_maker_one.ui.media.viewModel.PlayListViewModel
@@ -50,7 +51,7 @@ class FragmentPlayList(
         setupObservers()
 
         binding.newPlayListButton.setOnClickListener {
-            navigate()
+            navigateToCreateList()
         }
     }
     private fun setupObservers() {
@@ -70,13 +71,21 @@ class FragmentPlayList(
                 binding.recyclerViewPlaylist.visibility = View.VISIBLE
                 binding.nothingFoundText.visibility = View.GONE
                 binding.nothingFoundImage.visibility = View.GONE
-                binding.recyclerViewPlaylist.adapter = PlayListAdapter(state.playLists)
+                binding.recyclerViewPlaylist.adapter = PlayListAdapter(state.playLists,
+                    onItemClick = {
+                        navigateToCurrentPlaylist(playList = it)
+                    })
             }
         }
     }
 
-    private fun navigate(){
+    private fun navigateToCreateList(){
         findNavController().navigate(R.id.action_fragmentMedia_to_fragmentCreateList)
+    }
+
+    private fun navigateToCurrentPlaylist( playList: PlayListData){
+        findNavController().navigate(R.id.action_fragmentMedia_to_fragmentCurrentPlaylist,
+            FragmentCurrentPlaylist.createPlaylist(playList))
     }
 
     companion object {

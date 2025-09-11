@@ -118,6 +118,30 @@
         <item name="backgroundTint">@color/adaptiveCommonText</item>
     </style>
 
+    <style name="currentPlaylistOrdinaryText">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="fontFamily">@font/ys_display_regular</item>
+        <item name="fontWeight">400</item>
+        <item name="android:layout_marginTop">@dimen/minMargin</item>
+        <item name="android:layout_marginStart">@dimen/ordinaryMargin</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="playlistBottomText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/songHeight</item>
+        <item name="fontFamily">@font/ys_display_regular</item>
+        <item name="fontWeight">400</item>
+        <item name="android:textColor">@color/adaptiveCommonText</item>
+        <item name="android:textSize">@dimen/textNormalSize</item>
+        <item name="android:layout_marginTop">@dimen/minMargin</item>
+        <item name="android:layout_marginStart">@dimen/ordinaryMargin</item>
+        <item name="android:paddingTop">21dp</item>
+        <item name="android:paddingBottom">21dp</item>
+    </style>
+
     <style name="clearHistoryButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="cornerRadius">54dp</item>
         <item name="android:layout_marginTop">@dimen/errorTextMarginX</item>

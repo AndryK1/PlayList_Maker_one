@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.media.activity.FragmentEditPlaylist"
+    android:id="@+id/editPlaylist">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/leaveButton"
+        style="@style/headerText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:navigationIcon="@drawable/ic_arrow_24"
+        app:title="@string/edit"
+        app:navigationIconTint="@color/adaptiveCommonText"
+        app:titleTextColor="@color/adaptiveCommonText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <FrameLayout
+        android:id="@+id/photoBorders"
+        android:layout_width="312dp"
+        android:layout_height="312dp"
+        android:background="@drawable/load_photo_bg"
+        android:layout_marginTop="26dp"
+        app:layout_constraintTop_toBottomOf="@id/leaveButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/photo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
+
+    <EditText
+        android:id="@+id/nameInput"
+        style="@style/playListEditText"
+        app:layout_constraintTop_toBottomOf="@id/photoBorders"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/play_list_edit_text_bg"
+        android:hint="@string/name"
+        android:paddingStart="@dimen/editTextMediumPadding"
+        android:paddingEnd="@dimen/editTextMediumPadding"
+        android:layout_marginTop="32dp"
+        />
+
+    <EditText
+        android:id="@+id/descriptionInput"
+        style="@style/playListEditText"
+        app:layout_constraintTop_toBottomOf="@id/nameInput"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/play_list_edit_text_bg"
+        android:hint="@string/description"
+        android:paddingStart="@dimen/editTextMediumPadding"
+        android:paddingEnd="@dimen/editTextMediumPadding"
+        android:layout_marginTop="17dp"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/saveButton"
+        style="@style/playListButtons"
+        android:background="@drawable/button_bg_gray"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/save"
+        android:layout_marginStart="17dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginBottom="32dp"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
