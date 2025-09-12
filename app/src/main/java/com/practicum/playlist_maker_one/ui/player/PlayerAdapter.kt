@@ -36,6 +36,7 @@ class PlayerAdapter(
         val playList = playLists[position]
         val ids = playList.tracks.map { it.trackId }
         val isAlreadyHave = ids.any { track.trackId == it }
+
         holder.itemView.setOnClickListener {
             try{
                 coroutineScope.launch {

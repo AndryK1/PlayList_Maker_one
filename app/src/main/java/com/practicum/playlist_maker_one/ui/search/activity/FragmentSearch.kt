@@ -42,9 +42,6 @@ class FragmentSearch : Fragment() {
     private lateinit var binding: FragmentSearchBinding
     private val viewModel: SearchViewModel by viewModel(ownerProducer = { requireActivity() })
     private var lastSearchQuery: String = ""
-    private val history : TrackHistoryManager by inject()
-    private val mapper : TrackMapper by inject()
-    private val sharedPrefs: SharedPrefsTrack by inject()
 
     private lateinit var adapter : TrackAdapter
     private lateinit var historyAdapter : TrackHistoryAdapter
@@ -68,10 +65,15 @@ class FragmentSearch : Fragment() {
         context = requireActivity()
 
         adapter = TrackAdapter(
-            onItemClick = { track -> navigateToPlayer(track) }, emptyList(), history, mapper, sharedPrefs
+            onItemClick = { track ->
+                viewModel.onTrackClicked(track)
+                navigateToPlayer(track)
+            },
+            track = emptyList()
         )
         historyAdapter = TrackHistoryAdapter(
-            onItemClick = { track -> navigateToPlayer(track) }, emptyList(), history, mapper, sharedPrefs
+            onItemClick = {track -> viewModel.onTrackClicked(track)
+                navigateToPlayer(track) }, emptyList()
         )
 
         val recyclerView = binding.recyclerViewSearch

@@ -187,7 +187,7 @@ class AudioFragment() : Fragment() {
 
 
         binding.pauseButton.setOnClickListener{
-            viewModel?.play()
+            viewModel.play()
         }
 
     }

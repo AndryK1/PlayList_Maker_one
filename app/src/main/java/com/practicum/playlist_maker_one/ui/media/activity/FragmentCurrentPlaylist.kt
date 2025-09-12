@@ -37,9 +37,6 @@ class FragmentCurrentPlaylist : Fragment() {
     private lateinit var binding : FragmentCurrentPlaylistBinding
     private val viewModel: CurrentPlaylistViewModel by viewModel()
     private var playList: PlayListData? = null
-    private val history : TrackHistoryManager by inject()
-    private val mapper : TrackMapper by inject()
-    private val sharedPrefs : SharedPrefsTrack by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -225,13 +222,16 @@ class FragmentCurrentPlaylist : Fragment() {
         binding.duration.text = resources.getQuantityString(R.plurals.general_minutes, formatedTime, formatedTime)
         binding.tracksCount.text = resources.getQuantityString(R.plurals.tracks_count, tracksCount, tracksCount)
 
-        binding.recyclerView.adapter = TrackAdapter(onItemClick = {
-            track -> navigateToPlayer(track)
-        }, playList?.tracks!!, history, mapper, sharedPrefs,
-            onLongClickListener = {
-                track -> deleteTrack(track)
-            })
-
+        binding.recyclerView.adapter = TrackAdapter(
+            onItemClick = { track ->
+                viewModel.onTrackClicked(track)
+                navigateToPlayer(track)
+            },
+            track = playList?.tracks!!,
+            onLongClickListener = { track ->
+                deleteTrack(track)
+            }
+        )
         // bottomSheet moreOptions
 
         if(playList?.imageUrl != ""){

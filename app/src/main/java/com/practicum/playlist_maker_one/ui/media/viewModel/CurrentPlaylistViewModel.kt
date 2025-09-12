@@ -4,14 +4,22 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.practicum.playlist_maker_one.domain.api.SharedPrefsTrack
+import com.practicum.playlist_maker_one.domain.api.TrackHistoryManager
+import com.practicum.playlist_maker_one.domain.api.TrackMapper
 import com.practicum.playlist_maker_one.domain.db.PlayListInteractor
 import com.practicum.playlist_maker_one.domain.entity.PlayListData
 import com.practicum.playlist_maker_one.domain.entity.TrackData
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
+import kotlin.getValue
 import kotlin.math.roundToInt
 
 class CurrentPlaylistViewModel(
-    private val interactor: PlayListInteractor
+    private val interactor: PlayListInteractor,
+    private val history : TrackHistoryManager,
+    private val mapper : TrackMapper,
+    private val sharedPrefs : SharedPrefsTrack
 ) : ViewModel() {
 
     private var playlistLiveData = MutableLiveData<PlayListData>()
@@ -20,6 +28,11 @@ class CurrentPlaylistViewModel(
 
     fun putPlaylist(playList: PlayListData){
         playlistLiveData.postValue(playList)
+    }
+
+    fun onTrackClicked(track: TrackData){
+        history.addTrackToHistory(mapper.reversedMap(track))
+        sharedPrefs.saveHistory(history.getTrackHistory())
     }
 
     fun deleteTrack(trackData: TrackData){
