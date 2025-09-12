@@ -171,7 +171,6 @@
         android:background="@drawable/corners_for_bg"
         android:orientation="vertical"
         app:behavior_hideable="true"
-        android:visibility="gone"
         app:behavior_peekHeight="383dp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
