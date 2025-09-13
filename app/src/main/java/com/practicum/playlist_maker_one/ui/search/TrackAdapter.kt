@@ -16,9 +16,7 @@ import com.practicum.playlist_maker_one.ui.player.activity.AudioFragment
 class TrackAdapter (
     private val onItemClick: (TrackData) -> Unit,
     private var track: List<TrackData>,
-    private val history: TrackHistoryManager,
-    private val mapper: TrackMapper,
-    private val sharedPrefs: SharedPrefsTrack
+    private val onLongClickListener: ((TrackData) -> Unit)? = null
 ) : RecyclerView.Adapter<TrackViewHolder> () {
 
 
@@ -32,10 +30,15 @@ class TrackAdapter (
 
         holder.itemView.setOnClickListener{
 
-            history.addTrackToHistory(mapper.reversedMap(track[position]))
-            sharedPrefs.saveHistory(history.getTrackHistory())
-
             onItemClick(track[position])
+
+        }
+
+        onLongClickListener?.let { longClickListener ->
+            holder.itemView.setOnLongClickListener {
+                longClickListener(track[position])
+                true
+            }
         }
     }
 

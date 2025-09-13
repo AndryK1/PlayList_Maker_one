@@ -3,6 +3,7 @@ package com.practicum.playlist_maker_one.domain.impl
 import com.practicum.playlist_maker_one.domain.db.PlayListInteractor
 import com.practicum.playlist_maker_one.domain.db.PlayListRepository
 import com.practicum.playlist_maker_one.domain.entity.PlayListData
+import com.practicum.playlist_maker_one.domain.entity.TrackData
 import kotlinx.coroutines.flow.Flow
 
 class PlayListInteractorImpl(
@@ -18,17 +19,25 @@ class PlayListInteractorImpl(
     }
 
     override suspend fun addTrackToPlayList(
-        trackId: Long,
+        trackId: TrackData,
         playList: PlayListData
     ) {
         repository.addTrackToPlayList(trackId,playList)
     }
 
     override suspend fun deleteTrackFromPlayList(
-        trackId: Long,
+        track: TrackData,
         playList: PlayListData
-    ) {
-        repository.deleteTrackFromPlayList(trackId,playList)
+    ) : PlayListData{
+        return repository.deleteTrackFromPlayList(track,playList)
+    }
+
+    override suspend fun updatePlaylist(playList: PlayListData) {
+        repository.updatePlaylist(playList)
+    }
+
+    override suspend fun deletePlaylist(playList: PlayListData) {
+        repository.deletePlaylist(playList)
     }
 
 

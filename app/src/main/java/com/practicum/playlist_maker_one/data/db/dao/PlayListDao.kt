@@ -7,6 +7,9 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.practicum.playlist_maker_one.data.db.PlayListEntity
+import com.practicum.playlist_maker_one.data.db.TrackEntity
+import com.practicum.playlist_maker_one.domain.entity.PlayListData
+import com.practicum.playlist_maker_one.domain.entity.TrackData
 
 @Dao
 interface PlayListDao {
@@ -22,4 +25,8 @@ interface PlayListDao {
 
     @Update
     suspend fun updatePlayList(playList: PlayListEntity)
+
+    @Delete(entity = PlayListEntity::class)
+    suspend fun deleteTrackEntity(playlist : PlayListEntity)
+
 }

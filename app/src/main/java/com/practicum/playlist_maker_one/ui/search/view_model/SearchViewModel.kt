@@ -19,7 +19,8 @@ class SearchViewModel(
     private val trackManager : TrackHistoryManager,
     private var trackInteractor: TrackRepositoryInteractor,
     private val mapper : TrackMapper,
-    private val sharedPrefs: SharedPrefsTrack
+    private val sharedPrefs: SharedPrefsTrack,
+    private val history: TrackHistoryManager
 ) : ViewModel() {
 
     private var lastSearchText: String? = null
@@ -58,6 +59,11 @@ class SearchViewModel(
             delay(SEARCH_DEBOUNCE_DELAY)
             search(changedText)
         }
+    }
+
+    fun onTrackClicked(track: TrackData){
+        history.addTrackToHistory(mapper.reversedMap(track))
+        sharedPrefs.saveHistory(history.getTrackHistory())
     }
 
     private fun search(changedText: String) {

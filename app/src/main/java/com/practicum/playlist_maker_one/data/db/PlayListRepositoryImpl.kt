@@ -3,6 +3,7 @@ package com.practicum.playlist_maker_one.data.db
 import com.practicum.playlist_maker_one.data.converters.PlayListDbConverter
 import com.practicum.playlist_maker_one.domain.db.PlayListRepository
 import com.practicum.playlist_maker_one.domain.entity.PlayListData
+import com.practicum.playlist_maker_one.domain.entity.TrackData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -20,29 +21,42 @@ class PlayListRepositoryImpl(
         appDatabase.playListDao().insertPlayList(fromDataToEntity(playList))
     }
 
-    override suspend fun addTrackToPlayList(trackId: Long, playList: PlayListData){
-        val currentTrackIds = playList.tracksIds
+    override suspend fun updatePlaylist(playList: PlayListData){
+        appDatabase.playListDao().updatePlayList(fromDataToEntity(playList))
+    }
 
-        if(!currentTrackIds.contains(trackId)){
-            val updatedTrackIds = currentTrackIds.toMutableList().apply { add(trackId) }
+    override suspend fun addTrackToPlayList(track: TrackData, playList: PlayListData) {
+        val currentTrackIds = playList.tracks.map { it.trackId }
+
+        if (!currentTrackIds.contains(track.trackId)) {
+            val updatedTracks = playList.tracks.toMutableList().apply {
+                add(0, track)
+            }
             val updatedEntity = playList.copy(
-                tracksIds = updatedTrackIds,
-                tracksCount = updatedTrackIds.size.toLong()
+                tracks = updatedTracks,
+                tracksCount = updatedTracks.size
             )
             appDatabase.playListDao().updatePlayList(converter.map(updatedEntity))
         }
     }
 
-    override suspend fun deleteTrackFromPlayList(trackId: Long, playList: PlayListData){
-        val currentTrackIds = playList.tracksIds
+    override suspend fun deletePlaylist(playList: PlayListData){
+        appDatabase.playListDao().deleteTrackEntity(fromDataToEntity(playList))
+    }
 
-        if(currentTrackIds.contains(trackId)){
-            val updatedTrackIds = currentTrackIds.toMutableList().apply { remove(trackId) }
-            val updatedEntity = playList.copy(
-                tracksIds = updatedTrackIds,
-                tracksCount = updatedTrackIds.size.toLong()
+    override suspend fun deleteTrackFromPlayList(track: TrackData, playList: PlayListData) : PlayListData{
+        val currentTrackIds = playList.tracks.map { it.trackId }
+
+        return if(currentTrackIds.contains(track.trackId)){
+            val updatedTracks = playList.tracks.filterNot { it.trackId == track.trackId }
+            val updatedPlaylist = playList.copy(
+                tracks = updatedTracks,
+                tracksCount = updatedTracks.size
             )
-            appDatabase.playListDao().updatePlayList(converter.map(updatedEntity))
+            appDatabase.playListDao().updatePlayList(converter.map(updatedPlaylist))
+            updatedPlaylist
+        }else{
+            playList
         }
     }
 

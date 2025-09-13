@@ -15,9 +15,6 @@ import org.koin.java.KoinJavaComponent.inject
 
 class TrackHistoryAdapter (private val onItemClick: (TrackData) -> Unit,
                            private var trackHistory: List<TrackData>,
-                           private val history : TrackHistoryManager,
-                           private val mapper : TrackMapper,
-                           private val sharedPrefs: SharedPrefsTrack
 ) : RecyclerView.Adapter<TrackViewHolder> () {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
@@ -29,9 +26,6 @@ class TrackHistoryAdapter (private val onItemClick: (TrackData) -> Unit,
         holder.bind(trackHistory[position])
 
         holder.itemView.setOnClickListener{
-
-            history.addTrackToHistory(mapper.reversedMap(trackHistory[position]))
-            sharedPrefs.saveHistory(history.getTrackHistory())
 
             onItemClick(trackHistory[position])
         }

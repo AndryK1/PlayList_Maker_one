@@ -28,7 +28,9 @@ class PlayListViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
 
         name.text = playList.name
-        trackCount.text = "${playList.tracksCount} ${itemView.context.getString(R.string.tracks)}"
+        val tracksCount = playList.tracksCount.toString().toInt()
+        val text = itemView.context.resources.getQuantityString(R.plurals.tracks_count, tracksCount, tracksCount)
+        trackCount.text = text
     }
 
     private fun setImageVisible(state: Boolean, imagePath: String){

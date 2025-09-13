@@ -1,8 +1,10 @@
 package com.practicum.playlist_maker_one.ui.media.activity
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.text.Editable
@@ -13,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.os.bundleOf
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -20,50 +23,47 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.practicum.playlist_maker_one.databinding.FragmentCreatePlayListBinding
 import com.practicum.playlist_maker_one.R
+import com.practicum.playlist_maker_one.databinding.FragmentEditPlaylistBinding
 import com.practicum.playlist_maker_one.domain.entity.PlayListData
-import com.practicum.playlist_maker_one.ui.media.viewModel.CreateListViewModel
+import com.practicum.playlist_maker_one.domain.entity.TrackData
+import com.practicum.playlist_maker_one.ui.media.viewModel.EditPlaylistViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 import java.io.FileOutputStream
 
-class FragmentCreateList : Fragment() {
+class FragmentEditPlaylist : Fragment(){
 
-    private lateinit var binding: FragmentCreatePlayListBinding
+    private lateinit var binding: FragmentEditPlaylistBinding
+    private var playlist: PlayListData? = null
     private var imageUri : Uri? = null
-    private val viewModel: CreateListViewModel by viewModel(ownerProducer = { requireActivity() })
+    private val viewModel : EditPlaylistViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentCreatePlayListBinding.inflate(inflater, container, false)
+        binding = FragmentEditPlaylistBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.createButton.isEnabled = false
-        binding.photo.visibility = View.GONE
-        binding.photoPlaceholder.visibility = View.VISIBLE
 
-        val alert = MaterialAlertDialogBuilder(requireContext())
-            .setTitle(getString(R.string.are_you_sure_pay_list))
-            .setMessage(getString(R.string.exit_warning_play_list))
-            .setNeutralButton(getString(R.string.cansel)){ dialog, which ->
+        playlist = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            arguments?.getParcelable(EXTRA_EDIT_PLAYLIST, PlayListData::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            (arguments?.getParcelable(EXTRA_EDIT_PLAYLIST))
+        }
+        setView()
 
-            }
-            .setPositiveButton(getString(R.string.end)){dialog, which ->
-                findNavController().navigateUp()
-            }
-
-        val pickImage = registerForActivityResult(ActivityResultContracts.PickVisualMedia()){ uri ->
-            if(uri != null ){
+        val pickImage = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            if (uri != null) {
+                binding.photo.setPadding(0,0,0,0)
                 binding.photo.visibility = View.VISIBLE
-                binding.photoPlaceholder.visibility = View.GONE
                 imageUri = uri
                 Glide.with(view)
                     .load(uri)
@@ -82,33 +82,62 @@ class FragmentCreateList : Fragment() {
         }
 
         binding.nameInput.doOnTextChanged{text,_,_,_ ->
-            binding.createButton.isEnabled = text.toString().trim().isNotEmpty()
+            binding.saveButton.isEnabled = text.toString().trim().isNotEmpty()
         }
 
-        binding.createButton.setOnClickListener {
+        binding.saveButton.setOnClickListener {
             val newImageUri = if(imageUri != null){
                 saveImageToStorage(imageUri!!, binding.nameInput.text.toString())
             }else{
-                ""
+                playlist!!.imageUrl
             }
 
-            val playList = PlayListData(
-                id = 0,
+            val newPlayList = PlayListData(
+                id = playlist!!.id,
                 name = binding.nameInput.text.toString(),
                 description = binding.descriptionInput.text.toString(),
                 imageUrl = newImageUri,
-                tracks = emptyList(),
-                tracksCount = 0
+                tracks = playlist!!.tracks,
+                tracksCount = playlist!!.tracksCount
             )
 
-            viewModel.savePlayList(playList)
+            viewModel.updatePlaylist(newPlayList)
 
-            Toast.makeText(requireContext(), getString(R.string.playList) + playList.name + getString(R.string.done), Toast.LENGTH_SHORT).show()
+            //!!новая фишка - используем result API для передачи обновления
+            val result = bundleOf("updated_playlist" to newPlayList)
+            parentFragmentManager.setFragmentResult("edit_playlist_request", result)
+
+            Toast.makeText(requireContext(), getString(R.string.playList) + playlist!!.name + getString(R.string.edited), Toast.LENGTH_SHORT).show()
             findNavController().navigateUp()
         }
 
         binding.leaveButton.setOnClickListener {
-            alert.show()
+            findNavController().navigateUp()
+        }
+    }
+
+    private fun  setView(){
+        val paddingInPx = 24.dpToPx(requireContext())
+        binding.nameInput.setText(playlist?.name)
+
+        if(playlist?.imageUrl != ""){
+            Glide.with(requireContext())
+                .load(playlist?.imageUrl)
+                .transform(
+                    MultiTransformation(
+                        CenterCrop(),
+                        RoundedCorners(resources.getDimensionPixelSize(R.dimen.posterCornerRadius))
+                    )
+                )
+                .into(binding.photo)
+        }
+        else{
+            binding.photo.setPadding(paddingInPx,paddingInPx,paddingInPx,paddingInPx)
+            binding.photo.setImageResource(R.drawable.ic_placeholder_45)
+        }
+
+        if(playlist?.description != ""){
+            binding.descriptionInput.setText(playlist?.description)
         }
     }
 
@@ -130,5 +159,16 @@ class FragmentCreateList : Fragment() {
             .compress(Bitmap.CompressFormat.JPEG, 70, outputStream)
 
         return  file.absolutePath
+    }
+
+
+    private fun Int.dpToPx(context: Context): Int {
+        return (this * context.resources.displayMetrics.density).toInt()
+    }
+
+    companion object {
+        private const val EXTRA_EDIT_PLAYLIST = "PLAYLIST_EDIT_EXTRA"
+
+        fun createPlaylist(playlist: PlayListData): Bundle = bundleOf(EXTRA_EDIT_PLAYLIST to playlist)
     }
 }

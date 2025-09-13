@@ -99,7 +99,7 @@ class AudioFragment() : Fragment() {
         viewModel.observeList().observe(viewLifecycleOwner){
             adapter = PlayerAdapter(it,
                 playListInteractor,
-                track!!.trackId,
+                track!!,
                 viewLifecycleOwner.lifecycleScope,
                 onItemClick = { playlistName, result ->
                     if(result){
@@ -187,7 +187,7 @@ class AudioFragment() : Fragment() {
 
 
         binding.pauseButton.setOnClickListener{
-            viewModel?.play()
+            viewModel.play()
         }
 
     }

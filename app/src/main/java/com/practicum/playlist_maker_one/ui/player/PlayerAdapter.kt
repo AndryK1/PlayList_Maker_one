@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 class PlayerAdapter(
     private val playLists: List<PlayListData>,
     private val interactor: PlayListInteractor,
-    private val trackId: Long,
+    private val track: TrackData,
     private val coroutineScope: CoroutineScope,
     val onItemClick: (playlistName: String, result : Boolean) -> Unit
 ) : RecyclerView.Adapter<PlayerViewHolder>() {
@@ -34,12 +34,14 @@ class PlayerAdapter(
         holder.bind(playLists[position])
 
         val playList = playLists[position]
-        val isAlreadyHave = playList.tracksIds.any { trackId == it }
+        val ids = playList.tracks.map { it.trackId }
+        val isAlreadyHave = ids.any { track.trackId == it }
+
         holder.itemView.setOnClickListener {
             try{
                 coroutineScope.launch {
                     if(!isAlreadyHave){
-                        interactor.addTrackToPlayList(trackId, playList)
+                        interactor.addTrackToPlayList(track, playList)
                         onItemClick(playList.name, true)
                     }
                     else{

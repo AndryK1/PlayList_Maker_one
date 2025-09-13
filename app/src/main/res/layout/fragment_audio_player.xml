@@ -167,6 +167,7 @@
             android:layout_marginBottom="@dimen/audioPauseMargin"
             android:background="@color/adaptiveBackGroundWhite"
             android:src="@drawable/ic_button_play_100"
+            android:clickable="true"
             app:layout_constraintBottom_toTopOf="@id/descriptionTime"
             app:layout_constraintEnd_toStartOf="@id/likeButton"
             app:layout_constraintStart_toEndOf="@id/plusButton" />
