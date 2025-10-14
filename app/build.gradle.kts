@@ -1,6 +1,8 @@
 plugins {
-    alias(libs.plugins.android.application)
+    
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("com.android.application")
+    id("com.google.gms.google-services")
     id("kotlin-parcelize")
     id("org.jetbrains.kotlin.kapt")
 }
@@ -23,13 +25,18 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
+
+        debug {
+            isMinifyEnabled = true
+        }
     }
+
     kapt {
         useBuildCache = false
     }
@@ -79,6 +86,10 @@ dependencies {
     implementation ("androidx.room:room-runtime:2.7.2")
     kapt ("androidx.room:room-compiler:2.7.2")
     implementation ("androidx.room:room-ktx:2.7.2")
+
+    //Firebase
+    implementation(platform("com.google.firebase:firebase-bom:34.2.0"))
+    implementation("com.google.firebase:firebase-analytics")
 
     // Корутины
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")

@@ -11,6 +11,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.logEvent
 import com.practicum.playlist_maker_one.R
 
 
@@ -22,12 +24,18 @@ class RootActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.root_activity)
 
+        val analytics = FirebaseAnalytics.getInstance(this)
+
         //получаем экземпляр navController
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.container_view) as NavHostFragment
         val navController = navHostFragment.navController
         //получаем экземпляр bottomNavigationView и передаём ему navController
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         bottomNavigationView.setupWithNavController(navController)
+
+        analytics.logEvent("test"){
+            param("openedApp", "test")
+        }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {

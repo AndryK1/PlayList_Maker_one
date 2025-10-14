@@ -149,7 +149,6 @@
 
         <ImageButton
             android:id="@+id/plusButton"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/audioButtonMargin"
@@ -160,14 +159,16 @@
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="@id/leftBorderBigText" />
 
-        <ImageButton
+        <com.practicum.playlist_maker_one.ui.CustomViews.PlaybackButtonView
             android:id="@+id/pauseButton"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/audioPauseMargin"
             android:background="@color/adaptiveBackGroundWhite"
-            android:src="@drawable/ic_button_play_100"
+            app:imagePlaySrc="@drawable/ic_button_play_100"
+            app:imagePauseSrc="@drawable/ic_pause_button_100"
             android:clickable="true"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintBottom_toTopOf="@id/descriptionTime"
             app:layout_constraintEnd_toStartOf="@id/likeButton"
             app:layout_constraintStart_toEndOf="@id/plusButton" />

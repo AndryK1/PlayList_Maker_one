@@ -51,6 +51,7 @@
         app:layout_constraintTop_toBottomOf="@id/photoBorders"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+
         android:background="@drawable/play_list_edit_text_bg"
         android:hint="@string/name"
         android:paddingStart="@dimen/editTextMediumPadding"

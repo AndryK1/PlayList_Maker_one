@@ -10,6 +10,8 @@ import com.practicum.playlist_maker_one.R
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.logEvent
 
 import com.practicum.playlist_maker_one.databinding.FragmentPlayListBinding
 import com.practicum.playlist_maker_one.domain.db.PlayListInteractor

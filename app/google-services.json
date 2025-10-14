@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "581099733077",
+    "project_id": "practicumanalitycstest",
+    "storage_bucket": "practicumanalitycstest.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:581099733077:android:f497d122e36b6b46b794dc",
+        "android_client_info": {
+          "package_name": "com.practicum.playlist_maker_one"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDrN0tt9sd2RdklG30EdpK3bP-nVfoP14"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

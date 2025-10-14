@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.practicum.playlist_maker_one" />
+                  <option name="mobileSdkAppId" value="1:581099733077:android:f497d122e36b6b46b794dc" />
+                  <option name="projectId" value="practicumanalitycstest" />
+                  <option name="projectNumber" value="581099733077" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
