@@ -23,6 +23,7 @@ import com.practicum.playlist_maker_one.domain.api.SharedPrefsTrack
 import com.practicum.playlist_maker_one.domain.api.TrackHistoryManager
 import com.practicum.playlist_maker_one.domain.api.TrackMapper
 import com.practicum.playlist_maker_one.domain.entity.TrackData
+import com.practicum.playlist_maker_one.ui.main.activity.RootActivity
 import com.practicum.playlist_maker_one.ui.player.activity.AudioFragment
 import com.practicum.playlist_maker_one.ui.search.SearchState
 import com.practicum.playlist_maker_one.ui.search.TrackAdapter
@@ -53,6 +54,16 @@ class FragmentSearch : Fragment() {
     ): View? {
         binding = FragmentSearchBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        (requireActivity() as RootActivity).registerInternetReceiver()
+    }
+
+    override fun onStop() {
+        (requireActivity() as RootActivity).unregisterInternetReceiver()
+        super.onStop()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

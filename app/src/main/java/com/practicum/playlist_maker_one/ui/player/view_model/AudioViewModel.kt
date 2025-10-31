@@ -11,6 +11,7 @@ import com.practicum.playlist_maker_one.domain.db.PlayListInteractor
 import com.practicum.playlist_maker_one.domain.entity.PlayListData
 import com.practicum.playlist_maker_one.domain.entity.TrackData
 import com.practicum.playlist_maker_one.ui.player.PlayerState
+import com.practicum.playlist_maker_one.ui.player.service.MusicService
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
@@ -23,19 +24,10 @@ class AudioViewModel(
     private val playlistInteractor : PlayListInteractor
     ) : ViewModel(){
 
-    var timerJob: Job?= null
-
-    private lateinit var previewUrl: String
-    private lateinit var startTime: String
+    private var musicService: MusicService? = null
 
     private var isFavoriteLiveData = MutableLiveData<Boolean>()
     fun observeFavorite() : LiveData<Boolean> = isFavoriteLiveData
-
-    private var playingLiveData = MutableLiveData<PlayerState>()
-    fun observePlayer() : LiveData<PlayerState> = playingLiveData
-
-    private var timerLiveData = MutableLiveData<String>()
-    fun observeTimer() : LiveData<String> = timerLiveData
 
     private var playlistsLiveData = MutableLiveData<List<PlayListData>>()
     fun observeList() : LiveData<List<PlayListData>> = playlistsLiveData
@@ -44,12 +36,8 @@ class AudioViewModel(
     fun observeLastTrack() : LiveData<TrackData> = lastTrackLiveData
 
     fun prepare(previewUrl: String, time: String) {
-        this.previewUrl = previewUrl
-        this.startTime = time
-        player.preparePlayer(previewUrl) {
-            playingLiveData.postValue(PlayerState.Finished)
-            timerLiveData.postValue(startTime)
-        }
+        musicService?.initializePlayer(player)
+        musicService?.prepare(previewUrl, time)
     }
 
     suspend fun onLikeClicked(track : TrackData){
@@ -65,6 +53,10 @@ class AudioViewModel(
         }
     }
 
+    fun initializeService(service: MusicService){
+        this.musicService = service
+    }
+
     fun getLastTrack(lastTrack: TrackData?){
         if(lastTrack != null){
             lastTrackLiveData.postValue(lastTrack)
@@ -72,43 +64,15 @@ class AudioViewModel(
     }
 
     fun play(){
-        player.playbackControl(){
-            startTimer()
-        }
-
-        if (player.getCurrentState()) {
-            playingLiveData.postValue(PlayerState.Playing)
-        } else {
-            playingLiveData.postValue(PlayerState.Paused)
-        }
-    }
-
-    private fun startTimer(){
-
-        timerJob?.cancel()
-        timerJob = viewModelScope.launch {
-            while(isActive && player.getCurrentState()){
-                val currentSeconds = player.getSecondsRemain()
-                timerLiveData.postValue(formatTime(currentSeconds))
-                delay(DELAYED)
-            }
-        }
+        musicService?.play()
     }
 
     fun onPausePlayer(){
-        player.pausePlayer()
+        musicService?.onPausePlayer()
     }
 
     fun onDestroyPlayer(){
-        timerJob?.cancel()
-        timerJob = null
-        player.destroy()
-    }
-
-    private fun formatTime(seconds: Int): String {
-        val minutes = seconds / 60
-        val remainingSeconds = seconds % 60
-        return String.format("%02d:%02d", minutes, remainingSeconds)
+        musicService?.onDestroyPlayer()
     }
 
     fun loadPlayLists(){
