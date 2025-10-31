@@ -26,6 +26,9 @@ import com.practicum.playlist_maker_one.domain.entity.TrackData
 import com.practicum.playlist_maker_one.ui.player.PlayerAdapter
 import com.practicum.playlist_maker_one.ui.player.PlayerState
 import com.practicum.playlist_maker_one.ui.player.view_model.AudioViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -122,15 +125,27 @@ class AudioFragment() : Fragment() {
 
         viewModel?.observePlayer()?.observe(viewLifecycleOwner ){
             when(it){
-                is PlayerState.Playing -> {
-                    binding.pauseButton.setImageResource(R.drawable.ic_pause_button_100)
+                PlayerState.Playing -> {
+                    binding.pauseButton.setButton(false)
+                    lifecycleScope.launch{
+                        delay(100L)
+                        binding.pauseButton.enableInternalControl()
+                    }
                 }
-                is PlayerState.Paused -> {
-                    binding.pauseButton.setImageResource(R.drawable.ic_button_play_100)
-                }
+
                 PlayerState.Finished -> {
-                    binding.pauseButton.setImageResource(R.drawable.ic_button_play_100)
-                    binding.timeUnderPause.text = getString(R.string.audioStartTime)
+                    binding.pauseButton.setButton(false)
+                    lifecycleScope.launch{
+                        delay(100L)
+                        binding.pauseButton.enableInternalControl()
+                    }
+                }
+                PlayerState.Paused -> {
+                    binding.pauseButton.setButton(true)
+                    lifecycleScope.launch{
+                        delay(100L)
+                        binding.pauseButton.enableInternalControl()
+                    }
                 }
             }
         }
@@ -162,7 +177,6 @@ class AudioFragment() : Fragment() {
         binding.AlbumText.text = track?.collectionName
 
         binding.pauseButton.isEnabled = true
-        binding.pauseButton.setImageResource(R.drawable.ic_button_play_100)
 
         binding.closeButton.setOnClickListener{
             findNavController().navigateUp()

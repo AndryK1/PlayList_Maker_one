@@ -18,6 +18,7 @@ class FavoritesViewModel(
 
 
     fun loadLikedTracks(){
+
         viewModelScope.launch{
             try {
                 likedHistoryInteractor.getLikedTracks().collect { tracks ->

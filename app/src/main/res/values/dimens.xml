@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="zero">0dp</dimen>
+    <dimen name="minButtonSize">45dp</dimen>
     <dimen name="ordinaryMargin">16dp</dimen>
     <dimen name="minMargin">8dp</dimen>
     <dimen name="mediumPadding">24dp</dimen>
