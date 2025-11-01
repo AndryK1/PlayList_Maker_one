@@ -41,8 +41,8 @@ class MusicService(
     private lateinit var startTime: String
     var timerJob: Job?= null
     private lateinit var player : TrackPlayer
-    private var artistName : String = "not found"
-    private var trackName : String = "not found"
+    private lateinit var artistName : String
+    private lateinit var trackName : String
     private val binder = MusicBinder()
 
     private var isAppInForeground = true
@@ -108,9 +108,6 @@ class MusicService(
         else{
             ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
 
-            if (!isPlaying && !isAppInForeground) {
-                stopSelf()
-            }
         }
     }
 
@@ -142,6 +139,14 @@ class MusicService(
         player.preparePlayer(previewUrl) {
             _playerState.value = PlayerState.Finished
             _timerState.value = time
+        }
+
+        player.setOnCompletionListener {
+            _playerState.value = PlayerState.Finished
+            _timerState.value = time
+            isPlaying = false
+
+            changeNotificationVisibility()
         }
     }
 
@@ -188,7 +193,6 @@ class MusicService(
             unregisterReceiver(appStateReceiver)
         }catch (e : Exception){}
         onDestroyPlayer()
-        stopSelf()
         super.onDestroy()
     }
 

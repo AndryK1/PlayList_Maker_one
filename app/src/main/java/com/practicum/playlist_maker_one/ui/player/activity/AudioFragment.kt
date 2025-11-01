@@ -47,6 +47,7 @@ class AudioFragment() : Fragment() {
 
     companion object {
         private const val EXTRA_TRACK = "TRACK_EXTRA"
+        private const val BUTTON_DELAY = 100L
 
         fun createTrack(track: TrackData): Bundle = bundleOf(EXTRA_TRACK to track)
 
@@ -254,7 +255,7 @@ class AudioFragment() : Fragment() {
                     PlayerState.Playing -> {
                         binding.pauseButton.setButton(false)
                         lifecycleScope.launch{
-                            delay(100L)
+                            delay(BUTTON_DELAY)
                             binding.pauseButton.enableInternalControl()
                         }
                     }
@@ -262,14 +263,14 @@ class AudioFragment() : Fragment() {
                     PlayerState.Finished -> {
                         binding.pauseButton.setButton(false)
                         lifecycleScope.launch{
-                            delay(100L)
+                            delay(BUTTON_DELAY)
                             binding.pauseButton.enableInternalControl()
                         }
                     }
                     PlayerState.Paused -> {
                         binding.pauseButton.setButton(true)
                         lifecycleScope.launch{
-                            delay(100L)
+                            delay(BUTTON_DELAY)
                             binding.pauseButton.enableInternalControl()
                         }
                     }
@@ -310,8 +311,6 @@ class AudioFragment() : Fragment() {
             putExtra("track_name", track?.trackName ?: "not found")
         }
 
-        requireActivity().startService(intent)
-
         requireActivity().bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
     }
 
@@ -322,9 +321,7 @@ class AudioFragment() : Fragment() {
 
 
     override fun onDestroyView() {
-        if (musicService != null && musicService?.playerState != PlayerState.Playing) {
-            activity?.stopService(Intent(activity, MusicService::class.java))
-        }
+
         unbindMusicService()
         super.onDestroyView()
     }
