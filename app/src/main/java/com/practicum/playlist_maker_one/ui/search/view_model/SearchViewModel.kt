@@ -13,6 +13,9 @@ import com.practicum.playlist_maker_one.domain.useCase.TrackRepositoryInteractor
 import com.practicum.playlist_maker_one.ui.search.SearchState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class SearchViewModel(
@@ -34,8 +37,8 @@ class SearchViewModel(
 
     private var flagHistory : Boolean = true
 
-    private var stateLiveData = MutableLiveData<SearchState>()
-    fun observeState() : LiveData<SearchState> = stateLiveData
+    private val _stateLiveData = MutableStateFlow<SearchState?>(null)
+    var stateLiveData : StateFlow<SearchState?> = _stateLiveData.asStateFlow()
 
     private var listOfSongs: ArrayList<TrackData> = ArrayList()
 
@@ -78,7 +81,6 @@ class SearchViewModel(
             viewModelScope.launch {
                 renderState(SearchState.Loading)
                 flagHistory = false
-                trackInteractor
                 trackInteractor
                     .searchTracks(changedText)
                     .collect { pair ->
@@ -134,7 +136,7 @@ class SearchViewModel(
 
     private fun renderState(state: SearchState) {
         lastState = state
-        stateLiveData.postValue(state)
+        _stateLiveData.value = state
     }
 
 

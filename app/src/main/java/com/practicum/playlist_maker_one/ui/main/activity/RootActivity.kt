@@ -77,7 +77,7 @@ class RootActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+
         setContentView(R.layout.root_activity)
 
         val analytics = FirebaseAnalytics.getInstance(this)

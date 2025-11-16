@@ -7,4 +7,5 @@ sealed interface SettingsState {
     data class Support(val email: String, val subject: String, val text: String) : SettingsState
 
     data class Agreement(val url: String) : SettingsState
+
 }

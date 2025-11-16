@@ -1,5 +1,6 @@
 package com.practicum.playlist_maker_one.ui.settings.view_model
 
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,6 +13,9 @@ import com.practicum.playlist_maker_one.domain.api.SharedPrefsTrack
 import com.practicum.playlist_maker_one.domain.api.ThemeManager
 import com.practicum.playlist_maker_one.ui.settings.SettingsState
 import com.practicum.playlist_maker_one.ui.track.App
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class SettingsViewModel(
     private val prefixShare: String,
@@ -22,15 +26,22 @@ class SettingsViewModel(
     private val sharedPrefs : ThemeManager
 ) : ViewModel() {
 
-    private val nightStateLiveData = MutableLiveData<Boolean>(sharedPrefs.isDarkThemeEnabled())
-    fun observeState() : LiveData<Boolean> = nightStateLiveData
 
-    private val sharingStateLiveData = MutableLiveData<SettingsState>()
-    fun observeSharingState() : LiveData<SettingsState> = sharingStateLiveData
+    private val _nightStateLiveData = MutableStateFlow(sharedPrefs.isDarkThemeEnabled())
+    var nightStateLiveData : StateFlow<Boolean> = _nightStateLiveData.asStateFlow()
+
+    private val _sharingStateLiveData: MutableStateFlow<SettingsState?> = MutableStateFlow(null)
+    var sharingStateLiveData : StateFlow<SettingsState?> = _sharingStateLiveData.asStateFlow()
 
     fun switchDarkTheme(enabled: Boolean){
         sharedPrefs.setDarkTheme(enabled)
-        nightStateLiveData.postValue(enabled)
+        _nightStateLiveData.value = enabled
+
+        if (enabled) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
     }
 
     fun onShareClicked() {
@@ -49,9 +60,12 @@ class SettingsViewModel(
         renderState(SettingsState.Agreement(prefixUrl))
     }
 
+    fun resetSharingState() {
+        _sharingStateLiveData.value = null
+    }
 
     private fun renderState(state: SettingsState) {
-        sharingStateLiveData.postValue(state)
+        _sharingStateLiveData.value = (state)
     }
 
 }

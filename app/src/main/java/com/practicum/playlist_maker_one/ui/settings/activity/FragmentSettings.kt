@@ -7,6 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import com.practicum.playlist_maker_one.R
 import com.practicum.playlist_maker_one.databinding.FragmentSettingsBinding
@@ -16,89 +19,21 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FragmentSettings : Fragment() {
 
-    private val viewModel : SettingsViewModel by viewModel()
-    private lateinit var binding: FragmentSettingsBinding
+    private val viewModel: SettingsViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentSettingsBinding.inflate(inflater, container, false)
+    ): View {
+        return ComposeView(requireContext()).apply {
+            //стратегия для освобождения ресурсов
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
 
-        return binding.root
-    }
+            setContent {
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-
-        viewModel?.observeState()?.observe(requireActivity()){
-            if(it){
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                binding.darkTheme.isChecked = it
-            }
-            else{
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                binding.darkTheme.isChecked = it
+                 SettingsActivity(viewModel = viewModel)
             }
         }
-
-        viewModel?.observeSharingState()?.observe(requireActivity()){
-            render(it)
-        }
-        //тёмная тема
-
-        binding.darkTheme.setOnCheckedChangeListener { _, isChecked ->
-            viewModel?.switchDarkTheme(isChecked)
-        }
-
-        //
-        binding.share.setOnClickListener {
-            viewModel?.onShareClicked()
-        }
-
-        binding.support.setOnClickListener {
-            viewModel?.onSupportClicked()
-        }
-
-        binding.usersAgree.setOnClickListener {
-            viewModel?.onAgreementClicked()
-        }
-
-
-    }
-
-    private fun render(state: SettingsState){
-        when(state){
-            is SettingsState.Share -> {
-                val intent = Intent(Intent.ACTION_SEND).apply {
-                    type = "text/plain"
-                    putExtra(
-                        Intent.EXTRA_TEXT,
-                        state.text
-                    )
-                }
-                startActivity(Intent.createChooser(intent, getString(R.string.share_app)))
-            }
-
-            is SettingsState.Support ->{
-                val intent = Intent(Intent.ACTION_SEND).apply {
-                    type = "message/rfc822"
-                    putExtra(Intent.EXTRA_EMAIL, state.email)
-                    putExtra(Intent.EXTRA_SUBJECT, state.subject)
-                    putExtra(Intent.EXTRA_TEXT, state.text)
-                }
-                startActivity(intent)
-            }
-
-            is SettingsState.Agreement ->{
-                val intent = Intent(Intent.ACTION_VIEW).apply {
-                    data = Uri.parse(state.url)
-                }
-                startActivity(intent)
-            }
-        }
-
     }
 }
