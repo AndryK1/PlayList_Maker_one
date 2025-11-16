@@ -12,9 +12,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 class PlayerAdapter(
-    private val playLists: List<PlayListData>,
+    private var playLists: List<PlayListData>,
     private val interactor: PlayListInteractor,
-    private val track: TrackData,
+    private var track: TrackData,
     private val coroutineScope: CoroutineScope,
     val onItemClick: (playlistName: String, result : Boolean) -> Unit
 ) : RecyclerView.Adapter<PlayerViewHolder>() {
@@ -52,6 +52,12 @@ class PlayerAdapter(
                 onItemClick(playList.name, false)
             }
         }
+    }
+
+    fun updateData(newPlayLists: List<PlayListData>, newTrack: TrackData) {
+        this.playLists = newPlayLists
+        this.track = newTrack
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {

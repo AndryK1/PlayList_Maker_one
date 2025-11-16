@@ -1,6 +1,9 @@
 package com.practicum.playlist_maker_one.ui.main.activity
 
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -14,9 +17,62 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.logEvent
 import com.practicum.playlist_maker_one.R
+import com.practicum.playlist_maker_one.ui.player.service.MusicService
+import com.practicum.playlist_maker_one.ui.player.service.MusicService.Companion.APP_IN_BACKGROUND
+import com.practicum.playlist_maker_one.ui.player.service.MusicService.Companion.APP_IN_FOREGROUND
+import com.practicum.playlist_maker_one.utils.InternetBroadcastReceiver
 
 
 class RootActivity : AppCompatActivity() {
+
+    private val internetReceiver = InternetBroadcastReceiver()
+    private var isReceiverRegistered = false
+    private var isAppInForeground = true
+
+    fun registerInternetReceiver() {
+        if (!isReceiverRegistered) {
+            val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+            registerReceiver(
+                internetReceiver,
+                filter,
+                Context.RECEIVER_NOT_EXPORTED
+            )
+            isReceiverRegistered = true
+        }
+    }
+
+    fun unregisterInternetReceiver() {
+        if (isReceiverRegistered) {
+            unregisterReceiver(internetReceiver)
+            isReceiverRegistered = false
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        isAppInForeground = true
+        sendAppStateBroadcast(APP_IN_FOREGROUND)
+    }
+
+    override fun onPause() {
+        isAppInForeground = false
+        sendAppStateBroadcast(APP_IN_BACKGROUND)
+        super.onPause()
+    }
+
+    private fun sendAppStateBroadcast(action: String) {
+        val intent = Intent(action).apply {
+            // нужно указывать имя пакета иначе не досталяет(запомнить)
+            setPackage(packageName)
+        }
+        sendBroadcast(intent)
+    }
+
+    override fun onDestroy() {
+        val intent = Intent(this, MusicService::class.java)
+        stopService(intent)
+        super.onDestroy()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 

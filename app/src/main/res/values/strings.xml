@@ -47,6 +47,7 @@
     <string name="timePlug">0:00</string>
     <string name="audioStartTime">00:30</string>
     <string name="favorites">Избранные треки</string>
+    <string name="notPreparedService">Сервис еще не готов</string>
     <string name="playLists">Плейлисты</string>
     <string name="emptyMedia">Ваша медиатека пуста</string>
     <string name="newPlayListText">Новый плейлист</string>
@@ -80,5 +81,6 @@
     <string name="clearButton">Очистить текст</string>
     <string name="subjectMessage">Сообщение разработчикам и разработчицам приложения Playlist Maker</string>
     <string name="gratefulMessage">Спасибо разработчикам и разработчицам за крутое приложение!</string>
-
+    <string name="noInternetToast">Нет подключения к интернету</string>
+    <string name="notFoundPlug">not found</string>
 </resources>
