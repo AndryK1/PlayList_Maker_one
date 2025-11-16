@@ -56,13 +56,8 @@ import com.practicum.playlist_maker_one.ui.media.viewModel.FavoritesViewModel
 import com.practicum.playlist_maker_one.ui.media.viewModel.PlayListViewModel
 import com.practicum.playlist_maker_one.ui.settings.activity.BuildTracksItem
 import kotlinx.coroutines.launch
+import okhttp3.internal.immutableListOf
 
-
-private val imageSize = 45.dp
-private val imagePaddingVertical = 8.dp
-private val minPadding = 8.dp
-private val minTextSize = 11.sp
-private val edgeIconSize = 24.dp
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
@@ -79,7 +74,7 @@ fun MediaActivity(
     val pagerState = rememberPagerState(pageCount = { 2 })
     val coroutineScope = rememberCoroutineScope()
 
-    val tabs = listOf(
+    val tabs = immutableListOf(
         stringResource(R.string.favorites),
         stringResource(R.string.playLists)
     )
@@ -290,8 +285,8 @@ fun FavoritesScreen(viewModel: FavoritesViewModel? = null, onTrackClick : (Track
                         BuildTracksItem(
                             imageUrl = track.formatedArtworkUrl100,
                             songName = track.trackName,
-                            artistName = track.artistName,
-                            trackDuration = track.trackFormatedTime,
+                            artistName = track.artistName ?: stringResource(R.string.nothing_found),
+                            trackDuration = track.trackFormatedTime ?: "0:00",
                             onTrackClick = {
                                 onTrackClick(track)
                             }

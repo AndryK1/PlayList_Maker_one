@@ -17,36 +17,57 @@ class TrackMapperImpl : TrackMapper{
     }
 
 
-    override fun map(trackDataDto: TrackDataDto, isFavorite : Boolean): TrackData {
+    override fun map(trackDataDto: TrackDataDto, isFavorite: Boolean): TrackData {
         return TrackData(
             trackId = trackDataDto.trackId,
             trackName = trackDataDto.trackName,
-            artistName = trackDataDto.artistName,
+            artistName = trackDataDto.artistName ?: "nothing found",
             trackFormatedTime = SimpleDateFormat("mm:ss", Locale.getDefault()).format(trackDataDto.trackTimeMillis),
-            formatedArtworkUrl100 = trackDataDto.artworkUrl100.replaceAfterLast('/',"512x512bb.jpg"),
-            previewUrl = trackDataDto.previewUrl,
-            collectionName = trackDataDto.collectionName,
-            releaseDateFormated = SimpleDateFormat("yyyy", Locale.getDefault()).format(trackDataDto.releaseDate),
-            primaryGenreName = trackDataDto.primaryGenreName,
-            country = trackDataDto.country,
+            formatedArtworkUrl100 = trackDataDto.artworkUrl100?.replaceAfterLast('/', "512x512bb.jpg") ?: "",
+            previewUrl = trackDataDto.previewUrl ?: "",
+            collectionName = trackDataDto.collectionName ?: "nothing found",
+            releaseDateFormated = formatReleaseDate(trackDataDto.releaseDate),
+            primaryGenreName = trackDataDto.primaryGenreName?: "nothing found",
+            country = trackDataDto.country ?: "nothing found",
             isFavorite = isFavorite
         )
     }
 
-    override fun reversedMap(trackData: TrackData) : TrackDataDto{
-        val yearFormatter = SimpleDateFormat("yyyy", Locale.getDefault())
+    private fun formatReleaseDate(releaseDate: Date?): String? {
+
+        if (releaseDate == null) return "${Date()}"
+        return try {
+            SimpleDateFormat("yyyy", Locale.getDefault()).format(releaseDate)
+        } catch (e: Exception) {
+            "${Date()}"
+        }
+    }
+
+
+    override fun reversedMap(trackData: TrackData): TrackDataDto {
         return TrackDataDto(
             trackId = trackData.trackId,
             trackName = trackData.trackName,
             artistName = trackData.artistName,
-            trackTimeMillis = parseMinutesAndSecondsToMillis(trackData.trackFormatedTime),
-            artworkUrl100 = trackData.formatedArtworkUrl100.replaceAfterLast('/',"100x100bb.jpg"),
+            trackTimeMillis = parseMinutesAndSecondsToMillis(trackData.trackFormatedTime ?: "0:00"),
+            artworkUrl100 = trackData.formatedArtworkUrl100?.replaceAfterLast('/', "100x100bb.jpg"),
             previewUrl = trackData.previewUrl,
             collectionName = trackData.collectionName,
-            releaseDate = yearFormatter.parse(trackData.releaseDateFormated)!!,
+            releaseDate = parseReleaseDate(trackData.releaseDateFormated),
             primaryGenreName = trackData.primaryGenreName,
             country = trackData.country
         )
+    }
+
+    private fun parseReleaseDate(releaseDateFormated: String?): Date {
+        if (releaseDateFormated.isNullOrEmpty() || releaseDateFormated == "-") {
+            return Date()
+        }
+        return try {
+            SimpleDateFormat("yyyy", Locale.getDefault()).parse(releaseDateFormated) ?: Date()
+        } catch (e: Exception) {
+            Date()
+        }
     }
 
 

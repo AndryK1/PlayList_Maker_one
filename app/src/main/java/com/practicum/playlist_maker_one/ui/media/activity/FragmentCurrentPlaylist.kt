@@ -206,7 +206,7 @@ class FragmentCurrentPlaylist : Fragment() {
         }
 
         val tracksCount  = playList?.tracksCount ?: 0
-        val generalTime = playList!!.tracks.map { it.trackFormatedTime }
+        val generalTime = playList?.tracks?.mapNotNull { it.trackFormatedTime } ?: emptyList()
         val formatedTime = viewModel.getGeneralTime(generalTime)
         binding.name.text = playList?.name
         if(playList?.tracks?.isEmpty() == true){

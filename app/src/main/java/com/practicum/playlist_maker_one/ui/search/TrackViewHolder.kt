@@ -19,7 +19,7 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
     fun bind (item : TrackData)
     {
-        val artworkUrl : String = item.formatedArtworkUrl100
+        val artworkUrl : String = item.formatedArtworkUrl100 ?: ""
 
         Glide.with(itemView)
             .load(artworkUrl)
@@ -31,7 +31,7 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         tvTrackTime.text = item.trackFormatedTime
 
         tvTrackName.text = item.trackName.trim()
-        tvArtistName.text = item.artistName.trim()
+        tvArtistName.text = item.artistName?.trim()
     }
 
 

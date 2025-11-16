@@ -335,8 +335,8 @@ fun ShowHistory(history : List<TrackData>, onClick: () -> Unit, onTrackClick: (T
                 BuildTracksItem(
                     imageUrl = track.formatedArtworkUrl100,
                     songName = track.trackName,
-                    artistName = track.artistName,
-                    trackDuration = track.trackFormatedTime,
+                    artistName = track.artistName ?: stringResource(R.string.nothing_found),
+                    trackDuration = track.trackFormatedTime ?: "0:00",
                     onTrackClick = { onTrackClick(track) }
                 )
             }
@@ -442,8 +442,8 @@ fun ShowTrackList(tracks: List<TrackData>, onTrackClick: (TrackData) -> Unit){
             BuildTracksItem(
                 imageUrl = track.formatedArtworkUrl100,
                 songName = track.trackName,
-                artistName = track.artistName,
-                trackDuration = track.trackFormatedTime,
+                artistName = track.artistName ?: stringResource(R.string.nothing_found),
+                trackDuration = track.trackFormatedTime ?: "0:00",
                 onTrackClick = { onTrackClick(track) }
             )
         }

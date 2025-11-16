@@ -26,6 +26,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -103,12 +104,14 @@ fun BuildTracksItem(imageUrl: String?, songName: String, artistName: String, tra
                 verticalAlignment = Alignment.CenterVertically
             ){
                 Text(
+                    modifier = Modifier.weight(1f,false),
                     text = artistName,
                     style = TextStyle(
                         fontSize = minTextSize,
                         fontFamily = FontFamily(Font(R.font.ys_display_regular)),
                     ),
                     color = secondaryColor,
+                    overflow = TextOverflow.Ellipsis,
                     maxLines = 1
                 )
                 Icon(
@@ -143,5 +146,5 @@ fun BuildTracksItem(imageUrl: String?, songName: String, artistName: String, tra
 @Preview(showSystemUi = true)
 @Composable
 fun BuildTracksItemPreview(){
-    BuildTracksItem(null, "tim tim", "timati", "0:00", onTrackClick = {})
+    BuildTracksItem(null, "tim tim", "tim", "0:00", onTrackClick = {})
 }

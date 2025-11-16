@@ -85,7 +85,7 @@ class AudioFragment() : Fragment() {
 
             viewModel.initializeService(musicService!!)
 
-            track?.let { viewModel.prepare(it.previewUrl, getString(R.string.audioStartTime)) }
+            track?.let { viewModel.prepare(it.previewUrl ?: "", getString(R.string.audioStartTime)) }
 
             activateSubscriptions()
         }

@@ -84,17 +84,24 @@ class SearchViewModel(
                 trackInteractor
                     .searchTracks(changedText)
                     .collect { pair ->
+                        val tracks = pair.first
+                        val error = pair.second
+                        //пока так, потом обязательно переделать репозиторий
                         when {
-
-                            pair.second != null -> {
-                                renderState(SearchState.InternetError)
-                            }
-                            pair.first?.isEmpty() == true -> {
+                            error == "No tracks error" -> {
                                 renderState(SearchState.NothingFound)
                             }
-                            pair.first != null -> {
-                                renderState(SearchState.Content(pair.first!!.toList()))
+                            error != null -> {
+                                renderState(SearchState.InternetError)
                             }
+                            tracks != null && tracks.isNotEmpty() -> {
+                                renderState(SearchState.Content(tracks.toList()))
+                            }
+
+                            tracks != null && tracks.isEmpty() -> {
+                                renderState(SearchState.NothingFound)
+                            }
+
                             else -> {
                                 renderState(SearchState.InternetError)
                             }
