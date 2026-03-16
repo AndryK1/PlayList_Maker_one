@@ -1,12 +1,13 @@
 # 🎵 Music Player — тестовый проект
 
-[![Kotlin](https://img.shields.io/badge/Kotlin-2.0.0-blue.svg?style=flat&logo=kotlin)](https://kotlinlang.org)
+[![Kotlin](https://img.shields.io/badge/Kotlin-2.2.10-blue.svg?style=flat&logo=kotlin)](https://kotlinlang.org)
 [![Architecture](https://img.shields.io/badge/Architecture-Clean%20%2B%20MVVM-green)](https://developer.android.com/topic/architecture)
-[![Coroutines](https://img.shields.io/badge/Coroutines-1.8.0-blue)](https://kotlinlang.org/docs/coroutines-overview.html)
-[![Room](https://img.shields.io/badge/Room-2.6.0-orange)](https://developer.android.com/training/data-storage/room)
+[![Coroutines](https://img.shields.io/badge/Coroutines-1.7.3-blue)](https://kotlinlang.org/docs/coroutines-overview.html)
+[![Room](https://img.shields.io/badge/Room-2.7.2-orange)](https://developer.android.com/training/data-storage/room)
 [![Retrofit](https://img.shields.io/badge/Retrofit-2.9.0-brightgreen)](https://square.github.io/retrofit/)
-[![Navigation](https://img.shields.io/badge/Navigation-2.7.0-ff69b4)](https://developer.android.com/guide/navigation)
+[![Navigation](https://img.shields.io/badge/Navigation-2.5.3-ff69b4)](https://developer.android.com/guide/navigation)
 [![ViewBinding](https://img.shields.io/badge/ViewBinding-✓-yellow)](https://developer.android.com/topic/libraries/view-binding)
+[![ViewPager2](https://img.shields.io/badge/ViewPager2-1.0.0-lightgrey)](https://developer.android.com/jetpack/androidx/releases/viewpager2)
 
 **Music Player** — это учебное приложение для Android, созданное с целью освоения современных инструментов разработки, паттернов проектирования и работы с Git. Проект представляет собой музыкальный плеер с гибкой возможностью создания плейлистов и потоковой передачи аудио.
 
