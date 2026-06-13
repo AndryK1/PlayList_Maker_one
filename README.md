@@ -1,4 +1,4 @@
-# 🎵 Music Player — тестовый проект
+# 🎵 Music Player
 
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.2.10-blue.svg?style=flat&logo=kotlin)](https://kotlinlang.org)
 [![Architecture](https://img.shields.io/badge/Architecture-Clean%20%2B%20MVVM-green)](https://developer.android.com/topic/architecture)
