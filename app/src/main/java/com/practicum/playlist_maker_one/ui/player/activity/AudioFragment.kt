@@ -58,6 +58,7 @@ class AudioFragment() : Fragment() {
     private lateinit var adapter: PlayerAdapter
     private var track: TrackData? = null
     private var musicService: MusicService? = null
+    private var isServiceBound = false
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -82,10 +83,12 @@ class AudioFragment() : Fragment() {
         ) {
             val binder = service as MusicService.MusicBinder
             musicService = binder.getService()
+            isServiceBound = true
 
             viewModel.initializeService(musicService!!)
+            musicService?.onPlayerUiVisible()
 
-            track?.let { viewModel.prepare(it.previewUrl, getString(R.string.audioStartTime)) }
+            track?.let { viewModel.openTrack(it.trackId, it.previewUrl, getString(R.string.audioStartTime)) }
 
             activateSubscriptions()
         }
@@ -311,17 +314,23 @@ class AudioFragment() : Fragment() {
             putExtra("track_name", track?.trackName ?: "not found")
         }
 
-        requireActivity().bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
+        if (!isServiceBound) {
+            requireActivity().startService(intent)
+            requireActivity().bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
+        }
     }
 
     private fun unbindMusicService() {
         // код для отвязывания от сервиса
-        requireActivity().unbindService(serviceConnection)
+        if (isServiceBound) {
+            requireActivity().unbindService(serviceConnection)
+            isServiceBound = false
+        }
     }
 
 
     override fun onDestroyView() {
-
+        viewModel.onPlayerUiHidden()
         unbindMusicService()
         super.onDestroyView()
     }

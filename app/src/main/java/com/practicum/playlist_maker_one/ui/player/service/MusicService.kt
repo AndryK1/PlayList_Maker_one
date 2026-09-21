@@ -3,6 +3,7 @@ package com.practicum.playlist_maker_one.ui.player.service
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.app.Service
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -43,9 +44,11 @@ class MusicService(
     private lateinit var player : TrackPlayer
     private lateinit var artistName : String
     private lateinit var trackName : String
+    private var currentTrackId: Long? = null
     private val binder = MusicBinder()
 
     private var isAppInForeground = true
+    private var isPlayerUiVisible = false
     private var isPlaying = false
 
     private var serviceScope = CoroutineScope(Dispatchers.Main)
@@ -102,7 +105,7 @@ class MusicService(
     }
 
     private fun changeNotificationVisibility(){
-        if (isPlaying && !isAppInForeground){
+        if (isPlaying && (!isAppInForeground || !isPlayerUiVisible)){
             startForegroundService()
         }
         else{
@@ -118,6 +121,16 @@ class MusicService(
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        when (intent?.action) {
+            EXTRA_ARTIST_NAME -> {
+                if (::player.isInitialized) onPausePlayer()
+                return START_NOT_STICKY
+            }
+            EXTRA_TRACK_NAME -> {
+                stopPlayback()
+                return START_NOT_STICKY
+            }
+        }
         updateFromIntent(intent)
         registerAppStateReceiver()
         return START_STICKY
@@ -132,14 +145,32 @@ class MusicService(
         trackName = intent?.getStringExtra(EXTRA_TRACK_NAME) ?: trackName
     }
 
-    fun prepare(previewUrl: String, time: String) {
+    /** The service is the single owner of the active track and its state. */
+    fun openTrack(trackId: Long, previewUrl: String, time: String) {
+        if (currentTrackId == trackId && ::player.isInitialized) {
+            publishCurrentState()
+            return
+        }
+
+        if (::player.isInitialized) {
+            stopTimer()
+            player.destroy()
+        }
+        currentTrackId = trackId
         this.previewUrl = previewUrl
         this.startTime = time
+        _timerState.value = time
+        _playerState.value = PlayerState.Paused
+        isPlaying = false
 
-        player.preparePlayer(previewUrl) {
-            _playerState.value = PlayerState.Finished
-            _timerState.value = time
+        player.setOnPreparedListener {
+            isPlaying = player.getCurrentState()
+            _playerState.value = if (isPlaying) PlayerState.Playing else PlayerState.Paused
+            _timerState.value = formatTime(player.getSecondsRemain())
+            if (isPlaying) startTimer()
+            changeNotificationVisibility()
         }
+        player.preparePlayer(previewUrl) { }
 
         player.setOnCompletionListener {
             _playerState.value = PlayerState.Finished
@@ -152,11 +183,21 @@ class MusicService(
 
 
     fun initializePlayer(player: TrackPlayer){
-        this.player = player
+        if (!::player.isInitialized) this.player = player
+    }
+
+    fun onPlayerUiVisible() {
+        isPlayerUiVisible = true
+        changeNotificationVisibility()
+    }
+
+    fun onPlayerUiHidden() {
+        isPlayerUiVisible = false
+        changeNotificationVisibility()
     }
 
     fun play(){
-
+        if (!::player.isInitialized) return
         player.playbackControl(){
             startTimer()
         }
@@ -197,10 +238,33 @@ class MusicService(
     }
 
     fun onPausePlayer(){
+        if (!::player.isInitialized) return
         player.pausePlayer()
         isPlaying = false
+        _playerState.value = PlayerState.Paused
+        _timerState.value = formatTime(player.getSecondsRemain())
         changeNotificationVisibility()
         stopTimer()
+    }
+
+    private fun publishCurrentState() {
+        if (!::player.isInitialized) return
+        isPlaying = player.getCurrentState()
+        _playerState.value = if (isPlaying) PlayerState.Playing else PlayerState.Paused
+        _timerState.value = formatTime(player.getSecondsRemain())
+        if (isPlaying) startTimer()
+        changeNotificationVisibility()
+    }
+
+    private fun stopPlayback() {
+        stopTimer()
+        if (::player.isInitialized) player.destroy()
+        currentTrackId = null
+        isPlaying = false
+        _playerState.value = PlayerState.Paused
+        _timerState.value = formatTime(0)
+        ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
+        stopSelf()
     }
 
     private fun stopTimer() {
@@ -219,7 +283,8 @@ class MusicService(
         isPlaying = false
         timerJob = null
         serviceScope.cancel()
-        player.destroy()
+        if (::player.isInitialized) player.destroy()
+        currentTrackId = null
     }
 
     fun createNotificationChannel(){
@@ -248,6 +313,9 @@ class MusicService(
     }
 
     private fun createServiceNotification() : Notification{
+        val pauseIntent = Intent(this, MusicService::class.java).setAction(EXTRA_ARTIST_NAME)
+        val dismissIntent = Intent(this, MusicService::class.java).setAction(EXTRA_TRACK_NAME)
+        val flags = PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         return NotificationCompat.Builder(this,
             NOTIFICATION_CHANNEL_ID
         )
@@ -256,6 +324,8 @@ class MusicService(
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setPriority(NotificationCompat.PRIORITY_LOW)
             .setCategory(NotificationCompat.CATEGORY_SERVICE)
+            .addAction(0, getString(R.string.pause_action), PendingIntent.getService(this, 0, pauseIntent, flags))
+            .setDeleteIntent(PendingIntent.getService(this, 1, dismissIntent, flags))
             .setSilent(true)
             .build()
     }

@@ -68,12 +68,6 @@ class RootActivity : AppCompatActivity() {
         sendBroadcast(intent)
     }
 
-    override fun onDestroy() {
-        val intent = Intent(this, MusicService::class.java)
-        stopService(intent)
-        super.onDestroy()
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)

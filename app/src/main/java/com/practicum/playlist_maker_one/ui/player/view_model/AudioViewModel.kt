@@ -35,9 +35,9 @@ class AudioViewModel(
     private var lastTrackLiveData = MutableLiveData<TrackData>()
     fun observeLastTrack() : LiveData<TrackData> = lastTrackLiveData
 
-    fun prepare(previewUrl: String, time: String) {
+    fun openTrack(trackId: Long, previewUrl: String, time: String) {
         musicService?.initializePlayer(player)
-        musicService?.prepare(previewUrl, time)
+        musicService?.openTrack(trackId, previewUrl, time)
     }
 
     suspend fun onLikeClicked(track : TrackData){
@@ -65,6 +65,10 @@ class AudioViewModel(
 
     fun play(){
         musicService?.play()
+    }
+
+    fun onPlayerUiHidden() {
+        musicService?.onPlayerUiHidden()
     }
 
     fun onPausePlayer(){

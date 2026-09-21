@@ -5,6 +5,7 @@ interface TrackPlayer {
     fun getCurrentState(): Boolean
     fun getSecondsRemain(): Int
     fun setOnCompletionListener(listener: () -> Unit)
+    fun setOnPreparedListener(listener: () -> Unit)
     fun preparePlayer( trackUrl: String, timerRunnable: Runnable)
     fun destroy()
     fun startPlayer()
