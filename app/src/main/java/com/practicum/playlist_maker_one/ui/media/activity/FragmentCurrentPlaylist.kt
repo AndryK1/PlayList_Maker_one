@@ -1,11 +1,14 @@
 package com.practicum.playlist_maker_one.ui.media.activity
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
+import android.view.ViewConfiguration
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.os.bundleOf
@@ -76,6 +79,8 @@ class FragmentCurrentPlaylist : Fragment() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {}
         })
 
+        setupPlayListBottomSheet()
+
         viewModel.observeTracks().observe(viewLifecycleOwner){
             playList = it
             setView()
@@ -136,6 +141,51 @@ class FragmentCurrentPlaylist : Fragment() {
                     findNavController().navigateUp()
                 }.show()
 
+        }
+    }
+
+    // bottomSheet со списком треков: останавливается на любой высоте, скрывается свайпом вниз
+    // и вытягивается обратно свайпом вверх от нижнего края экрана
+    @SuppressLint("ClickableViewAccessibility")
+    private fun setupPlayListBottomSheet(){
+        val playListBehavior = BottomSheetBehavior.from(binding.playListBottomSheet)
+        val hideThresholdPx = HIDE_THRESHOLD_DP.dpToPx(requireContext())
+        val touchSlop = ViewConfiguration.get(requireContext()).scaledTouchSlop
+        var previousState = playListBehavior.state
+
+        playListBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                // пользователь отпустил шторку — фиксируем её там, где отпустил, вместо прилипания к стандартным позициям
+                if (previousState == BottomSheetBehavior.STATE_DRAGGING && newState == BottomSheetBehavior.STATE_SETTLING) {
+                    val parentHeight = (bottomSheet.parent as View).height
+                    val visibleHeight = parentHeight - bottomSheet.top
+
+                    if (visibleHeight < hideThresholdPx) {
+                        playListBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+                    } else {
+                        playListBehavior.peekHeight = visibleHeight
+                        playListBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                    }
+                }
+                previousState = newState
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {}
+        })
+
+        var startY = 0f
+        binding.playListSwipeZone.setOnTouchListener { view, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> startY = event.rawY
+                MotionEvent.ACTION_MOVE -> {
+                    if (startY - event.rawY > touchSlop && playListBehavior.state == BottomSheetBehavior.STATE_HIDDEN) {
+                        playListBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                    }
+                }
+                MotionEvent.ACTION_UP -> view.performClick()
+            }
+            true
         }
     }
 
@@ -272,6 +322,7 @@ class FragmentCurrentPlaylist : Fragment() {
 
     companion object{
         private const val EXTRA_PLAYLIST ="extra_playlist"
+        private const val HIDE_THRESHOLD_DP = 100
 
         fun createPlaylist(playList: PlayListData) : Bundle = bundleOf(EXTRA_PLAYLIST to playList)
 

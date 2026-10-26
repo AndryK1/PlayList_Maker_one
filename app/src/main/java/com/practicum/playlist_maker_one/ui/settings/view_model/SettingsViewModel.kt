@@ -25,8 +25,8 @@ class SettingsViewModel(
     private val nightStateLiveData = MutableLiveData<Boolean>(sharedPrefs.isDarkThemeEnabled())
     fun observeState() : LiveData<Boolean> = nightStateLiveData
 
-    private val sharingStateLiveData = MutableLiveData<SettingsState>()
-    fun observeSharingState() : LiveData<SettingsState> = sharingStateLiveData
+    private val sharingStateLiveData = MutableLiveData<SettingsState?>()
+    fun observeSharingState() : LiveData<SettingsState?> = sharingStateLiveData
 
     fun switchDarkTheme(enabled: Boolean){
         sharedPrefs.setDarkTheme(enabled)
@@ -49,6 +49,11 @@ class SettingsViewModel(
         renderState(SettingsState.Agreement(prefixUrl))
     }
 
+
+    // событие одноразовое: после обработки сбрасываем, чтобы оно не прилетало повторно при возврате на экран
+    fun onSharingHandled(){
+        sharingStateLiveData.value = null
+    }
 
     private fun renderState(state: SettingsState) {
         sharingStateLiveData.postValue(state)

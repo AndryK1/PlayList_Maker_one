@@ -13,3 +13,9 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Claude Code
+.claude/
+CLAUDE.md
+CLAUDE.local.md
+.scan_report.json

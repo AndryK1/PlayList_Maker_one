@@ -1,11 +1,13 @@
 package com.practicum.playlist_maker_one.ui.settings.activity
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.practicum.playlist_maker_one.R
@@ -33,7 +35,7 @@ class FragmentSettings : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        viewModel?.observeState()?.observe(requireActivity()){
+        viewModel?.observeState()?.observe(viewLifecycleOwner){
             if(it){
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 binding.darkTheme.isChecked = it
@@ -44,7 +46,9 @@ class FragmentSettings : Fragment() {
             }
         }
 
-        viewModel?.observeSharingState()?.observe(requireActivity()){
+        viewModel?.observeSharingState()?.observe(viewLifecycleOwner){
+            it ?: return@observe
+            viewModel?.onSharingHandled()
             render(it)
         }
         //тёмная тема
@@ -83,13 +87,18 @@ class FragmentSettings : Fragment() {
             }
 
             is SettingsState.Support ->{
-                val intent = Intent(Intent.ACTION_SEND).apply {
-                    type = "message/rfc822"
-                    putExtra(Intent.EXTRA_EMAIL, state.email)
+                // SENDTO + mailto: открывает только почтовые клиенты, а не общее меню "поделиться"
+                val intent = Intent(Intent.ACTION_SENDTO).apply {
+                    data = Uri.parse("mailto:")
+                    putExtra(Intent.EXTRA_EMAIL, arrayOf(state.email))
                     putExtra(Intent.EXTRA_SUBJECT, state.subject)
                     putExtra(Intent.EXTRA_TEXT, state.text)
                 }
-                startActivity(intent)
+                try {
+                    startActivity(intent)
+                } catch (e: ActivityNotFoundException) {
+                    Toast.makeText(requireContext(), getString(R.string.noMailApp), Toast.LENGTH_SHORT).show()
+                }
             }
 
             is SettingsState.Agreement ->{

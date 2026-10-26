@@ -2,7 +2,7 @@
     <string name="plug">Заглушка</string>
     <string name="name">Название*</string>
     <string name="addToPlaylist">Добавить в плейлист</string>
-    <string name="addedToPlaylist">Добавлено в плейлист </string>
+    <string name="addedToPlaylist">"Добавлено в плейлист "</string>
     <string name="done">создан </string>
     <string name="playList">Плейлист</string>
     <string name="buttonErrorW">Неизвестный режим ширины </string>
@@ -40,7 +40,7 @@
     <string name="end">Завершить</string>
     <string name="exit_warning_play_list">Все несохраненные данные будут потеряны</string>
     <string name="are_you_sure_pay_list">Завершить создание плейлиста?</string>
-    <string name="alreadyHaveTrack">Трек уже добавлен в плейлист </string>
+    <string name="alreadyHaveTrack">"Трек уже добавлен в плейлист "</string>
     <string name="description">Описание</string>
     <string name="create">Создать</string>
     <string name="newPlayList">Новый плейлист</string>
@@ -78,6 +78,7 @@
     <string name="linkDevelopment">Ознакомьтесь с этим курсом по андроид разработке : https://practicum.yandex.ru/android-developer/</string>
     <string name="linkAgreement">https://yandex.ru/legal/practicum_offer/</string>
     <string name="mail">s.hlopovskih@gmail.com</string>
+    <string name="noMailApp">Не найдено почтовое приложение</string>
     <string name="clearButton">Очистить текст</string>
     <string name="subjectMessage">Сообщение разработчикам и разработчицам приложения Playlist Maker</string>
     <string name="gratefulMessage">Спасибо разработчикам и разработчицам за крутое приложение!</string>

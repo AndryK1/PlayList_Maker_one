@@ -41,7 +41,8 @@ class TrackRepositoryImpl(
                     }
                 }
                 100 -> {
-                    emit(Resource.Error("No tracks error", emptyList()))
+                    // пустой ответ — это не ошибка, а успешный запрос без результатов (дальше станет NothingFound)
+                    emit(Resource.Success(emptyList()))
                 }
                 400 -> {
                     emit(Resource.Error("Ошибка при загрузке данных", emptyList()))
